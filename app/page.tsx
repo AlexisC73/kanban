@@ -1,6 +1,7 @@
 'use client'
 
 import { SubtaskCheckbox } from '@/presentation/components/subtask-checkbox/SubtaskCheckbox'
+import { TextField } from '@/presentation/components/text-field/TextField'
 import { useState } from 'react'
 
 export default function Home () {
@@ -42,6 +43,8 @@ export default function Home () {
             onChange={() => toggleCompleted(item.id)}
           />
         ))}
+        <TextField />
+        <TextField hasError={false} />
       </div>
     </main>
   )
