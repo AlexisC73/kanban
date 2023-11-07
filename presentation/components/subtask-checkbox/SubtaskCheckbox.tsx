@@ -20,7 +20,7 @@ export function SubtaskCheckbox ({
           completed
             ? 'line-through text-opacity-50 dark:text-opacity-50'
             : 'no-underline'
-        } text-Black dark:text-white`}
+        } text-Black dark:text-white flex-1 cursor-pointer`}
       >
         {label}
       </label>
