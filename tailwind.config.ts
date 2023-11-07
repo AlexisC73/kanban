@@ -9,6 +9,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      boxShadow: {
+        'dropdown-shadow': '0 10px 20px 0 rgba(54, 78, 126, 0.25)'
+      },
       colors: {
         'Main-Purple': '#635FC7',
         'Main-Purple-Hover': '#A8A4FF',

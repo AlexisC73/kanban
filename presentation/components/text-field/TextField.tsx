@@ -10,9 +10,7 @@ export function TextField ({ hasError = true }: { hasError?: boolean }) {
         placeholder='Enter task name'
         className={`outline-none placeholder:opacity-25 flex-1`}
       />
-      {hasError && (
-        <p className='flex-1 text-Body-L text-right text-Red'>Can’t be empty</p>
-      )}
+      {hasError && <p className='text-Body-L text-Red'>Can’t be empty</p>}
     </div>
   )
 }
