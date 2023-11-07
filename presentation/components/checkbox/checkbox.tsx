@@ -24,7 +24,7 @@ export function CheckBox ({
         id={name}
         type='checkbox'
         checked={checked}
-        className={`h-4 w-4 appearance-none bg-white border-[1px] border-Medium-Grey border-opacity-25 rounded-sm outline-none checked:bg-Main-Purple`}
+        className={`h-4 w-4 appearance-none bg-white dark:bg-Dark-Grey border-[1px] border-Medium-Grey border-opacity-25 rounded-sm outline-none checked:bg-Main-Purple dark:checked:bg-Main-Purple`}
       />
       {checked && (
         <CheckIcon

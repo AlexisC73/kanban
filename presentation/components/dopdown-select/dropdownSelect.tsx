@@ -21,7 +21,7 @@ export const DropdownSelect = ({
       <div
         onClick={toggleOpenSelect}
         className={
-          'bg-white flex justify-between px-4 h-10 w-full items-center rounded-[4px] border-[1px] border-Medium-Grey border-opacity-25 cursor-pointer' +
+          'bg-white dark:bg-Dark-Grey text-Black dark:text-white flex justify-between px-4 h-10 w-full items-center rounded-[4px] border-[1px] border-Medium-Grey border-opacity-25 cursor-pointer' +
           `${open ? ' border-Main-Purple border-opacity-100' : ''}`
         }
       >
@@ -31,7 +31,7 @@ export const DropdownSelect = ({
       {open && (
         <ul
           onMouseLeave={() => setOpen(false)}
-          className='z-50 absolute top-12 left-0 right-0 bg-white p-4 rounded-lg flex flex-col gap-y-2 text-Medium-Grey shadow-dropdown-shadow'
+          className='z-50 absolute top-12 left-0 right-0 bg-white dark:bg-Dark-Grey p-4 rounded-lg flex flex-col gap-y-2 text-Medium-Grey shadow-dropdown-shadow'
         >
           <li
             onClick={() => {

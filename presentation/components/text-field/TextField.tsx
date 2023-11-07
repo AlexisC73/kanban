@@ -4,11 +4,11 @@ export function TextField ({ hasError = true }: { hasError?: boolean }) {
     : 'border-Medium-Grey border-opacity-25'
   return (
     <div
-      className={`flex items-center justify-between text-Black px-4 pt-[9px] text-Body-L pb-[8px] border-[1px] rounded-[0.25rem] bg-white outline-none placeholder:opacity-25 ${customClass}`}
+      className={`flex items-center justify-between dark:text-white px-4 pt-[9px] text-Body-L pb-[8px] border-[1px] rounded-[0.25rem] bg-white dark:bg-Dark-Grey outline-none ${customClass}`}
     >
       <input
         placeholder='Enter task name'
-        className={`outline-none placeholder:opacity-25 flex-1`}
+        className={`outline-none bg-transparent placeholder:opacity-25 flex-1 text-Black dark:text-white dark:placeholder:opacity-25`}
       />
       {hasError && <p className='text-Body-L text-Red'>Can’t be empty</p>}
     </div>
