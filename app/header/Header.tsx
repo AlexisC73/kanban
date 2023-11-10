@@ -19,7 +19,7 @@ export const Branding = () => {
     <div
       className={`pl-4 flex items-center text-Heading-XL gap-x-4 md:w-[200px] md:border-r-[1px] md:border-r-Lines-Light md:dark:border-r-Lines-Dark h-16 ${
         isMenuOpen
-          ? 'md:w-[260px] md:border-b-Lines-Light md:dark:border-b-Lines-Dark md:border-b-[1px]'
+          ? 'md:w-[260px] lg:w-[300px] md:border-b-Lines-Light md:dark:border-b-Lines-Dark md:border-b-[1px]'
           : null
       }`}
     >
