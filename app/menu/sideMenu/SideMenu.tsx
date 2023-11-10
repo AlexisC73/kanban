@@ -9,8 +9,8 @@ export const SideMenu = () => {
   return (
     <>
       <div
-        className={`h-full min-w-[260px] w-[260px] lg:w-[300px] lg:min-w-[300px] bg-white dark:bg-Dark-Grey pt-[30px] pb-[47px] border-r-[1px] border-Lines-Light dark:border-Lines-Dark flex-col justify-between ${
-          isMenuOpen ? 'hidden md:flex' : 'hidden'
+        className={`min-w-[260px] w-[260px] lg:w-[300px] lg:min-w-[300px] bg-white dark:bg-Dark-Grey pt-[30px] pb-[47px] border-r-[1px] border-Lines-Light dark:border-Lines-Dark flex-col justify-between ${
+          isMenuOpen ? 'hidden md:flex fixed bottom-0 left-0 top-16' : 'hidden'
         }`}
       >
         <BoardsList />
@@ -18,7 +18,7 @@ export const SideMenu = () => {
           <ThemeSwitcher />
           <button
             onClick={() => setIsOpen(false)}
-            className='flex items-center text-Medium-Grey gap-x-[10px] px-3'
+            className='flex items-center text-Medium-Grey gap-x-[10px] px-3 z-50'
           >
             <HideMenuIcon />
             <span className='text-Heading-M'>Hide Sidebar</span>

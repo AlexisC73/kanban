@@ -8,6 +8,7 @@ import { Header } from './header/Header'
 import { MobileMenu } from './menu/mobileMenu/MobileMenu'
 import { SideMenu } from './menu/sideMenu/SideMenu'
 import { MenuCtx } from '@/context/menu/MenuCtx'
+import { Menu } from './menu/Menu'
 
 const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
@@ -25,13 +26,20 @@ export default function RootLayout ({
   return (
     <ThemeCtx.Provider value={{ theme, toggleTheme }}>
       <html lang='en' className={theme}>
-        <body className={jakarta_sans.className + ' h-screen flex flex-col'}>
+        <body
+          className={
+            jakarta_sans.className +
+            ' h-screen flex flex-col bg-Light-Grey dark:bg-Very-Dark-Grey'
+          }
+        >
           <MenuCtx.Provider value={{ isOpen, setIsOpen, toggleMenu }}>
             <Header />
-            <div className='flex flex-1 bg-Light-Grey dark:bg-Very-Dark-Grey'>
-              {isOpen && <MobileMenu />}
-              <SideMenu />
-
+            <Menu />
+            <div
+              className={`flex mt-16 overflow-y-scroll h-full ${
+                isOpen ? 'md:ml-[260px] lg:ml-[300px]' : ''
+              }`}
+            >
               {children}
             </div>
           </MenuCtx.Provider>

@@ -168,3 +168,16 @@ export const VerticalMenuIcon = (props: SVGProps<SVGSVGElement>) => (
     <circle cx='1.84615' cy='14.1538' r='1.84615' fill='currentColor' />
   </svg>
 )
+
+export const CircleIcon = (props: SVGProps<SVGSVGElement>) => (
+  <svg
+    width='1em'
+    height='1em'
+    viewBox='0 0 15 15'
+    fill='none'
+    xmlns='http://www.w3.org/2000/svg'
+    {...props}
+  >
+    <circle cx='7.5' cy='7.5' r='7.5' fill='currentColor' />
+  </svg>
+)

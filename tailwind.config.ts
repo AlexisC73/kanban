@@ -12,7 +12,8 @@ const config: Config = {
   theme: {
     extend: {
       boxShadow: {
-        'dropdown-shadow': '0 10px 20px 0 rgba(54, 78, 126, 0.25)'
+        'dropdown-shadow': '0 10px 20px 0 rgba(54, 78, 126, 0.25)',
+        'card-task': '0px 4px 6px 0 rgba(54, 78, 126, 0.1)'
       },
       colors: {
         'Main-Purple': '#635FC7',

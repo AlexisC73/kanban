@@ -9,7 +9,7 @@ import { useContext } from 'react'
 
 export const Header = () => {
   return (
-    <div className='bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
+    <div className='fixed top-0 left-0 right-0 bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
       <div className='flex w-full justify-between'>
         <div className='flex items-center gap-x-4 md:gap-x-6'>
           <Branding />
