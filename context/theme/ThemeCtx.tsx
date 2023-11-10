@@ -7,4 +7,3 @@ export const ThemeCtx = createContext<{
   theme: 'light',
   toggleTheme: () => {}
 })
-

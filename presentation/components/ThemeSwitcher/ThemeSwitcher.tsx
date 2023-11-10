@@ -9,7 +9,7 @@ export const ThemeSwitcher = () => {
   }`
 
   return (
-    <div className='flex justify-center text-Medium-Grey gap-x-[24px] items-center h-12 w-full dark:bg-Very-Dark-Grey bg-Light-Grey'>
+    <div className='flex justify-center text-Medium-Grey md:rounded-lg gap-x-[24px] items-center h-12 w-full dark:bg-Very-Dark-Grey bg-Light-Grey'>
       <LightModeIcon className='text-[18px]' />
       <div className={customClass} onClick={toggleTheme}>
         <div className='h-[14px] w-[14px] bg-white rounded-full'></div>
