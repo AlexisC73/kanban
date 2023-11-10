@@ -1,13 +1,24 @@
 import { MenuCtx } from '@/context/menu/MenuCtx'
-import { AppLogo, ArrowDownIcon } from '@/presentation/@shared/assets'
+import {
+  AppLogo,
+  ArrowDownIcon,
+  VerticalMenuIcon
+} from '@/presentation/@shared/assets'
+import { AddTaskButton } from '@/presentation/components/add-task/AddTask'
 import { useContext } from 'react'
 
 export const Header = () => {
   return (
     <div className='bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
-      <div className='flex items-center gap-x-4 md:gap-x-6'>
-        <Branding />
-        <BoardTitle boardTitle='Platform Launch' />
+      <div className='flex w-full justify-between'>
+        <div className='flex items-center gap-x-4 md:gap-x-6'>
+          <Branding />
+          <BoardTitle boardTitle='Platform Launch' />
+        </div>
+        <div className='flex items-center gap-x-4 pr-4'>
+          <AddTaskButton />
+          <VerticalMenuIcon className='text-Medium-Grey' />
+        </div>
       </div>
     </div>
   )
