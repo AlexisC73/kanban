@@ -36,5 +36,5 @@ export default function Home () {
   }
 
   const [currentState, setCurrentState] = useState('Todo')
-  return <main className='bg-Light-Grey'>coucou</main>
+  return <main className='bg-Light-Grey'></main>
 }
