@@ -17,7 +17,7 @@ export const Header = () => {
         </div>
         <div className='flex items-center gap-x-4 pr-4'>
           <AddTaskButton />
-          <VerticalMenuIcon className='text-Medium-Grey' />
+          <VerticalMenuIcon className='text-Medium-Grey cursor-pointer' />
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ export const SideMenu = () => {
   return (
     <>
       <div
-        className={`h-full w-[260px] lg:w-[300px] bg-white dark:bg-Dark-Grey pt-[30px] pb-[47px] border-r-[1px] border-Lines-Light dark:border-Lines-Dark flex-col justify-between ${
+        className={`h-full min-w-[260px] w-[260px] lg:w-[300px] lg:min-w-[300px] bg-white dark:bg-Dark-Grey pt-[30px] pb-[47px] border-r-[1px] border-Lines-Light dark:border-Lines-Dark flex-col justify-between ${
           isMenuOpen ? 'hidden md:flex' : 'hidden'
         }`}
       >

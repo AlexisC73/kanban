@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useState } from 'react'
+import { createContext } from 'react'
 
 export const MenuCtx = createContext<{
   isOpen: boolean
