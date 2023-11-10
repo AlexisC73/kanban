@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  AppLogo,
-  ArrowDownIcon,
-  BoardLogo
-} from '@/presentation/@shared/assets'
-import { ThemeSwitcher } from '@/presentation/components/ThemeSwitcher/ThemeSwitcher'
-import { useContext, useState } from 'react'
+import { useState } from 'react'
 
 export default function Home () {
   const [state, setState] = useState([

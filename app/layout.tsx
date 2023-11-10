@@ -28,7 +28,7 @@ export default function RootLayout ({
         <body className={jakarta_sans.className + ' h-screen flex flex-col'}>
           <MenuCtx.Provider value={{ isOpen, setIsOpen, toggleMenu }}>
             <Header />
-            <div className='flex flex-1 bg-Light-Grey'>
+            <div className='flex flex-1 bg-Light-Grey dark:bg-Very-Dark-Grey'>
               {isOpen && <MobileMenu />}
               <SideMenu />
 
