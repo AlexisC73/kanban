@@ -6,14 +6,14 @@ import { TaskView } from '@/presentation/components/task-view/TaskView'
 export default function Home () {
   return (
     <main className='flex gap-x-6 p-4 py-6 md:px-6'>
-      <KanbanColumn title='TODO' />
-      <KanbanColumn title='DOING' />
-      <KanbanColumn title='DONE' />
+      <Column title='TODO' />
+      <Column title='DOING' />
+      <Column title='DONE' />
     </main>
   )
 }
 
-const KanbanColumn = ({ title }: { title: string }) => {
+const Column = ({ title }: { title: string }) => {
   return (
     <div className='w-[280px] min-w-[280px] flex flex-col gap-y-6'>
       <h2 className='uppercase flex gap-x-3 items-center text-Heading-S text-Medium-Grey'>
@@ -32,8 +32,6 @@ const KanbanColumn = ({ title }: { title: string }) => {
           totalTaskAmount={5}
         />
       </ul>
-
-      <TaskView />
     </div>
   )
 }

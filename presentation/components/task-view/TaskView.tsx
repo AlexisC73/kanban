@@ -7,9 +7,9 @@ import { PropsWithChildren } from 'react'
 export const TaskView = () => {
   return (
     <Overlay>
-      <div className='flex flex-col mx-4 md:mx-0 md:w-[480px] bg-white px-6 pt-6 pb-8 rounded-md gap-y-6'>
-        <div className='flex items-center gap-x-4'>
-          <h1 className='text-Heading-L text-Black'>
+      <div className='flex flex-col mx-4 md:mx-0 md:w-[480px] bg-white dark:bg-Dark-Grey px-6 pt-6 pb-8 rounded-md gap-y-6'>
+        <div className='flex items-center gap-x-4 md:gap-x-6'>
+          <h1 className='text-Heading-L text-Black dark:text-white'>
             Research pricing points of various competitors and trial different
             business models
           </h1>
