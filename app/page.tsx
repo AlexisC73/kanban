@@ -9,6 +9,7 @@ export default function Home () {
       <Column title='TODO' />
       <Column title='DOING' />
       <Column title='DONE' />
+      <TaskView />
     </main>
   )
 }

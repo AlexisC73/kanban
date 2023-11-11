@@ -5,8 +5,6 @@ import './globals.css'
 import { useState } from 'react'
 import { ThemeCtx } from '@/context/theme/ThemeCtx'
 import { Header } from './header/Header'
-import { MobileMenu } from './menu/mobileMenu/MobileMenu'
-import { SideMenu } from './menu/sideMenu/SideMenu'
 import { MenuCtx } from '@/context/menu/MenuCtx'
 import { Menu } from './menu/Menu'
 
