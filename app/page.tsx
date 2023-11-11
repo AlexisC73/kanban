@@ -1,6 +1,7 @@
 'use client'
 
 import { CircleIcon } from '@/presentation/@shared/assets'
+import { TaskView } from '@/presentation/components/task-view/TaskView'
 
 export default function Home () {
   return (
@@ -16,7 +17,7 @@ export const Column = ({ title }: { title: string }) => {
   return (
     <div className='w-[280px] min-w-[280px] flex flex-col gap-y-6'>
       <h2 className='uppercase flex gap-x-3 items-center text-Heading-S text-Medium-Grey'>
-        <CircleIcon className='text-[#49C4E5]' />
+        <CircleIcon className='text-[#49C4E5] text-[15px]' />
         {title} (4)
       </h2>
       <ul className='flex flex-col gap-y-5'>
@@ -27,10 +28,12 @@ export const Column = ({ title }: { title: string }) => {
         />
         <TaskCard
           taskName='Research pricing points of various competitors and trial different business models'
-          completedTask={0}
-          totalTaskAmount={3}
+          completedTask={2}
+          totalTaskAmount={5}
         />
       </ul>
+
+      <TaskView />
     </div>
   )
 }
