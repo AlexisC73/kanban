@@ -44,7 +44,10 @@ export const BoardTitle = ({ boardTitle }: { boardTitle: string }) => {
   const { isOpen: isMenuOpen, toggleMenu } = useContext(MenuCtx)
   return (
     <div className='text-Heading-L dark:text-white'>
-      <div onClick={toggleMenu} className='md:hidden flex items-center gap-x-2'>
+      <div
+        onClick={toggleMenu}
+        className='md:hidden flex items-center gap-x-2 cursor-pointer'
+      >
         <h1>{boardTitle}</h1>
         <ArrowDownIcon
           className={`text-Main-Purple text-[11px] ${

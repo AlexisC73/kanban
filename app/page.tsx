@@ -1,6 +1,5 @@
 'use client'
 
-import { AddTaskForm } from '@/presentation/components/add-task-form/AddTaskForm'
 import { Column } from '@/presentation/components/column/Column'
 
 export default function Home () {
@@ -9,7 +8,6 @@ export default function Home () {
       <Column title='TODO' />
       <Column title='DOING' />
       <Column title='DONE' />
-      <AddTaskForm />
     </main>
   )
 }
