@@ -27,9 +27,9 @@ a little.'
           <SubtasksEditList />
 
           <div className='flex flex-col gap-y-2'>
-            <h2 className='text-Body-M text-Medium-Grey dark:text-white'>
+            <span className='text-Body-M text-Medium-Grey dark:text-white'>
               Status
-            </h2>
+            </span>
             <StatusSelect
               defaultValue='Todo'
               onChange={() => console.log('test')}

@@ -1,3 +1,4 @@
+import { Label } from '../label/Label'
 import { TextField } from '../text-field/TextField'
 
 export const TextFieldWithInput = ({
@@ -13,12 +14,7 @@ export const TextFieldWithInput = ({
 }) => {
   return (
     <div className='flex flex-col gap-y-2'>
-      <label
-        className='text-Body-M dark:text-white text-Medium-Grey'
-        htmlFor={name}
-      >
-        {label}
-      </label>
+      <Label name={name}>{label}</Label>
       <TextField name={name} placeholder={placeholder} />
     </div>
   )

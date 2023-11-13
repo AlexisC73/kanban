@@ -1,3 +1,5 @@
+import { Label } from '../label/Label'
+
 export function TextareaField ({
   label,
   name,
@@ -16,12 +18,7 @@ export function TextareaField ({
     : 'border-Medium-Grey border-opacity-25'
   return (
     <div className='flex flex-col gap-y-2'>
-      <label
-        className='text-Body-M text-Medium-Grey dark:text-white'
-        htmlFor={name}
-      >
-        {label}
-      </label>
+      <Label name={name}>{label}</Label>
       <div
         className={`flex items-center justify-between dark:text-white px-4 pt-[9px] text-Body-L pb-[8px] border-[1px] rounded-[0.25rem] bg-white dark:bg-Dark-Grey outline-none ${customClass}`}
       >
