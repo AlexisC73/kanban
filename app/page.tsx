@@ -1,7 +1,12 @@
 'use client'
 
-import { CircleIcon } from '@/presentation/@shared/assets'
-import { TaskView } from '@/presentation/components/task-view/TaskView'
+import { CrossIcon } from '@/presentation/@shared/assets'
+import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
+import { Column } from '@/presentation/components/column/Column'
+import { StatusSelect } from '@/presentation/components/status-select/StatusSelect'
+import { TextFieldWithInput } from '@/presentation/components/text-field-with-input/TextFieldWithInput'
+import { TextField } from '@/presentation/components/text-field/TextField'
+import { TextareaField } from '@/presentation/components/textarea-field/TextareaField'
 
 export default function Home () {
   return (
@@ -9,49 +14,74 @@ export default function Home () {
       <Column title='TODO' />
       <Column title='DOING' />
       <Column title='DONE' />
-      <TaskView />
+      <AddTaskForm />
     </main>
   )
 }
 
-const Column = ({ title }: { title: string }) => {
+export const AddTaskForm = () => {
   return (
-    <div className='w-[280px] min-w-[280px] flex flex-col gap-y-6'>
-      <h2 className='uppercase flex gap-x-3 items-center text-Heading-S text-Medium-Grey'>
-        <CircleIcon className='text-[#49C4E5] text-[15px]' />
-        {title} (4)
-      </h2>
-      <ul className='flex flex-col gap-y-5'>
-        <TaskCard
-          taskName='Build UI for onboarding flow'
-          completedTask={0}
-          totalTaskAmount={3}
-        />
-        <TaskCard
-          taskName='Research pricing points of various competitors and trial different business models'
-          completedTask={2}
-          totalTaskAmount={5}
-        />
+    <Overlay>
+      <div className='bg-white dark:bg-Dark-Grey p-6 flex flex-col gap-y-6 w-full mx-4 rounded-md md:w-[480px]'>
+        <h2 className='text-Heading-L dark:text-white'>Add New Task</h2>
+        <form className='flex flex-col gap-y-6'>
+          <TextFieldWithInput
+            name='title'
+            label='Title'
+            placeholder='e.g. Take coffee break'
+          />
+          <TextareaField
+            label='Description'
+            name='description'
+            placeholder='e.g. It’s always good to take a break. This 
+15 minute break will  recharge the batteries 
+a little.'
+            rows={4}
+          />
+
+          <SubtasksEditList />
+
+          <div className='flex flex-col gap-y-2'>
+            <h2 className='text-Body-M text-Medium-Grey dark:text-white'>
+              Status
+            </h2>
+            <StatusSelect
+              defaultValue='Todo'
+              onChange={() => console.log('test')}
+            />
+          </div>
+          <button
+            type='submit'
+            className='text-white text-Body-L font-bold bg-Main-Purple h-10 w-full rounded-full'
+          >
+            Create Task
+          </button>
+        </form>
+      </div>
+    </Overlay>
+  )
+}
+
+export const SubtasksEditList = () => {
+  return (
+    <div className='flex flex-col gap-y-2'>
+      <h2 className='text-Body-M text-Medium-Grey dark:text-white'>Subtasks</h2>
+      <ul className='flex flex-col gap-y-3'>
+        <SubtaskEditItem />
+        <SubtaskEditItem />
       </ul>
+      <button className='text-Main-Purple dark:bg-white mt-1 text-Body-L font-bold bg-Main-Purple bg-opacity-10 h-10 w-full rounded-full'>
+        + Add New Subtask
+      </button>
     </div>
   )
 }
 
-const TaskCard = ({
-  taskName,
-  completedTask,
-  totalTaskAmount
-}: {
-  taskName: string
-  completedTask: number
-  totalTaskAmount: number
-}) => {
+export const SubtaskEditItem = () => {
   return (
-    <li className='bg-white dark:bg-Dark-Grey px-4 py-6 flex flex-col gap-y-2 rounded-lg shadow-card-task'>
-      <p className='text-Black dark:text-white text-Heading-M'>{taskName}</p>
-      <p className='text-Body-M text-Medium-Grey'>
-        {completedTask} of {totalTaskAmount} subtasks
-      </p>
+    <li className='flex flex-1 items-center gap-x-4'>
+      <TextField name='task-1' />
+      <CrossIcon className='text-[15px] text-Medium-Grey cursor-pointer' />
     </li>
   )
 }

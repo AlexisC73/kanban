@@ -1,7 +1,7 @@
 import { VerticalMenuIcon } from '@/presentation/@shared/assets'
 import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
 import { SubtaskCheckbox } from '../subtask-checkbox/SubtaskCheckbox'
-import { DropdownSelect } from '../dopdown-select/dropdownSelect'
+import { StatusSelect } from '../status-select/StatusSelect'
 import { PropsWithChildren } from 'react'
 
 export const TaskView = () => {
@@ -51,7 +51,7 @@ export const TaskView = () => {
         </div>
         <div className='flex flex-col gap-y-2'>
           <SectionTitle>Current Status</SectionTitle>
-          <DropdownSelect
+          <StatusSelect
             defaultValue='Doing'
             onChange={() => {
               console.log('should change')

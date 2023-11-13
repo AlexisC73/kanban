@@ -1,7 +1,7 @@
 import { ArrowDownIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
 
-export const DropdownSelect = ({
+export const StatusSelect = ({
   defaultValue,
   onChange
 }: {

@@ -1,6 +1,5 @@
 import { BoardLogo } from '@/presentation/@shared/assets'
 import { ThemeSwitcher } from '@/presentation/components/ThemeSwitcher/ThemeSwitcher'
-import { BoardLi } from '../@shared/BoardLi'
 import { BoardsList } from '../@shared/BoardsList'
 import { useContext } from 'react'
 import { MenuCtx } from '@/context/menu/MenuCtx'
