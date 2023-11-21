@@ -1,3 +1,5 @@
+'use client'
+
 import { MenuCtx } from '@/context/menu/MenuCtx'
 import {
   AppLogo,
@@ -13,7 +15,7 @@ export const Header = () => {
       <div className='flex w-full justify-between'>
         <div className='flex items-center gap-x-4 md:gap-x-6'>
           <Branding />
-          <BoardTitle boardTitle='Platform Launch' />
+          <BoardTitle boardTitle={'Platform Launch'} />
         </div>
         <div className='flex items-center gap-x-4 pr-4'>
           <AddTaskButton />

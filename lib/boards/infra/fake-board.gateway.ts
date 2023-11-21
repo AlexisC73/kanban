@@ -1,10 +1,21 @@
-import { BoardGateway, GetBoardsNameResponse } from '../model/board.gateway'
+import {
+  BoardGateway,
+  CreateBoardResponse,
+  GetBoardsNameResponse
+} from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
   boards: { id: string; name: string }[] = []
-  getAllBoardsName (): Promise<GetBoardsNameResponse> {
+  getAllBoards (): Promise<GetBoardsNameResponse> {
     return Promise.resolve(this.boards)
   }
-}
 
-export const fakeBoardGateway = new FakeBoardGateway()
+  createBoard (board: { name: string }): Promise<CreateBoardResponse> {
+    const newBoard = {
+      id: Math.floor(Math.random() * 10000).toString(),
+      name: board.name
+    }
+    this.boards = [...this.boards, newBoard]
+    return Promise.resolve(newBoard)
+  }
+}

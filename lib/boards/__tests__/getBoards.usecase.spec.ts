@@ -1,41 +1,21 @@
-import { createStore } from '@/lib/store'
-import { selectAllBoards } from '../slices/boards.slice'
-import { getAllBoardsName } from '../usecases/get-all-boards.usecase'
-import { FakeBoardGateway } from '../infra/fake-board.gateway'
+import { BoardFixture, createBoardFixture } from './fixtures/board.fixture'
 
 describe('GetAllBoards', () => {
+  let boardFixture: BoardFixture
+  beforeEach(() => {
+    boardFixture = createBoardFixture()
+  })
   test('Example: should get all boards', async () => {
-    givenExistingBoardsName([
+    boardFixture.givenExistingBoards([
       { id: 'board1-id', name: 'Board 1' },
       { id: 'board2-id', name: 'Board 2' }
     ])
 
-    await whenRetrievingBoards()
+    await boardFixture.whenRetrievingBoards()
 
-    thenReceivedBoardsNameShouldBe([
+    boardFixture.thenReceivedBoardsNameShouldBe([
       { id: 'board1-id', name: 'Board 1' },
       { id: 'board2-id', name: 'Board 2' }
     ])
   })
 })
-
-const boardGateway = new FakeBoardGateway()
-
-const store = createStore({
-  boardGateway
-})
-
-function givenExistingBoardsName (boards: { id: string; name: string }[]) {
-  boardGateway.boards = boards
-}
-
-async function whenRetrievingBoards () {
-  await store.dispatch(getAllBoardsName())
-}
-
-function thenReceivedBoardsNameShouldBe (
-  expectedBoards: { id: string; name: string }[]
-) {
-  const boards = selectAllBoards(store.getState())
-  expect(boards).toEqual(expectedBoards)
-}

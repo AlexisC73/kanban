@@ -1,6 +1,7 @@
 import { RootState } from '@/lib/store'
 import { createSlice } from '@reduxjs/toolkit'
-import { getAllBoardsName } from '../usecases/get-all-boards.usecase'
+import { getAllBoards } from '../usecases/get-all-boards.usecase'
+import { createBoard } from '../usecases/add-board.usecase'
 
 type Board = {
   id: string
@@ -23,10 +24,17 @@ export const boardsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers (builder) {
-    builder.addCase(getAllBoardsName.fulfilled, (state, action) => {
+    builder.addCase(getAllBoards.fulfilled, (state, action) => {
       state.boards = action.payload
+    })
+
+    builder.addCase(createBoard.fulfilled, (state, action) => {
+      state.boards.push(action.payload)
     })
   }
 })
 
 export const selectAllBoards = (state: RootState) => state.boards.boards
+
+export const selectBoardByName = (state: RootState, name: string) =>
+  state.boards.boards.find(board => board.name === name)

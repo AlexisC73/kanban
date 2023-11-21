@@ -1,5 +1,7 @@
 export interface BoardGateway {
-  getAllBoardsName(): Promise<GetBoardsNameResponse>
+  getAllBoards(): Promise<GetBoardsNameResponse>
+  createBoard(board: { name: string }): Promise<CreateBoardResponse>
 }
 
 export type GetBoardsNameResponse = { id: string; name: string }[]
+export type CreateBoardResponse = { id: string; name: string }
