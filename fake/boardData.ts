@@ -61,3 +61,5 @@ export const fakeBoardData = [
     ]
   }
 ]
+
+export const allBoards = fakeBoardData.map(b => ({ id: b.id, name: b.name }))

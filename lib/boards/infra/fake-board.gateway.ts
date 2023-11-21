@@ -1,9 +1,9 @@
 import { BoardGateway, GetBoardsNameResponse } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
-  boardsName!: string[]
+  boards: { id: string; name: string }[] = []
   getAllBoardsName (): Promise<GetBoardsNameResponse> {
-    return Promise.resolve(this.boardsName)
+    return Promise.resolve(this.boards)
   }
 }
 

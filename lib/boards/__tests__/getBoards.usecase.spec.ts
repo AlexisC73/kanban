@@ -1,15 +1,21 @@
 import { createStore } from '@/lib/store'
-import { selectAllBoardsName } from '../slices/boards.slice'
+import { selectAllBoards } from '../slices/boards.slice'
 import { getAllBoardsName } from '../usecases/get-all-boards.usecase'
 import { FakeBoardGateway } from '../infra/fake-board.gateway'
 
 describe('GetAllBoards', () => {
   test('Example: should get all boards', async () => {
-    givenExistingBoardsName(['board1-id', 'board2-id'])
+    givenExistingBoardsName([
+      { id: 'board1-id', name: 'Board 1' },
+      { id: 'board2-id', name: 'Board 2' }
+    ])
 
     await whenRetrievingBoards()
 
-    thenReceivedBoardsNameShouldBe(['board1-id', 'board2-id'])
+    thenReceivedBoardsNameShouldBe([
+      { id: 'board1-id', name: 'Board 1' },
+      { id: 'board2-id', name: 'Board 2' }
+    ])
   })
 })
 
@@ -19,15 +25,17 @@ const store = createStore({
   boardGateway
 })
 
-function givenExistingBoardsName (boards: string[]) {
-  boardGateway.boardsName = boards
+function givenExistingBoardsName (boards: { id: string; name: string }[]) {
+  boardGateway.boards = boards
 }
 
 async function whenRetrievingBoards () {
   await store.dispatch(getAllBoardsName())
 }
 
-function thenReceivedBoardsNameShouldBe (expectedBoards: string[]) {
-  const boards = selectAllBoardsName(store.getState())
-  expect(boards.boardsName).toEqual(expectedBoards)
+function thenReceivedBoardsNameShouldBe (
+  expectedBoards: { id: string; name: string }[]
+) {
+  const boards = selectAllBoards(store.getState())
+  expect(boards).toEqual(expectedBoards)
 }

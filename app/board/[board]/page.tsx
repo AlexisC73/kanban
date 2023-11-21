@@ -7,7 +7,7 @@ import { useParams, redirect } from 'next/navigation'
 
 export default function BoardPage () {
   const { board } = useParams()
-  const boardInfo = fakeBoardData.find(b => b.id === board)
+  const boardInfo = fakeBoardData.find(b => b.id === 'board-1')
   if (!boardInfo) {
     redirect('/')
   }

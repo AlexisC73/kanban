@@ -2,4 +2,4 @@ export interface BoardGateway {
   getAllBoardsName(): Promise<GetBoardsNameResponse>
 }
 
-export type GetBoardsNameResponse = string[]
+export type GetBoardsNameResponse = { id: string; name: string }[]

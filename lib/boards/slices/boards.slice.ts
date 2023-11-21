@@ -9,19 +9,24 @@ type Board = {
 }
 
 type BoardsState = {
-  boardsName: string[]
-  boardInfo: Board
+  boards: { id: string; name: string }[]
+  boardInfo: Board | null
+}
+
+const initialState: BoardsState = {
+  boards: [],
+  boardInfo: null
 }
 
 export const boardsSlice = createSlice({
   name: 'boards',
-  initialState: {} as BoardsState,
+  initialState,
   reducers: {},
   extraReducers (builder) {
     builder.addCase(getAllBoardsName.fulfilled, (state, action) => {
-      state.boardsName = action.payload
+      state.boards = action.payload
     })
   }
 })
 
-export const selectAllBoardsName = (state: RootState) => state.boards
+export const selectAllBoards = (state: RootState) => state.boards.boards
