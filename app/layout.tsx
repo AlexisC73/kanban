@@ -25,6 +25,7 @@ export default function RootLayout ({
     <ThemeCtx.Provider value={{ theme, toggleTheme }}>
       <html lang='en' className={theme}>
         <body
+          suppressHydrationWarning={true}
           className={
             jakarta_sans.className +
             ' h-screen flex flex-col bg-Light-Grey dark:bg-Very-Dark-Grey'

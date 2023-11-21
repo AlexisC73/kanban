@@ -4,7 +4,7 @@ import { TextareaField } from '../textarea-field/TextareaField'
 import { SubtasksEditList } from '../subtask-edit-list/SubtaskEditList'
 import { StatusSelect } from '../status-select/StatusSelect'
 
-export const AddTaskForm = () => {
+export const AddTaskModal = () => {
   return (
     <Overlay>
       <div className='bg-white dark:bg-Dark-Grey p-6 flex flex-col gap-y-6 w-full mx-4 rounded-md md:w-[480px]'>

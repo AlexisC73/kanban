@@ -1,5 +1,5 @@
 import { CircleIcon } from '@/presentation/@shared/assets'
-import { TaskCard } from '../task-card/TaskCard'
+import { TaskCard } from './task-card/TaskCard'
 
 export const Column = ({ title }: { title: string }) => {
   return (
