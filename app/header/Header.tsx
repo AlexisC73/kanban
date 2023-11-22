@@ -9,7 +9,13 @@ import {
 import { AddTaskButton } from '@/presentation/components/add-task/AddTask'
 import { useContext } from 'react'
 
-export const Header = ({ currentBoardName }: { currentBoardName: string }) => {
+export const Header = ({
+  currentBoardName,
+  columnLength
+}: {
+  currentBoardName: string
+  columnLength: number
+}) => {
   return (
     <div className='fixed top-0 left-0 right-0 bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
       <div className='flex w-full justify-between'>
@@ -18,7 +24,7 @@ export const Header = ({ currentBoardName }: { currentBoardName: string }) => {
           <BoardTitle boardTitle={currentBoardName} />
         </div>
         <div className='flex items-center gap-x-4 pr-4'>
-          <AddTaskButton />
+          <AddTaskButton disabled={columnLength <= 0} />
           <VerticalMenuIcon className='text-Medium-Grey cursor-pointer' />
         </div>
       </div>
