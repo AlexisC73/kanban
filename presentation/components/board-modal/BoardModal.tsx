@@ -85,7 +85,7 @@ export const BoardModal = ({
       <form
         onSubmit={handleSubmit}
         onClick={e => e.stopPropagation()}
-        className='bg-white flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
+        className='bg-white dark:bg-Dark-Grey flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
       >
         <h2 className='text-Heading-L'>
           {isEdit ? 'Edit board' : 'Add New Board'}
@@ -137,7 +137,9 @@ export const ListWithCrossButton = ({
 }) => {
   return (
     <div>
-      <p className='text-Medium-Grey text-Body-M pb-2'>Board Columns</p>
+      <p className='text-Medium-Grey dark:text-white text-Body-M pb-2'>
+        Board Columns
+      </p>
       <ul className='flex flex-col gap-y-3'>
         {columns.map(column => (
           <InputWithCrossButton
@@ -150,7 +152,8 @@ export const ListWithCrossButton = ({
       </ul>
       <button
         onClick={onAddNewColumn}
-        className='text-Main-Purple bg-Main-Purple bg-opacity-10 rounded-full h-10 w-full text-Body-L font-bold mt-3'
+        type='button'
+        className='text-Main-Purple dark:text-Main-Purple dark:bg-white dark:bg-opacity-100 bg-Main-Purple bg-opacity-10 rounded-full h-10 w-full text-Body-L font-bold mt-3'
       >
         + Add New Column
       </button>
