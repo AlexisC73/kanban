@@ -1,12 +1,13 @@
 import {
   BoardGateway,
   CreateBoardResponse,
-  GetBoardsNameResponse
+  GetBoardByIdResponse,
+  GetBoardsWithoutColumnsResponse
 } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
   boards: { id: string; name: string; columns: string[] }[] = []
-  getAllBoards (): Promise<GetBoardsNameResponse> {
+  getAllBoards (): Promise<GetBoardsWithoutColumnsResponse> {
     return Promise.resolve(this.boards)
   }
 
@@ -18,5 +19,11 @@ export class FakeBoardGateway implements BoardGateway {
     }
     this.boards = [...this.boards, newBoard]
     return Promise.resolve(newBoard)
+  }
+
+  getBoardById (id: string): Promise<GetBoardByIdResponse> {
+    const board = this.boards.find(b => b.id === id)
+    if (!board) throw new Error('Board not found')
+    return Promise.resolve(board)
   }
 }

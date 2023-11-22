@@ -2,7 +2,7 @@
 
 import { selectAllBoards } from '@/lib/boards/slices/boards.slice'
 import { createBoard } from '@/lib/boards/usecases/add-board.usecase'
-import { getAllBoards } from '@/lib/boards/usecases/get-all-boards.usecase'
+import { getAllBoardsWithoutColums } from '@/lib/boards/usecases/get-all-boards.usecase'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -16,7 +16,7 @@ export default function Home () {
   const boards = useAppSelector(selectAllBoards)
 
   useEffect(() => {
-    const getBoards = dispatch(getAllBoards())
+    const getBoards = dispatch(getAllBoardsWithoutColums())
 
     getBoards.finally(() => {
       setInitializing(false)

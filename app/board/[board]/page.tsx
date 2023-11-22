@@ -1,31 +1,44 @@
 'use client'
-import { fakeBoardData } from '@/fake/boardData'
+import { selectBoardById } from '@/lib/boards/slices/boards.slice'
+import { getBoardById } from '@/lib/boards/usecases/get-board-by-id.usecase'
+import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import ColumList, {
   ColumnListProps
 } from '@/presentation/components/ColumnList/ColumnList'
 import { useParams, redirect } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 export default function BoardPage () {
-  const { board } = useParams()
-  const boardInfo = fakeBoardData.find(b => b.id === 'board-1')
-  if (!boardInfo) {
+  const { board: boardId }: { board: string } = useParams()
+  const [initializing, setInitializing] = useState(true)
+
+  const dispatch = useAppDispatch()
+
+  const board = useAppSelector(state => selectBoardById(state, boardId))
+
+  useEffect(() => {
+    const result = dispatch(getBoardById(boardId))
+
+    result.finally(() => {
+      setInitializing(false)
+    })
+
+    return () => {
+      result.abort()
+    }
+  }, [])
+
+  if (!board) {
     redirect('/')
   }
 
   const boardData: ColumnListProps['board'] = {
-    id: boardInfo.id,
-    name: boardInfo.name,
-    columns: boardInfo.columns.map(col => ({
-      id: col.id,
-      title: col.name,
-      tasks: col.tasks.map(t => ({
-        id: t.id,
-        name: t.title,
-        completedSubTasksAmount: t.subtasks.filter(s => s.completed).length,
-        totalSubTasksAmount: t.subtasks.length
-      }))
-    }))
+    id: board.id,
+    name: board.name,
+    columns: []
   }
+
+  if (initializing) return <div>loading...</div>
 
   return (
     <main className='flex'>

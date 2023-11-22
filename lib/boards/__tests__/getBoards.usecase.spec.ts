@@ -1,4 +1,5 @@
 import { BoardFixture, createBoardFixture } from './fixtures/board.fixture'
+import { boardBuilder } from './fixtures/boardBuilder'
 
 describe('GetAllBoards', () => {
   let boardFixture: BoardFixture
@@ -7,15 +8,15 @@ describe('GetAllBoards', () => {
   })
   test('Example: should get all boards', async () => {
     boardFixture.givenExistingBoards([
-      { id: 'board1-id', name: 'Board 1', columns: [] },
-      { id: 'board2-id', name: 'Board 2', columns: [] }
+      boardBuilder().withId('board-id').withName('Board 1 name').build(),
+      boardBuilder().withId('board-id-2').withName('Board 2 name').build()
     ])
 
     await boardFixture.whenRetrievingBoards()
 
     boardFixture.thenReceivedBoardsShouldBe([
-      { id: 'board1-id', name: 'Board 1', columns: [] },
-      { id: 'board2-id', name: 'Board 2', columns: [] }
+      boardBuilder().withId('board-id').withName('Board 1 name').build(),
+      boardBuilder().withId('board-id-2').withName('Board 2 name').build()
     ])
   })
 })
