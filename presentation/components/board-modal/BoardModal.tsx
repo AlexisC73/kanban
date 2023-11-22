@@ -87,7 +87,7 @@ export const BoardModal = ({
         onClick={e => e.stopPropagation()}
         className='bg-white dark:bg-Dark-Grey flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
       >
-        <h2 className='text-Heading-L'>
+        <h2 className='text-Heading-L dark:text-white'>
           {isEdit ? 'Edit board' : 'Add New Board'}
         </h2>
         <TextFieldWithInput
