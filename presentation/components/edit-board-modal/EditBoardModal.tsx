@@ -127,7 +127,7 @@ export const InputWithCrossButton = ({
       <TextField
         onValueChange={onColumnNameChange(column.id)}
         id={column.id}
-        name={`column_${column.id}`}
+        name={`${column.id}`}
         value={column.name}
         placeholder='e.g. Todo'
       />
