@@ -9,7 +9,7 @@ import {
 export class FakeBoardGateway implements BoardGateway {
   boards: Board[] = []
   getAllBoards (): Promise<GetBoardsWithoutColumnsResponse> {
-    return Promise.resolve(this.boards)
+    return Promise.resolve(this.boards.map(b => ({ id: b.id, name: b.name })))
   }
 
   createBoard (board: { name: string }): Promise<CreateBoardResponse> {

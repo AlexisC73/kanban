@@ -3,7 +3,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getAllBoardsWithoutColums } from '../usecases/get-all-boards.usecase'
 import { createBoard } from '../usecases/add-board.usecase'
 import { getBoardById } from '../usecases/get-board-by-id.usecase'
-import { boardEntityAdapter } from '../model/board.entity'
+import { Board, boardEntityAdapter } from '../model/board.entity'
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -11,7 +11,8 @@ export const boardsSlice = createSlice({
   reducers: {},
   extraReducers (builder) {
     builder.addCase(getAllBoardsWithoutColums.fulfilled, (state, action) => {
-      boardEntityAdapter.upsertMany(state, action.payload)
+      const boards: Board[] = action.payload.map(b => ({ ...b, columns: [] }))
+      boardEntityAdapter.upsertMany(state, boards)
     })
 
     builder.addCase(createBoard.fulfilled, (state, action) => {
