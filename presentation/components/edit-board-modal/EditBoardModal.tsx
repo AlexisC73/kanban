@@ -40,9 +40,17 @@ export const EditBoardModal = () => {
     }))
   }
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    console.log('Faire le fonction de submit')
+  }
+
   return (
     <Overlay fixed>
-      <div className='bg-white flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'>
+      <form
+        onSubmit={handleSubmit}
+        className='bg-white flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
+      >
         <h2 className='text-Heading-L'>Edit Board</h2>
         <TextFieldWithInput
           label='Board Name'
@@ -60,10 +68,13 @@ export const EditBoardModal = () => {
           deleteColumn={deleteColumn}
           onAddNewColumn={addNewColumn}
         />
-        <button className='text-white bg-Main-Purple text-Body-L font-bold h-10 w-full rounded-full'>
+        <button
+          type='submit'
+          className='text-white bg-Main-Purple text-Body-L font-bold h-10 w-full rounded-full'
+        >
           Save Changes
         </button>
-      </div>
+      </form>
     </Overlay>
   )
 }
