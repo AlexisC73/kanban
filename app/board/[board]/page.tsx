@@ -59,6 +59,13 @@ export default function BoardPage () {
         closeModal={() => {
           console.log('close modal')
         }}
+        onSubmit={async () => {
+          return new Promise(resolve => {
+            setTimeout(() => {
+              resolve()
+            }, 2000)
+          })
+        }}
       />
     </main>
   )

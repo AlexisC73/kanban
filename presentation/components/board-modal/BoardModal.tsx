@@ -1,7 +1,7 @@
 import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
 import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
 import { TextField } from '../text-field/TextField'
-import { CrossIcon } from '@/presentation/@shared/assets'
+import { CrossIcon, SpinnerIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
 
 export const BoardModal = ({
@@ -24,9 +24,10 @@ export const BoardModal = ({
     id: string
     name: string
     column: { id: string; name: string }[]
-  }) => void
+  }) => Promise<void>
   closeModal: () => void
 }) => {
+  const [submiting, setSubmiting] = useState(false)
   const [editBoard, setEditBoard] = useState({
     id: defaultBoard.id,
     boardName: defaultBoard.name,
@@ -61,16 +62,26 @@ export const BoardModal = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setSubmiting(true)
     onSubmit?.({
       id: editBoard.id,
       name: editBoard.boardName,
       column: editBoard.boardColumns
+    }).then(() => {
+      setSubmiting(false)
+      closeModal?.()
     })
+  }
+
+  const handleCloseModal = () => {
+    if (submiting) {
+      return
+    }
     closeModal?.()
   }
 
   return (
-    <Overlay onClickAction={closeModal} fixed>
+    <Overlay onClickAction={handleCloseModal} fixed>
       <form
         onSubmit={handleSubmit}
         onClick={e => e.stopPropagation()}
@@ -97,9 +108,16 @@ export const BoardModal = ({
         />
         <button
           type='submit'
-          className='text-white bg-Main-Purple text-Body-L font-bold h-10 w-full rounded-full'
+          disabled={submiting}
+          className='text-white hover:bg-Main-Purple-Hover disabled:bg-opacity-60 bg-Main-Purple flex items-center justify-center text-Body-L font-bold h-10 w-full rounded-full'
         >
-          {isEdit ? 'Save Changes' : 'Create New Board'}
+          {submiting ? (
+            <SpinnerIcon className='text-[22px]' />
+          ) : isEdit ? (
+            'Save Changes'
+          ) : (
+            'Create New Board'
+          )}
         </button>
       </form>
     </Overlay>
