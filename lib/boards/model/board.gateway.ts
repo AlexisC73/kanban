@@ -1,3 +1,5 @@
+import { Board } from './board.entity'
+
 export interface BoardGateway {
   getAllBoards(): Promise<GetBoardsWithoutColumnsResponse>
   createBoard(board: { name: string }): Promise<CreateBoardResponse>
@@ -9,14 +11,6 @@ export type GetBoardsWithoutColumnsResponse = {
   name: string
 }[]
 
-export type CreateBoardResponse = {
-  id: string
-  name: string
-  columns: string[]
-}
+export type CreateBoardResponse = Board
 
-export type GetBoardByIdResponse = {
-  id: string
-  name: string
-  columns: string[]
-}
+export type GetBoardByIdResponse = Board

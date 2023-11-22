@@ -1,45 +1,35 @@
 import { RootState } from '@/lib/store'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { getAllBoardsWithoutColums } from '../usecases/get-all-boards.usecase'
 import { createBoard } from '../usecases/add-board.usecase'
 import { getBoardById } from '../usecases/get-board-by-id.usecase'
-
-type Board = {
-  id: string
-  name: string
-  columns: string[]
-}
-
-const initialState: Board[] = []
+import { boardEntityAdapter } from '../model/board.entity'
 
 export const boardsSlice = createSlice({
   name: 'boards',
-  initialState,
+  initialState: boardEntityAdapter.getInitialState(),
   reducers: {},
   extraReducers (builder) {
     builder.addCase(getAllBoardsWithoutColums.fulfilled, (state, action) => {
-      return action.payload.map(b => ({
-        id: b.id,
-        name: b.name,
-        columns: []
-      }))
+      boardEntityAdapter.upsertMany(state, action.payload)
     })
 
     builder.addCase(createBoard.fulfilled, (state, action) => {
-      return [...state, action.payload]
+      boardEntityAdapter.addOne(state, action.payload)
     })
 
     builder.addCase(getBoardById.fulfilled, (state, action) => {
       const boardInfo = action.payload
-      if (!boardInfo) return
-      if (state.findIndex(s => s.id === boardInfo.id) === -1) {
-        return [...state, boardInfo]
-      }
-      return state.map(b => (b.id === boardInfo.id ? boardInfo : b))
+      boardEntityAdapter.upsertOne(state, boardInfo)
     })
   }
 })
 
-export const selectAllBoards = (state: RootState) => state.boards
+export const selectAllBoards = createSelector(
+  (state: RootState) =>
+    boardEntityAdapter.getSelectors().selectAll(state.boards),
+  boards => boards
+)
+
 export const selectBoardById = (state: RootState, id: string) =>
-  state.boards.find(b => b.id === id)
+  boardEntityAdapter.getSelectors().selectById(state.boards, id)

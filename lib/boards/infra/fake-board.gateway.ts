@@ -1,3 +1,4 @@
+import { Board } from '../model/board.entity'
 import {
   BoardGateway,
   CreateBoardResponse,
@@ -6,7 +7,7 @@ import {
 } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
-  boards: { id: string; name: string; columns: string[] }[] = []
+  boards: Board[] = []
   getAllBoards (): Promise<GetBoardsWithoutColumnsResponse> {
     return Promise.resolve(this.boards)
   }

@@ -4,6 +4,7 @@ import { getAllBoardsWithoutColums } from '../../usecases/get-all-boards.usecase
 import { selectAllBoards, selectBoardById } from '../../slices/boards.slice'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { getBoardById } from '../../usecases/get-board-by-id.usecase'
+import { Board } from '../../model/board.entity'
 
 export const createBoardFixture = () => {
   const boardGateway = new FakeBoardGateway()
@@ -13,9 +14,7 @@ export const createBoardFixture = () => {
   })
 
   return {
-    givenExistingBoards: (
-      boards: { id: string; name: string; columns: string[] }[]
-    ) => {
+    givenExistingBoards: (boards: Board[]) => {
       boardGateway.boards = boards
     },
     whenRetrievingBoards: async () => {
@@ -37,17 +36,11 @@ export const createBoardFixture = () => {
       const boards = selectAllBoards(store.getState())
       expect(boards.findIndex(b => b.name === expectedBoard.name)).not.toBe(-1)
     },
-    thenReceivedBoardsShouldBe: (
-      expectedBoards: { id: string; name: string; columns: string[] }[]
-    ) => {
+    thenReceivedBoardsShouldBe: (expectedBoards: Board[]) => {
       const boards = selectAllBoards(store.getState())
       expect(boards).toEqual(expectedBoards)
     },
-    thenBoardShouldBe: (expectedBoard: {
-      id: string
-      name: string
-      columns: string[]
-    }) => {
+    thenBoardShouldBe: (expectedBoard: Board) => {
       const board = selectBoardById(store.getState(), expectedBoard.id)
       expect(board).toEqual(expectedBoard)
     }
