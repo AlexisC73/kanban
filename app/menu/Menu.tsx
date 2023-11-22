@@ -7,7 +7,6 @@ import { selectAllBoards } from '@/lib/boards/slices/boards.slice'
 
 export const Menu = ({ currentBoardId }: { currentBoardId: string }) => {
   const boards = useAppSelector(selectAllBoards)
-  console.log('boards', boards)
   const { isOpen } = useContext(MenuCtx)
   return (
     <>

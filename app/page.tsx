@@ -10,25 +10,10 @@ import { useEffect, useState } from 'react'
 export default function Home () {
   const { push } = useRouter()
 
-  const [initializing, setInitializing] = useState(true)
-
   const dispatch = useAppDispatch()
   const boards = useAppSelector(selectAllBoards)
 
   useEffect(() => {
-    const getBoards = dispatch(getAllBoardsWithoutColums())
-
-    getBoards.finally(() => {
-      setInitializing(false)
-    })
-
-    return () => {
-      getBoards.abort()
-    }
-  }, [dispatch])
-
-  useEffect(() => {
-    if (initializing) return
     if (boards.length > 0) {
       push(`/board/${boards[0].id}`)
     }
@@ -38,7 +23,7 @@ export default function Home () {
         abort()
       }
     }
-  }, [boards, initializing, dispatch, push])
+  }, [boards, dispatch, push])
 
   return <main className='flex gap-x-6 p-4 py-6 md:px-6'></main>
 }

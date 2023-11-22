@@ -5,7 +5,6 @@ export const getAllBoardsWithoutColums = createAppAsyncThunk(
   'boards/getAllBoardsWithoutColumns',
   async (_, { extra: { boardGateway } }) => {
     const boards = await boardGateway.getAllBoards()
-    console.log(boards)
     return boards
   }
 )
