@@ -1,4 +1,5 @@
 'use client'
+import { NoColumnScreen } from '@/app/no-column-screen/NoColumnScreen'
 import { selectBoardById } from '@/lib/boards/slices/boards.slice'
 import { getBoardById } from '@/lib/boards/usecases/get-board-by-id.usecase'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
@@ -41,8 +42,12 @@ export default function BoardPage () {
   if (initializing) return <div>loading...</div>
 
   return (
-    <main className='flex'>
-      <ColumList board={boardData} />
+    <main className='flex w-full'>
+      {board.columns.length <= 0 ? (
+        <NoColumnScreen />
+      ) : (
+        <ColumList board={boardData} />
+      )}
     </main>
   )
 }

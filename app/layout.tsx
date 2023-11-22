@@ -8,7 +8,7 @@ import { Header } from './header/Header'
 import { MenuCtx, MenuCtxProvider } from '@/context/menu/MenuCtx'
 import { Menu } from './menu/Menu'
 import { Providers } from '@/lib/provider'
-import { WithMenuLayout } from './layout/withMenuLayout'
+import { WithMenuLayout } from './layout/withMenu/withMenuLayout'
 
 const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 

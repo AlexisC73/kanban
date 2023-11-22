@@ -1,6 +1,6 @@
-export const NoTaskScreen = () => {
+export const NoColumnScreen = () => {
   return (
-    <div className='flex flex-col justify-center items-center gap-y-6 px-4 md:px-16 text-center'>
+    <div className='w-full flex flex-col justify-center items-center gap-y-6 px-4 md:px-16 text-center'>
       <p className='text-Heading-L text-Medium-Grey'>
         This board is empty. Create a new column to get started.
       </p>
