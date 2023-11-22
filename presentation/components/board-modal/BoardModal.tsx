@@ -10,7 +10,9 @@ export const BoardModal = ({
     name: '',
     columns: []
   },
-  isEdit
+  isEdit,
+  onSubmit,
+  closeModal
 }: {
   defaultBoard?: {
     id: string
@@ -18,8 +20,15 @@ export const BoardModal = ({
     columns: { id: string; name: string }[]
   }
   isEdit?: boolean
+  onSubmit?: (board: {
+    id: string
+    name: string
+    column: { id: string; name: string }[]
+  }) => void
+  closeModal?: () => void
 }) => {
   const [editBoard, setEditBoard] = useState({
+    id: defaultBoard.id,
     boardName: defaultBoard.name,
     boardColumns: defaultBoard.columns
   })
@@ -52,7 +61,12 @@ export const BoardModal = ({
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log('Faire le fonction de submit')
+    onSubmit?.({
+      id: editBoard.id,
+      name: editBoard.boardName,
+      column: editBoard.boardColumns
+    })
+    closeModal?.()
   }
 
   return (
@@ -61,7 +75,9 @@ export const BoardModal = ({
         onSubmit={handleSubmit}
         className='bg-white flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
       >
-        <h2 className='text-Heading-L'>Edit Board</h2>
+        <h2 className='text-Heading-L'>
+          {isEdit ? 'Edit board' : 'Add New Board'}
+        </h2>
         <TextFieldWithInput
           label='Board Name'
           name='board-name'
