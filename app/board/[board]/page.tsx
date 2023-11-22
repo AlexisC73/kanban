@@ -6,6 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import ColumList, {
   ColumnListProps
 } from '@/presentation/components/ColumnList/ColumnList'
+import { EditBoardModal } from '@/presentation/components/edit-board-modal/EditBoardModal'
 import { useParams, redirect } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
@@ -48,6 +49,7 @@ export default function BoardPage () {
       ) : (
         <ColumList board={boardData} />
       )}
+      <EditBoardModal />
     </main>
   )
 }

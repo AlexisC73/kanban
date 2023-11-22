@@ -1,11 +1,17 @@
 export function TextField ({
   name,
   placeholder,
-  hasError = false
+  hasError = false,
+  value,
+  onValueChange,
+  id
 }: {
   name: string
   placeholder?: string
   hasError?: boolean
+  value: string
+  onValueChange: (value: string) => void
+  id?: string
 }) {
   const customClass = hasError
     ? 'border-Red'
@@ -16,9 +22,11 @@ export function TextField ({
     >
       <input
         placeholder={placeholder ?? 'Enter task name'}
-        id={name}
+        id={id}
         name={name}
         className={`outline-none bg-transparent placeholder:opacity-25 flex-1 text-Black dark:text-white dark:placeholder:opacity-25`}
+        value={value}
+        onChange={e => onValueChange(e.target.value)}
       />
       {hasError && <p className='text-Body-L text-Red'>Can’t be empty</p>}
     </div>
