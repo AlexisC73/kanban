@@ -81,7 +81,7 @@ export const BoardModal = ({
   }
 
   return (
-    <Overlay onClickAction={handleCloseModal} fixed>
+    <Overlay onClickAction={handleCloseModal}>
       <form
         onSubmit={handleSubmit}
         onClick={e => e.stopPropagation()}

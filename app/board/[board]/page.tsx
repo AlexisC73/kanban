@@ -49,24 +49,6 @@ export default function BoardPage () {
       ) : (
         <ColumList board={boardData} />
       )}
-      <BoardModal
-        defaultBoard={{
-          id: boardData.id,
-          name: boardData.name,
-          columns: boardData.columns.map(c => ({ id: c.id, name: c.title }))
-        }}
-        isEdit
-        closeModal={() => {
-          console.log('close modal')
-        }}
-        onSubmit={async () => {
-          return new Promise(resolve => {
-            setTimeout(() => {
-              resolve()
-            }, 2000)
-          })
-        }}
-      />
     </main>
   )
 }
