@@ -3,7 +3,7 @@
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import { useState } from 'react'
-import { ThemeCtx, ThemeProvider } from '@/context/theme/ThemeCtx'
+import { ThemeProvider } from '@/context/theme/ThemeCtx'
 import { Header } from './header/Header'
 import { MenuCtx } from '@/context/menu/MenuCtx'
 import { Menu } from './menu/Menu'

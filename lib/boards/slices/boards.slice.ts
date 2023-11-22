@@ -9,15 +9,7 @@ type Board = {
   columns: string[]
 }
 
-type BoardsState = {
-  boards: { id: string; name: string }[]
-  boardInfo: Board | null
-}
-
-const initialState: BoardsState = {
-  boards: [],
-  boardInfo: null
-}
+const initialState: Board[] = []
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -25,16 +17,16 @@ export const boardsSlice = createSlice({
   reducers: {},
   extraReducers (builder) {
     builder.addCase(getAllBoards.fulfilled, (state, action) => {
-      state.boards = action.payload
+      return action.payload
     })
 
     builder.addCase(createBoard.fulfilled, (state, action) => {
-      state.boards.push(action.payload)
+      return [...state, action.payload]
     })
   }
 })
 
-export const selectAllBoards = (state: RootState) => state.boards.boards
+export const selectAllBoards = (state: RootState) => state.boards
 
 export const selectBoardByName = (state: RootState, name: string) =>
-  state.boards.boards.find(board => board.name === name)
+  state.boards.find(board => board.name === name)

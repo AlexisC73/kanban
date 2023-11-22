@@ -3,5 +3,13 @@ export interface BoardGateway {
   createBoard(board: { name: string }): Promise<CreateBoardResponse>
 }
 
-export type GetBoardsNameResponse = { id: string; name: string }[]
-export type CreateBoardResponse = { id: string; name: string }
+export type GetBoardsNameResponse = {
+  id: string
+  name: string
+  columns: string[]
+}[]
+export type CreateBoardResponse = {
+  id: string
+  name: string
+  columns: string[]
+}

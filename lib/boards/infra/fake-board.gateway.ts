@@ -5,7 +5,7 @@ import {
 } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
-  boards: { id: string; name: string }[] = []
+  boards: { id: string; name: string; columns: string[] }[] = []
   getAllBoards (): Promise<GetBoardsNameResponse> {
     return Promise.resolve(this.boards)
   }
@@ -13,7 +13,8 @@ export class FakeBoardGateway implements BoardGateway {
   createBoard (board: { name: string }): Promise<CreateBoardResponse> {
     const newBoard = {
       id: Math.floor(Math.random() * 10000).toString(),
-      name: board.name
+      name: board.name,
+      columns: []
     }
     this.boards = [...this.boards, newBoard]
     return Promise.resolve(newBoard)

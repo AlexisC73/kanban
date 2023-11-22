@@ -12,7 +12,9 @@ export const createBoardFixture = () => {
   })
 
   return {
-    givenExistingBoards: (boards: { id: string; name: string }[]) => {
+    givenExistingBoards: (
+      boards: { id: string; name: string; columns: string[] }[]
+    ) => {
       boardGateway.boards = boards
     },
     whenRetrievingBoards: async () => {
@@ -25,8 +27,8 @@ export const createBoardFixture = () => {
       const boards = selectAllBoards(store.getState())
       expect(boards.findIndex(b => b.name === expectedBoard.name)).not.toBe(-1)
     },
-    thenReceivedBoardsNameShouldBe: (
-      expectedBoards: { id: string; name: string }[]
+    thenReceivedBoardsShouldBe: (
+      expectedBoards: { id: string; name: string; columns: [] }[]
     ) => {
       const boards = selectAllBoards(store.getState())
       expect(boards).toEqual(expectedBoards)
