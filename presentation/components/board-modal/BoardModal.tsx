@@ -4,14 +4,24 @@ import { TextField } from '../text-field/TextField'
 import { CrossIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
 
-export const EditBoardModal = () => {
+export const BoardModal = ({
+  defaultBoard = {
+    id: Date.now().toString(),
+    name: '',
+    columns: []
+  },
+  isEdit
+}: {
+  defaultBoard?: {
+    id: string
+    name: string
+    columns: { id: string; name: string }[]
+  }
+  isEdit?: boolean
+}) => {
   const [editBoard, setEditBoard] = useState({
-    boardName: 'Platform Launch',
-    boardColumns: [
-      { id: '1', name: 'Todo' },
-      { id: '2', name: 'Doing' },
-      { id: '3', name: 'Done' }
-    ]
+    boardName: defaultBoard.name,
+    boardColumns: defaultBoard.columns
   })
 
   const deleteColumn = (id: string) => {
@@ -72,7 +82,7 @@ export const EditBoardModal = () => {
           type='submit'
           className='text-white bg-Main-Purple text-Body-L font-bold h-10 w-full rounded-full'
         >
-          Save Changes
+          {isEdit ? 'Save Changes' : 'Create New Board'}
         </button>
       </form>
     </Overlay>
