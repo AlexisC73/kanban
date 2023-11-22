@@ -56,6 +56,9 @@ export default function BoardPage () {
           columns: boardData.columns.map(c => ({ id: c.id, name: c.title }))
         }}
         isEdit
+        closeModal={() => {
+          console.log('close modal')
+        }}
       />
     </main>
   )

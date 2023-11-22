@@ -25,7 +25,7 @@ export const BoardModal = ({
     name: string
     column: { id: string; name: string }[]
   }) => void
-  closeModal?: () => void
+  closeModal: () => void
 }) => {
   const [editBoard, setEditBoard] = useState({
     id: defaultBoard.id,
@@ -70,9 +70,10 @@ export const BoardModal = ({
   }
 
   return (
-    <Overlay fixed>
+    <Overlay onClickAction={closeModal} fixed>
       <form
         onSubmit={handleSubmit}
+        onClick={e => e.stopPropagation()}
         className='bg-white flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
       >
         <h2 className='text-Heading-L'>

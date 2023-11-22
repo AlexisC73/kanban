@@ -2,8 +2,9 @@ import { PropsWithChildren } from 'react'
 
 export const Overlay = ({
   children,
-  fixed = false
-}: { fixed?: boolean } & PropsWithChildren) => {
+  fixed = false,
+  onClickAction
+}: { fixed?: boolean; onClickAction?: () => void } & PropsWithChildren) => {
   return (
     <div
       className={`${
