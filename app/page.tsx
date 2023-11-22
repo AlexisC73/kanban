@@ -25,7 +25,7 @@ export default function Home () {
     return () => {
       getBoards.abort()
     }
-  }, [])
+  }, [dispatch])
 
   useEffect(() => {
     if (initializing) return
@@ -38,7 +38,7 @@ export default function Home () {
         abort()
       }
     }
-  }, [boards, initializing])
+  }, [boards, initializing, dispatch, push])
 
   return <main className='flex gap-x-6 p-4 py-6 md:px-6'></main>
 }

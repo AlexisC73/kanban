@@ -26,7 +26,7 @@ export default function BoardPage () {
     return () => {
       result.abort()
     }
-  }, [])
+  }, [dispatch, boardId])
 
   if (!board) {
     redirect('/')
