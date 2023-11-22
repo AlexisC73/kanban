@@ -11,6 +11,7 @@ export const AddTaskModal = () => {
         <h2 className='text-Heading-L dark:text-white'>Add New Task</h2>
         <form className='flex flex-col gap-y-6'>
           <TextFieldWithInput
+            onValueChange={() => console.log('test')}
             name='title'
             label='Title'
             placeholder='e.g. Take coffee break'

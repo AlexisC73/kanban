@@ -9,7 +9,7 @@ export function TextField ({
   name: string
   placeholder?: string
   hasError?: boolean
-  value: string
+  value?: string
   onValueChange: (value: string) => void
   id?: string
 }) {

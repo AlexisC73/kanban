@@ -13,7 +13,7 @@ export const TextFieldWithInput = ({
   name: string
   placeholder?: string
   hasError?: boolean
-  value: string
+  value?: string
   onValueChange: (value: string) => void
 }) => {
   return (
