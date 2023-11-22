@@ -3,8 +3,14 @@ import { ThemeSwitcher } from '@/presentation/components/ThemeSwitcher/ThemeSwit
 import { BoardsList } from '../@shared/BoardsList'
 import { useContext } from 'react'
 import { MenuCtx } from '@/context/menu/MenuCtx'
+import { Board } from '@/lib/boards/model/board.entity'
 
-export const MobileMenu = () => {
+export type MobileMenuProps = {
+  boards: Board[]
+  currentBoardId: string
+}
+
+export const MobileMenu = ({ boards, currentBoardId }: MobileMenuProps) => {
   const { isOpen: isMenuOpen, setIsOpen } = useContext(MenuCtx)
   const blurMenu = () => {
     setIsOpen(false)
@@ -20,7 +26,7 @@ export const MobileMenu = () => {
         onClick={e => e.stopPropagation()}
         className='bg-white dark:bg-Dark-Grey w-[264px] mx-auto mt-4 py-4 rounded-lg'
       >
-        <BoardsList />
+        <BoardsList boards={boards} currentBoardId={currentBoardId} />
         <div className='mt-4 mx-[13px] rounded-[6px] overflow-hidden'>
           <ThemeSwitcher />
         </div>

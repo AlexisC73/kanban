@@ -5,9 +5,10 @@ import './globals.css'
 import { useState } from 'react'
 import { ThemeProvider } from '@/context/theme/ThemeCtx'
 import { Header } from './header/Header'
-import { MenuCtx } from '@/context/menu/MenuCtx'
+import { MenuCtx, MenuCtxProvider } from '@/context/menu/MenuCtx'
 import { Menu } from './menu/Menu'
 import { Providers } from '@/lib/provider'
+import { WithMenuLayout } from './layout/withMenuLayout'
 
 const jakarta_sans = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
@@ -16,8 +17,6 @@ export default function RootLayout ({
 }: {
   children: React.ReactNode
 }) {
-  const [isOpen, setIsOpen] = useState(false)
-  const toggleMenu = () => setIsOpen(prev => !prev)
   return (
     <Providers>
       <ThemeProvider>
@@ -28,17 +27,9 @@ export default function RootLayout ({
             ' h-screen flex flex-col bg-Light-Grey dark:bg-Very-Dark-Grey'
           }
         >
-          <MenuCtx.Provider value={{ isOpen, setIsOpen, toggleMenu }}>
-            <Header />
-            <Menu />
-            <div
-              className={`flex mt-16 overflow-y-scroll h-full ${
-                isOpen ? 'md:ml-[260px] lg:ml-[300px]' : ''
-              }`}
-            >
-              {children}
-            </div>
-          </MenuCtx.Provider>
+          <MenuCtxProvider>
+            <WithMenuLayout>{children}</WithMenuLayout>
+          </MenuCtxProvider>
         </body>
       </ThemeProvider>
     </Providers>

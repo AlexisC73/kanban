@@ -3,8 +3,14 @@ import { BoardsList } from '../@shared/BoardsList'
 import { HideMenuIcon, ShowMenuIcon } from '@/presentation/@shared/assets'
 import { useContext } from 'react'
 import { MenuCtx } from '@/context/menu/MenuCtx'
+import { Board } from '@/lib/boards/model/board.entity'
 
-export const SideMenu = () => {
+export type SideMenuProps = {
+  boards: Board[]
+  currentBoardId: string
+}
+
+export const SideMenu = ({ boards, currentBoardId }: SideMenuProps) => {
   const { setIsOpen, isOpen: isMenuOpen } = useContext(MenuCtx)
   return (
     <>
@@ -13,7 +19,7 @@ export const SideMenu = () => {
           isMenuOpen ? 'hidden md:flex fixed bottom-0 left-0 top-16' : 'hidden'
         }`}
       >
-        <BoardsList />
+        <BoardsList boards={boards} currentBoardId={currentBoardId} />
         <div className='flex flex-col px-3 gap-y-[30px]'>
           <ThemeSwitcher />
           <button
