@@ -1,11 +1,10 @@
-import { BoardLogo } from '@/presentation/@shared/assets'
 import { ThemeSwitcher } from '@/presentation/components/ThemeSwitcher/ThemeSwitcher'
 import { BoardsList } from '../@shared/BoardsList'
 import { useContext } from 'react'
 import { MenuCtx } from '@/context/menu/MenuCtx'
 import { Board } from '@/lib/boards/model/board.entity'
 
-export type MobileMenuProps = {
+export interface MobileMenuProps {
   boards: Board[]
   currentBoardId: string
 }
@@ -23,11 +22,13 @@ export const MobileMenu = ({ boards, currentBoardId }: MobileMenuProps) => {
       }`}
     >
       <div
-        onClick={e => e.stopPropagation()}
-        className='bg-white dark:bg-Dark-Grey w-[264px] mx-auto mt-4 py-4 rounded-lg'
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
+        className="bg-white dark:bg-Dark-Grey w-[264px] mx-auto mt-4 py-4 rounded-lg"
       >
         <BoardsList boards={boards} currentBoardId={currentBoardId} />
-        <div className='mt-4 mx-[13px] rounded-[6px] overflow-hidden'>
+        <div className="mt-4 mx-[13px] rounded-[6px] overflow-hidden">
           <ThemeSwitcher />
         </div>
       </div>

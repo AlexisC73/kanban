@@ -10,7 +10,7 @@ describe('GetAllBoards', () => {
     boardFixture.givenExistingBoards([])
 
     await boardFixture.whenCreateNewBoard({
-      name: 'Board 2'
+      name: 'Board 2',
     })
 
     boardFixture.thenBoardShouldExist({ name: 'Board 2' })

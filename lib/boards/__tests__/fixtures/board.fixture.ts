@@ -10,7 +10,7 @@ export const createBoardFixture = () => {
   const boardGateway = new FakeBoardGateway()
 
   const store = createStore({
-    boardGateway
+    boardGateway,
   })
 
   return {
@@ -34,7 +34,9 @@ export const createBoardFixture = () => {
     },
     thenBoardShouldExist: (expectedBoard: { name: string }) => {
       const boards = selectAllBoards(store.getState())
-      expect(boards.findIndex(b => b.name === expectedBoard.name)).not.toBe(-1)
+      expect(boards.findIndex((b) => b.name === expectedBoard.name)).not.toBe(
+        -1,
+      )
     },
     thenReceivedBoardsShouldBe: (expectedBoards: Board[]) => {
       const boards = selectAllBoards(store.getState())
@@ -43,7 +45,7 @@ export const createBoardFixture = () => {
     thenBoardShouldBe: (expectedBoard: Board) => {
       const board = selectBoardById(store.getState(), expectedBoard.id)
       expect(board).toEqual(expectedBoard)
-    }
+    },
   }
 }
 

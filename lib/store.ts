@@ -2,22 +2,22 @@ import { AnyAction, ThunkDispatch, configureStore } from '@reduxjs/toolkit'
 import { boardsSlice } from './boards/slices/boards.slice'
 import { BoardGateway } from './boards/model/board.gateway'
 
-export type Dependencies = {
+export interface Dependencies {
   boardGateway: BoardGateway
 }
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
     reducer: {
-      [boardsSlice.name]: boardsSlice.reducer
+      [boardsSlice.name]: boardsSlice.reducer,
     },
-    middleware: getDefaultMiddleware => {
+    middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware({
         thunk: {
-          extraArgument: dependencies
-        }
+          extraArgument: dependencies,
+        },
       })
-    }
+    },
   })
 
 export type AppStore = ReturnType<typeof createStore>

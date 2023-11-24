@@ -4,7 +4,7 @@ import Link from 'next/link'
 export const BoardLi = ({
   label,
   boardId,
-  active = false
+  active = false,
 }: {
   label: string
   boardId: string
@@ -17,9 +17,9 @@ export const BoardLi = ({
         active ? activeStyle : null
       }`}
     >
-      <Link className='flex items-center gap-x-3' href={boardId}>
+      <Link className="flex items-center gap-x-3" href={boardId}>
         <BoardLogo />
-        <p className='text-Heading-M'>{label}</p>
+        <p className="text-Heading-M">{label}</p>
       </Link>
     </li>
   )

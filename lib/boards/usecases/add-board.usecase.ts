@@ -5,6 +5,6 @@ export const createBoard = createAppAsyncThunk(
   'boards/createBoard',
   async (board: { name: string }, { extra: { boardGateway } }) => {
     const newBoard = await boardGateway.createBoard(board)
-    return Promise.resolve(newBoard)
-  }
+    return await Promise.resolve(newBoard)
+  },
 )

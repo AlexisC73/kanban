@@ -9,12 +9,12 @@ import { selectBoardById } from '@/lib/boards/slices/boards.slice'
 export const WithMenuLayout = ({ children }: { children: ReactNode }) => {
   const { board: boardId }: { board: string } = useParams()
   const { isOpen } = useContext(MenuCtx)
-  const board = useAppSelector(state => selectBoardById(state, boardId))
+  const board = useAppSelector((state) => selectBoardById(state, boardId))
   return (
     <>
       <Header
-        columnLength={board?.columns.length || 0}
-        currentBoardName={board?.name || 'Kanban App'}
+        columnLength={board?.columns.length ?? 0}
+        currentBoardName={board?.name ?? 'Kanban App'}
       />
       <Menu currentBoardId={boardId} />
       <div

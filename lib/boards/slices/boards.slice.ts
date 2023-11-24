@@ -9,9 +9,9 @@ export const boardsSlice = createSlice({
   name: 'boards',
   initialState: boardEntityAdapter.getInitialState(),
   reducers: {},
-  extraReducers (builder) {
+  extraReducers(builder) {
     builder.addCase(getAllBoardsWithoutColums.fulfilled, (state, action) => {
-      const boards: Board[] = action.payload.map(b => ({ ...b, columns: [] }))
+      const boards: Board[] = action.payload.map((b) => ({ ...b, columns: [] }))
       boardEntityAdapter.upsertMany(state, boards)
     })
 
@@ -23,13 +23,13 @@ export const boardsSlice = createSlice({
       const boardInfo = action.payload
       boardEntityAdapter.upsertOne(state, boardInfo)
     })
-  }
+  },
 })
 
 export const selectAllBoards = createSelector(
   (state: RootState) =>
     boardEntityAdapter.getSelectors().selectAll(state.boards),
-  boards => boards
+  (boards) => boards,
 )
 
 export const selectBoardById = (state: RootState, id: string) =>

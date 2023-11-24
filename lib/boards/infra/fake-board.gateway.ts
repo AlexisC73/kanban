@@ -3,28 +3,30 @@ import {
   BoardGateway,
   CreateBoardResponse,
   GetBoardByIdResponse,
-  GetBoardsWithoutColumnsResponse
+  GetBoardsWithoutColumnsResponse,
 } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
   boards: Board[] = []
-  getAllBoards (): Promise<GetBoardsWithoutColumnsResponse> {
-    return Promise.resolve(this.boards.map(b => ({ id: b.id, name: b.name })))
+  async getAllBoards(): Promise<GetBoardsWithoutColumnsResponse> {
+    return await Promise.resolve(
+      this.boards.map((b) => ({ id: b.id, name: b.name })),
+    )
   }
 
-  createBoard (board: { name: string }): Promise<CreateBoardResponse> {
+  async createBoard(board: { name: string }): Promise<CreateBoardResponse> {
     const newBoard = {
       id: Math.floor(Math.random() * 10000).toString(),
       name: board.name,
-      columns: []
+      columns: [],
     }
     this.boards = [...this.boards, newBoard]
-    return Promise.resolve(newBoard)
+    return await Promise.resolve(newBoard)
   }
 
-  getBoardById (id: string): Promise<GetBoardByIdResponse> {
-    const board = this.boards.find(b => b.id === id)
+  async getBoardById(id: string): Promise<GetBoardByIdResponse> {
+    const board = this.boards.find((b) => b.id === id)
     if (!board) throw new Error('Board not found')
-    return Promise.resolve(board)
+    return await Promise.resolve(board)
   }
 }
