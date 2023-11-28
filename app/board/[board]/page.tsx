@@ -1,6 +1,7 @@
 'use client'
 import { NoColumnScreen } from '@/app/no-column-screen/NoColumnScreen'
 import { selectBoard } from '@/lib/boards/slices/boards.slice'
+import { selectColumnsWithIds } from '@/lib/boards/slices/column.slice'
 import { getBoardById } from '@/lib/boards/usecases/get-board-by-id.usecase'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import ColumList, {
@@ -36,7 +37,13 @@ export default function BoardPage() {
   const boardData: ColumnListProps['board'] = {
     id: board.id,
     name: board.name,
-    columns: [],
+    columns: useAppSelector((state) =>
+      selectColumnsWithIds(state, board.columns),
+    ).map((col) => ({
+      id: col.id,
+      tasks: [],
+      title: col.name,
+    })),
   }
 
   if (initializing) return <div>loading...</div>
