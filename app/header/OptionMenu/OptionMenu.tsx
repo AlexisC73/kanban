@@ -5,12 +5,14 @@ import { useContext, useState } from 'react'
 export default function OptionMenu() {
   const [showMenuList, setShowMenuList] = useState(false)
 
+  const toggleMenuList = () => {
+    setShowMenuList((prev) => !prev)
+  }
+
   return (
     <div className='flex items-center justify-center relative'>
       <VerticalMenuIcon
-        onClick={() => {
-          setShowMenuList(true)
-        }}
+        onClick={toggleMenuList}
         className='text-Medium-Grey cursor-pointer'
       />
       {showMenuList && (
