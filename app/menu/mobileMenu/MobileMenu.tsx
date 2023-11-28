@@ -25,10 +25,10 @@ export const MobileMenu = ({ boards, currentBoardId }: MobileMenuProps) => {
         onClick={(e) => {
           e.stopPropagation()
         }}
-        className="bg-white dark:bg-Dark-Grey w-[264px] mx-auto mt-4 py-4 rounded-lg"
+        className='bg-white dark:bg-Dark-Grey w-[264px] mx-auto mt-4 py-4 rounded-lg'
       >
         <BoardsList boards={boards} currentBoardId={currentBoardId} />
-        <div className="mt-4 mx-[13px] rounded-[6px] overflow-hidden">
+        <div className='mt-4 mx-[13px] rounded-[6px] overflow-hidden'>
           <ThemeSwitcher />
         </div>
       </div>
