@@ -3,19 +3,12 @@ import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
 import { TextField } from '../text-field/TextField'
 import { CrossIcon, SpinnerIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
+import { useAppDispatch } from '@/lib/hook'
+import { createBoard } from '@/lib/boards/usecases/add-board.usecase'
 
-export const AddBoardModal = ({
-  onSubmit,
-  closeModal,
-}: {
-  onSubmit?: (board: {
-    id: string
-    name: string
-    column: Array<{ id: string; name: string }>
-  }) => Promise<void>
-  closeModal: () => void
-}) => {
+export const AddBoardModal = ({ closeModal }: { closeModal: () => void }) => {
   const [submiting, setSubmiting] = useState(false)
+  const dispatch = useAppDispatch()
   const [editBoard, setEditBoard] = useState<{
     id: string
     boardName: string
@@ -55,11 +48,12 @@ export const AddBoardModal = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmiting(true)
-    onSubmit?.({
-      id: editBoard.id,
-      name: editBoard.boardName,
-      column: editBoard.boardColumns,
-    }).then(() => {
+    dispatch(
+      createBoard({
+        name: editBoard.boardName,
+        columns: editBoard.boardColumns.map((column) => column.name),
+      }),
+    ).then(() => {
       setSubmiting(false)
       closeModal?.()
     })

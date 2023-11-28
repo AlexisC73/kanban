@@ -1,6 +1,6 @@
 import { AnyAction, ThunkDispatch, configureStore } from '@reduxjs/toolkit'
-import { boardsSlice } from './boards/slices/boards.slice'
 import { BoardGateway } from './boards/model/board.gateway'
+import { reducer } from './boards/reducer'
 
 export interface Dependencies {
   boardGateway: BoardGateway
@@ -8,9 +8,7 @@ export interface Dependencies {
 
 export const createStore = (dependencies: Dependencies) =>
   configureStore({
-    reducer: {
-      [boardsSlice.name]: boardsSlice.reducer,
-    },
+    reducer,
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware({
         thunk: {

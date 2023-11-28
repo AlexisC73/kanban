@@ -1,6 +1,6 @@
 'use client'
 
-import { selectAllBoards } from '@/lib/boards/slices/boards.slice'
+import { selectBoards } from '@/lib/boards/slices/boards.slice'
 import { createBoard } from '@/lib/boards/usecases/add-board.usecase'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { useRouter } from 'next/navigation'
@@ -10,14 +10,16 @@ export default function Home() {
   const { push } = useRouter()
 
   const dispatch = useAppDispatch()
-  const boards = useAppSelector(selectAllBoards)
+  const boards = useAppSelector(selectBoards)
 
   useEffect(() => {
     if (boards.length > 0) {
       push(`/board/${boards[0].id}`)
     }
     if (boards.length <= 0) {
-      const { abort } = dispatch(createBoard({ name: 'Mon premier board' }))
+      const { abort } = dispatch(
+        createBoard({ name: 'Mon premier board', columns: [] }),
+      )
       return () => {
         abort()
       }

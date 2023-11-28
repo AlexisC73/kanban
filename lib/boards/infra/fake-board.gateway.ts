@@ -1,4 +1,3 @@
-import { Board } from '../model/board.entity'
 import {
   BoardGateway,
   CreateBoardResponse,
@@ -7,18 +6,30 @@ import {
 } from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
-  boards: Board[] = []
+  boards: Array<{
+    id: string
+    name: string
+    columns: Array<{ id: string; name: string; tasks: string[] }>
+  }> = []
+
   async getAllBoards(): Promise<GetBoardsWithoutColumnsResponse> {
     return await Promise.resolve(
       this.boards.map((b) => ({ id: b.id, name: b.name })),
     )
   }
 
-  async createBoard(board: { name: string }): Promise<CreateBoardResponse> {
+  async createBoard(board: {
+    name: string
+    columns: string[]
+  }): Promise<CreateBoardResponse> {
     const newBoard = {
       id: Math.floor(Math.random() * 10000).toString(),
       name: board.name,
-      columns: [],
+      columns: board.columns.map((c) => ({
+        id: `id_${c}`,
+        name: c,
+        tasks: [],
+      })),
     }
     this.boards = [...this.boards, newBoard]
     return await Promise.resolve(newBoard)

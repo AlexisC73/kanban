@@ -1,5 +1,5 @@
 'use client'
-import { selectBoardById } from '@/lib/boards/slices/boards.slice'
+import { selectBoard } from '@/lib/boards/slices/boards.slice'
 import { useAppSelector } from '@/lib/hook'
 import { AddBoardModal } from '@/presentation/components/add-board-modal/AddBoardModal'
 import { EditBoardModal } from '@/presentation/components/edit-board-modal/EditBoardModal'
@@ -26,7 +26,7 @@ export const BoardActionsCtxProvider = ({
   const [showAddBoardModal, setShowAddBoardModal] = useState(false)
   const [showEditBoardModal, setShowEditBoardModal] = useState(false)
   const { board: boardId } = useParams<{ board: string }>()
-  const board = useAppSelector((state) => selectBoardById(state, boardId))
+  const board = useAppSelector((state) => selectBoard(state, boardId))
 
   return (
     <BoardActionsCtx.Provider

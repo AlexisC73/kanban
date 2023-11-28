@@ -3,10 +3,10 @@ import { useContext } from 'react'
 import { MobileMenu } from './mobileMenu/MobileMenu'
 import { SideMenu } from './sideMenu/SideMenu'
 import { useAppSelector } from '@/lib/hook'
-import { selectAllBoards } from '@/lib/boards/slices/boards.slice'
+import { selectBoards } from '@/lib/boards/slices/boards.slice'
 
 export const Menu = ({ currentBoardId }: { currentBoardId: string }) => {
-  const boards = useAppSelector(selectAllBoards)
+  const boards = useAppSelector(selectBoards)
   const { isOpen } = useContext(MenuCtx)
   return (
     <>

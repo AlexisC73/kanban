@@ -1,10 +1,11 @@
 import { createStore } from '@/lib/store'
 import { FakeBoardGateway } from '../../infra/fake-board.gateway'
 import { getAllBoardsWithoutColums } from '../../usecases/get-all-boards.usecase'
-import { selectAllBoards, selectBoardById } from '../../slices/boards.slice'
+import { selectBoard, selectBoards } from '../../slices/boards.slice'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { getBoardById } from '../../usecases/get-board-by-id.usecase'
 import { Board } from '../../model/board.entity'
+import { selectColumnsWithIds } from '../../slices/column.slice'
 
 export const createBoardFixture = () => {
   const boardGateway = new FakeBoardGateway()
@@ -14,13 +15,19 @@ export const createBoardFixture = () => {
   })
 
   return {
-    givenExistingBoards: (boards: Board[]) => {
+    givenExistingBoards: (
+      boards: Array<{
+        id: string
+        name: string
+        columns: Array<{ id: string; name: string; tasks: string[] }>
+      }>,
+    ) => {
       boardGateway.boards = boards
     },
     whenRetrievingBoards: async () => {
       await store.dispatch(getAllBoardsWithoutColums())
     },
-    whenCreateNewBoard: async (board: { name: string }) => {
+    whenCreateNewBoard: async (board: { name: string; columns: string[] }) => {
       try {
         await store.dispatch(createBoard(board))
       } catch (e) {}
@@ -32,18 +39,25 @@ export const createBoardFixture = () => {
         console.log(e)
       }
     },
-    thenBoardShouldExist: (expectedBoard: { name: string }) => {
-      const boards = selectAllBoards(store.getState())
-      expect(boards.findIndex((b) => b.name === expectedBoard.name)).not.toBe(
-        -1,
-      )
+    thenBoardShouldExist: (expectedBoard: {
+      name: string
+      columns: string[]
+    }) => {
+      const boards = selectBoards(store.getState())
+      const board = boards.find((b) => b.name === expectedBoard.name)
+      const columnsName = selectColumnsWithIds(
+        store.getState(),
+        board?.columns ?? [],
+      ).map((c) => c.name)
+      expect(board?.name).toBe(expectedBoard.name)
+      expect(columnsName).toEqual(expectedBoard.columns)
     },
     thenReceivedBoardsShouldBe: (expectedBoards: Board[]) => {
-      const boards = selectAllBoards(store.getState())
+      const boards = selectBoards(store.getState())
       expect(boards).toEqual(expectedBoards)
     },
     thenBoardShouldBe: (expectedBoard: Board) => {
-      const board = selectBoardById(store.getState(), expectedBoard.id)
+      const board = selectBoard(store.getState(), expectedBoard.id)
       expect(board).toEqual(expectedBoard)
     },
   }

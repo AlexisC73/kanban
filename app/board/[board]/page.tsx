@@ -1,6 +1,6 @@
 'use client'
 import { NoColumnScreen } from '@/app/no-column-screen/NoColumnScreen'
-import { selectBoardById } from '@/lib/boards/slices/boards.slice'
+import { selectBoard } from '@/lib/boards/slices/boards.slice'
 import { getBoardById } from '@/lib/boards/usecases/get-board-by-id.usecase'
 import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import ColumList, {
@@ -15,7 +15,7 @@ export default function BoardPage() {
 
   const dispatch = useAppDispatch()
 
-  const board = useAppSelector((state) => selectBoardById(state, boardId))
+  const board = useAppSelector((state) => selectBoard(state, boardId))
 
   useEffect(() => {
     const result = dispatch(getBoardById(boardId))

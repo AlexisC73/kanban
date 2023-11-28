@@ -11,8 +11,12 @@ describe('GetAllBoards', () => {
 
     await boardFixture.whenCreateNewBoard({
       name: 'Board 2',
+      columns: ['todo', 'in-progress', 'done'],
     })
 
-    boardFixture.thenBoardShouldExist({ name: 'Board 2' })
+    boardFixture.thenBoardShouldExist({
+      name: 'Board 2',
+      columns: ['todo', 'in-progress', 'done'],
+    })
   })
 })

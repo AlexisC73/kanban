@@ -16,21 +16,29 @@ export const boardsSlice = createSlice({
     })
 
     builder.addCase(createBoard.fulfilled, (state, action) => {
-      boardEntityAdapter.addOne(state, action.payload)
+      boardEntityAdapter.addOne(state, {
+        id: action.payload.id,
+        name: action.payload.name,
+        columns: action.payload.columns.map((c) => c.id),
+      })
     })
 
     builder.addCase(getBoardById.fulfilled, (state, action) => {
       const boardInfo = action.payload
-      boardEntityAdapter.upsertOne(state, boardInfo)
+      boardEntityAdapter.upsertOne(state, {
+        id: boardInfo.id,
+        name: boardInfo.name,
+        columns: boardInfo.columns.map((c) => c.id),
+      })
     })
   },
 })
 
-export const selectAllBoards = createSelector(
+export const selectBoards = createSelector(
   (state: RootState) =>
     boardEntityAdapter.getSelectors().selectAll(state.boards),
   (boards) => boards,
 )
 
-export const selectBoardById = (state: RootState, id: string) =>
+export const selectBoard = (state: RootState, id: string) =>
   boardEntityAdapter.getSelectors().selectById(state.boards, id)
