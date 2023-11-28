@@ -6,7 +6,10 @@ export interface Dependencies {
   boardGateway: BoardGateway
 }
 
-export const createStore = (dependencies: Dependencies) =>
+export const createStore = (
+  dependencies: Dependencies,
+  preloadedState?: Partial<ReturnType<typeof reducer>>,
+) =>
   configureStore({
     reducer,
     middleware: (getDefaultMiddleware) => {

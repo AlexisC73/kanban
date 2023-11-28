@@ -1,5 +1,6 @@
 'use client'
 import { selectBoard } from '@/lib/boards/slices/boards.slice'
+import { selectColumnsFromBoard } from '@/lib/boards/slices/column.slice'
 import { useAppSelector } from '@/lib/hook'
 import { AddBoardModal } from '@/presentation/components/add-board-modal/AddBoardModal'
 import { EditBoardModal } from '@/presentation/components/edit-board-modal/EditBoardModal'
@@ -27,6 +28,9 @@ export const BoardActionsCtxProvider = ({
   const [showEditBoardModal, setShowEditBoardModal] = useState(false)
   const { board: boardId } = useParams<{ board: string }>()
   const board = useAppSelector((state) => selectBoard(state, boardId))
+  const boardColumns = useAppSelector((state) =>
+    selectColumnsFromBoard(state, boardId),
+  )
 
   return (
     <BoardActionsCtx.Provider
@@ -47,15 +51,12 @@ export const BoardActionsCtxProvider = ({
       {showEditBoardModal && (
         <EditBoardModal
           boardToEdit={{
-            columns: [],
+            columns: boardColumns ?? [],
             id: boardId ?? '',
             name: board?.name ?? '',
           }}
           closeModal={() => {
             setShowEditBoardModal(false)
-          }}
-          onSubmit={async (board: any) => {
-            await new Promise((resolve) => setTimeout(resolve, 1000))
           }}
         />
       )}

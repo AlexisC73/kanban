@@ -1,11 +1,12 @@
 import { createStore } from '@/lib/store'
 import { FakeBoardGateway } from '../../infra/fake-board.gateway'
-import { getAllBoardsWithoutColums } from '../../usecases/get-all-boards.usecase'
+import { getAllBoards } from '../../usecases/get-all-boards.usecase'
 import { selectBoard, selectBoards } from '../../slices/boards.slice'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { getBoardById } from '../../usecases/get-board-by-id.usecase'
 import { Board } from '../../model/board.entity'
 import { selectColumnsWithIds } from '../../slices/column.slice'
+import { updateBoard } from '../../usecases/update-board.usecase'
 
 export const createBoardFixture = () => {
   const boardGateway = new FakeBoardGateway()
@@ -19,13 +20,18 @@ export const createBoardFixture = () => {
       boards: Array<{
         id: string
         name: string
-        columns: Array<{ id: string; name: string; tasks: string[] }>
+        columns: Array<{
+          id: string
+          name: string
+          tasks: string[]
+          board: string
+        }>
       }>,
     ) => {
       boardGateway.boards = boards
     },
     whenRetrievingBoards: async () => {
-      await store.dispatch(getAllBoardsWithoutColums())
+      await store.dispatch(getAllBoards())
     },
     whenCreateNewBoard: async (board: { name: string; columns: string[] }) => {
       try {
@@ -38,6 +44,15 @@ export const createBoardFixture = () => {
       } catch (e) {
         console.log(e)
       }
+    },
+    whenBoardUpdate: async (board: {
+      id: string
+      name: string
+      columns: Array<{ id: string; name: string }>
+    }) => {
+      try {
+        await store.dispatch(updateBoard(board))
+      } catch (e) {}
     },
     thenBoardShouldExist: (expectedBoard: {
       name: string
@@ -56,9 +71,27 @@ export const createBoardFixture = () => {
       const boards = selectBoards(store.getState())
       expect(boards).toEqual(expectedBoards)
     },
-    thenBoardShouldBe: (expectedBoard: Board) => {
+    thenBoardShouldBe: (expectedBoard: {
+      id: string
+      name: string
+      columns: Array<{
+        id: string
+        name: string
+        tasks: string[]
+        board: string
+      }>
+    }) => {
       const board = selectBoard(store.getState(), expectedBoard.id)
-      expect(board).toEqual(expectedBoard)
+      const columns = selectColumnsWithIds(
+        store.getState(),
+        board?.columns ?? [],
+      )
+      expect(board).toEqual({
+        id: expectedBoard.id,
+        name: expectedBoard.name,
+        columns: expectedBoard.columns.map((c) => c.id),
+      })
+      expect(columns).toEqual(expectedBoard.columns)
     },
   }
 }
