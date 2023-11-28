@@ -42,7 +42,7 @@ export default function BoardPage() {
   if (initializing) return <div>loading...</div>
 
   return (
-    <main className="flex w-full">
+    <main className='flex w-full'>
       {board.columns.length <= 0 ? (
         <NoColumnScreen />
       ) : (

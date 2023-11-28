@@ -1,6 +1,6 @@
-import { BoardLogo } from '@/presentation/@shared/assets'
 import { BoardLi } from './BoardLi'
 import { Board } from '@/lib/boards/model/board.entity'
+import { CreateNewBoardButton } from './CreateNewBoardButton'
 
 export interface BoardsListProps {
   boards: Board[]
@@ -13,11 +13,11 @@ export const BoardsList = ({
 }: BoardsListProps) => {
   return (
     <div>
-      <h2 className="text-Heading-S uppercase text-Medium-Grey px-6 pb-4">
+      <h2 className='text-Heading-S uppercase text-Medium-Grey px-6 pb-4'>
         All Boards ({boards.length})
       </h2>
       <div>
-        <ul className="pr-6">
+        <ul className='pr-6'>
           {boards.map((board) => (
             <BoardLi
               label={board.name}
@@ -27,10 +27,7 @@ export const BoardsList = ({
             />
           ))}
         </ul>
-        <button className="flex items-center gap-x-3 pl-6 h-12 text-Main-Purple">
-          <BoardLogo />
-          <span className="text-Heading-M">+ Create New Board</span>
-        </button>
+        <CreateNewBoardButton />
       </div>
     </div>
   )

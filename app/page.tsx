@@ -24,5 +24,5 @@ export default function Home() {
     }
   }, [boards, dispatch, push])
 
-  return <main className="flex gap-x-6 p-4 py-6 md:px-6"></main>
+  return <main className='flex gap-x-6 p-4 py-6 md:px-6'></main>
 }

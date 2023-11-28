@@ -20,16 +20,16 @@ export const SideMenu = ({ boards, currentBoardId }: SideMenuProps) => {
         }`}
       >
         <BoardsList boards={boards} currentBoardId={currentBoardId} />
-        <div className="flex flex-col px-3 gap-y-[30px]">
+        <div className='flex flex-col px-3 gap-y-[30px]'>
           <ThemeSwitcher />
           <button
             onClick={() => {
               setIsOpen(false)
             }}
-            className="flex items-center text-Medium-Grey gap-x-[10px] px-3 z-50"
+            className='flex items-center text-Medium-Grey gap-x-[10px] px-3 z-50'
           >
             <HideMenuIcon />
-            <span className="text-Heading-M">Hide Sidebar</span>
+            <span className='text-Heading-M'>Hide Sidebar</span>
           </button>
         </div>
       </div>

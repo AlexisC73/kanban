@@ -1,13 +1,10 @@
 'use client'
 
 import { MenuCtx } from '@/context/menu/MenuCtx'
-import {
-  AppLogo,
-  ArrowDownIcon,
-  VerticalMenuIcon,
-} from '@/presentation/@shared/assets'
+import { AppLogo, ArrowDownIcon } from '@/presentation/@shared/assets'
 import { AddTaskButton } from '@/presentation/components/add-task/AddTask'
 import { useContext } from 'react'
+import OptionMenu from './OptionMenu/OptionMenu'
 
 export const Header = ({
   currentBoardName,
@@ -17,15 +14,15 @@ export const Header = ({
   columnLength: number
 }) => {
   return (
-    <div className="fixed top-0 left-0 right-0 bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark">
-      <div className="flex w-full justify-between">
-        <div className="flex items-center gap-x-4 md:gap-x-6">
+    <div className='fixed top-0 left-0 right-0 bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
+      <div className='flex w-full justify-between'>
+        <div className='flex items-center gap-x-4 md:gap-x-6'>
           <Branding />
           <BoardTitle boardTitle={currentBoardName} />
         </div>
-        <div className="flex items-center gap-x-4 pr-4">
+        <div className='flex items-center gap-x-4 pr-4'>
           <AddTaskButton disabled={columnLength <= 0} />
-          <VerticalMenuIcon className="text-Medium-Grey cursor-pointer" />
+          <OptionMenu />
         </div>
       </div>
     </div>
@@ -43,7 +40,7 @@ export const Branding = () => {
       }`}
     >
       <AppLogo />
-      <p className="hidden md:block text-[30px] dark:text-white">kanban</p>
+      <p className='hidden md:block text-[30px] dark:text-white'>kanban</p>
     </div>
   )
 }
@@ -51,10 +48,10 @@ export const Branding = () => {
 export const BoardTitle = ({ boardTitle }: { boardTitle: string }) => {
   const { isOpen: isMenuOpen, toggleMenu } = useContext(MenuCtx)
   return (
-    <div className="text-Heading-L dark:text-white">
+    <div className='text-Heading-L dark:text-white'>
       <div
         onClick={toggleMenu}
-        className="md:hidden flex items-center gap-x-2 cursor-pointer"
+        className='md:hidden flex items-center gap-x-2 cursor-pointer'
       >
         <h1>{boardTitle}</h1>
         <ArrowDownIcon
@@ -63,7 +60,7 @@ export const BoardTitle = ({ boardTitle }: { boardTitle: string }) => {
           }`}
         />
       </div>
-      <p className="hidden md:block">{boardTitle}</p>
+      <p className='hidden md:block'>{boardTitle}</p>
     </div>
   )
 }

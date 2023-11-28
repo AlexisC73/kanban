@@ -8,22 +8,22 @@ export const BoardModal = ({
   defaultBoard = {
     id: Date.now().toString(),
     name: '',
-    columns: []
+    columns: [],
   },
   isEdit,
   onSubmit,
-  closeModal
+  closeModal,
 }: {
   defaultBoard?: {
     id: string
     name: string
-    columns: { id: string; name: string }[]
+    columns: Array<{ id: string; name: string }>
   }
   isEdit?: boolean
   onSubmit?: (board: {
     id: string
     name: string
-    column: { id: string; name: string }[]
+    column: Array<{ id: string; name: string }>
   }) => Promise<void>
   closeModal: () => void
 }) => {
@@ -31,32 +31,32 @@ export const BoardModal = ({
   const [editBoard, setEditBoard] = useState({
     id: defaultBoard.id,
     boardName: defaultBoard.name,
-    boardColumns: defaultBoard.columns
+    boardColumns: defaultBoard.columns,
   })
 
   const deleteColumn = (id: string) => {
-    setEditBoard(prev => ({
+    setEditBoard((prev) => ({
       ...prev,
-      boardColumns: prev.boardColumns.filter(column => column.id !== id)
+      boardColumns: prev.boardColumns.filter((column) => column.id !== id),
     }))
   }
 
   const editColumnName = (id: string) => (name: string) => {
-    setEditBoard(prev => ({
+    setEditBoard((prev) => ({
       ...prev,
-      boardColumns: prev.boardColumns.map(column =>
-        column.id === id ? { ...column, name } : column
-      )
+      boardColumns: prev.boardColumns.map((column) =>
+        column.id === id ? { ...column, name } : column,
+      ),
     }))
   }
 
   const addNewColumn = () => {
-    setEditBoard(prev => ({
+    setEditBoard((prev) => ({
       ...prev,
       boardColumns: [
         ...prev.boardColumns,
-        { id: `column_${Date.now()}`, name: '' }
-      ]
+        { id: `column_${Date.now()}`, name: '' },
+      ],
     }))
   }
 
@@ -66,7 +66,7 @@ export const BoardModal = ({
     onSubmit?.({
       id: editBoard.id,
       name: editBoard.boardName,
-      column: editBoard.boardColumns
+      column: editBoard.boardColumns,
     }).then(() => {
       setSubmiting(false)
       closeModal?.()
@@ -84,7 +84,9 @@ export const BoardModal = ({
     <Overlay onClickAction={handleCloseModal}>
       <form
         onSubmit={handleSubmit}
-        onClick={e => e.stopPropagation()}
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
         className='bg-white dark:bg-Dark-Grey flex flex-col gap-y-6 p-8 w-full md:w-[480px] rounded-md mx-4 md:mx-0'
       >
         <h2 className='text-Heading-L dark:text-white'>
@@ -94,9 +96,9 @@ export const BoardModal = ({
           label='Board Name'
           name='board-name'
           value={editBoard.boardName}
-          onValueChange={(value: string) =>
-            setEditBoard(prev => ({ ...prev, boardName: value }))
-          }
+          onValueChange={(value: string) => {
+            setEditBoard((prev) => ({ ...prev, boardName: value }))
+          }}
           placeholder='e.g. Web Design'
         />
 
@@ -128,9 +130,9 @@ export const ListWithCrossButton = ({
   columns,
   onColumnNameChange,
   deleteColumn,
-  onAddNewColumn
+  onAddNewColumn,
 }: {
-  columns: { id: string; name: string }[]
+  columns: Array<{ id: string; name: string }>
   onColumnNameChange: (id: string) => (name: string) => void
   deleteColumn: (id: string) => void
   onAddNewColumn: () => void
@@ -141,7 +143,7 @@ export const ListWithCrossButton = ({
         Board Columns
       </p>
       <ul className='flex flex-col gap-y-3'>
-        {columns.map(column => (
+        {columns.map((column) => (
           <InputWithCrossButton
             onColumnNameChange={onColumnNameChange}
             column={column}
@@ -164,7 +166,7 @@ export const ListWithCrossButton = ({
 export const InputWithCrossButton = ({
   column,
   onColumnNameChange,
-  deleteColumn
+  deleteColumn,
 }: {
   column: { id: string; name: string }
   onColumnNameChange: (id: string) => (name: string) => void
@@ -180,7 +182,9 @@ export const InputWithCrossButton = ({
         placeholder='e.g. Todo'
       />
       <CrossIcon
-        onClick={() => deleteColumn(column.id)}
+        onClick={() => {
+          deleteColumn(column.id)
+        }}
         className='text-Medium-Grey text-[18px] cursor-pointer'
       />
     </li>

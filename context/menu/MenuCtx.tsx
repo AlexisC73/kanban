@@ -7,13 +7,15 @@ export const MenuCtx = createContext<{
   toggleMenu: () => void
 }>({
   isOpen: true,
-  setIsOpen: isOpen => {},
-  toggleMenu: () => {}
+  setIsOpen: (isOpen) => {},
+  toggleMenu: () => {},
 })
 
 export const MenuCtxProvider = ({ children }: { children: ReactNode }) => {
   const [isOpen, setIsOpen] = useState(false)
-  const toggleMenu = () => setIsOpen(prev => !prev)
+  const toggleMenu = () => {
+    setIsOpen((prev) => !prev)
+  }
   return (
     <MenuCtx.Provider value={{ isOpen, setIsOpen, toggleMenu }}>
       {children}
