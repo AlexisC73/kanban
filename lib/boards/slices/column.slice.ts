@@ -63,12 +63,3 @@ export const selectColumnsWithIds = createSelector(
     [columnEntityAdapter.getSelectors().selectAll(state.columns), ids] as const,
   ([columns, ids]) => columns.filter((col) => ids.includes(col.id)),
 )
-
-export const selectColumnsFromBoard = createSelector(
-  (state: RootState, boardId: string) =>
-    [
-      columnEntityAdapter.getSelectors().selectAll(state.columns),
-      boardId,
-    ] as const,
-  ([columns, boardId]) => columns.filter((col) => col.board === boardId),
-)
