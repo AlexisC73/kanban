@@ -34,8 +34,15 @@ const OptionMenuList = ({ closeMenuList }: { closeMenuList: () => void }) => {
     setShowEditBoardModal(true)
   }
 
+  const handleMouseLeave = () => {
+    closeMenuList()
+  }
+
   return (
-    <ul className='absolute top-10 right-0 bg-white dark:bg-Dark-Grey p-4 flex flex-col gap-y-4 w-[192px] rounded-lg'>
+    <ul
+      onMouseLeave={handleMouseLeave}
+      className='absolute top-10 right-0 bg-white dark:bg-Dark-Grey p-4 flex flex-col gap-y-4 w-[192px] rounded-lg'
+    >
       <li onClick={handleEditBoard} className='text-Medium-Grey cursor-pointer'>
         Edit Board
       </li>

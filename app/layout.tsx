@@ -18,19 +18,19 @@ export default function RootLayout({
   return (
     <Providers>
       <ThemeProvider>
-        <BoardActionsCtxProvider>
-          <body
-            suppressHydrationWarning={true}
-            className={
-              jakartaSans.className +
-              ' h-screen flex flex-col bg-Light-Grey dark:bg-Very-Dark-Grey'
-            }
-          >
+        <body
+          suppressHydrationWarning={true}
+          className={
+            jakartaSans.className +
+            ' h-screen flex flex-col bg-Light-Grey dark:bg-Very-Dark-Grey'
+          }
+        >
+          <BoardActionsCtxProvider>
             <MenuCtxProvider>
               <WithMenuLayout>{children}</WithMenuLayout>
             </MenuCtxProvider>
-          </body>
-        </BoardActionsCtxProvider>
+          </BoardActionsCtxProvider>
+        </body>
       </ThemeProvider>
     </Providers>
   )

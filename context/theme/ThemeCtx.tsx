@@ -6,16 +6,17 @@ export const ThemeCtx = createContext<{
   toggleTheme: () => void
 }>({
   theme: 'light',
-  toggleTheme: () => {}
+  toggleTheme: () => {},
 })
 
 export const ThemeProvider = ({ children }: { children: ReactNode }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')
-  const toggleTheme = () =>
-    setTheme(prev => {
+  const toggleTheme = () => {
+    setTheme((prev) => {
       localStorage.setItem('theme', prev === 'light' ? 'dark' : 'light')
       return prev === 'light' ? 'dark' : 'light'
     })
+  }
 
   useEffect(() => {
     const localTheme = localStorage.getItem('theme')
