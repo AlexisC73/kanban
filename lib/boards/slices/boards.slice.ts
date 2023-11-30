@@ -56,5 +56,8 @@ export const selectBoards = createSelector(
   (boards) => boards,
 )
 
-export const selectBoard = (state: RootState, id: string) =>
-  boardEntityAdapter.getSelectors().selectById(state.boards, id)
+export const selectBoard = createSelector(
+  (state: RootState, id: string) =>
+    boardEntityAdapter.getSelectors().selectById(state.boards, id),
+  (board) => board,
+)

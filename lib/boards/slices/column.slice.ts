@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { columnEntityAdapter } from '../model/column.entity'
 import { createBoard } from '../usecases/add-board.usecase'
 import { RootState } from '@/lib/store'
@@ -58,16 +58,17 @@ export const selectColumn = (state: RootState, id: string) => {
   return columnEntityAdapter.getSelectors().selectById(state.columns, id)
 }
 
-export const selectColumnsWithIds = (state: RootState, ids: string[]) => {
-  return columnEntityAdapter
-    .getSelectors()
-    .selectAll(state.columns)
-    .filter((column) => ids.includes(column.id))
-}
+export const selectColumnsWithIds = createSelector(
+  (state: RootState, ids: string[]) =>
+    [columnEntityAdapter.getSelectors().selectAll(state.columns), ids] as const,
+  ([columns, ids]) => columns.filter((col) => ids.includes(col.id)),
+)
 
-export const selectColumnsFromBoard = (state: RootState, boardId: string) => {
-  return columnEntityAdapter
-    .getSelectors()
-    .selectAll(state.columns)
-    .filter((column) => column.board === boardId)
-}
+export const selectColumnsFromBoard = createSelector(
+  (state: RootState, boardId: string) =>
+    [
+      columnEntityAdapter.getSelectors().selectAll(state.columns),
+      boardId,
+    ] as const,
+  ([columns, boardId]) => columns.filter((col) => col.board === boardId),
+)
