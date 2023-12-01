@@ -1,6 +1,5 @@
 'use client'
 import { selectBoard } from '@/lib/boards/slices/boards.slice'
-import { selectColumnsWithIds } from '@/lib/boards/slices/column.slice'
 import { useAppSelector } from '@/lib/hook'
 import { AddBoardModal } from '@/presentation/components/add-board-modal/AddBoardModal'
 import { EditBoardModal } from '@/presentation/components/edit-board-modal/EditBoardModal'
@@ -28,10 +27,6 @@ export const BoardActionsCtxProvider = ({
   const [showEditBoardModal, setShowEditBoardModal] = useState(false)
   const { board: boardId } = useParams<{ board: string }>()
   const board = useAppSelector((state) => selectBoard(state, boardId))
-  const defaultColumnsId: string[] = []
-  const boardColumns = useAppSelector((state) =>
-    selectColumnsWithIds(state, board?.columns ?? defaultColumnsId),
-  )
 
   return (
     <BoardActionsCtx.Provider
@@ -52,7 +47,7 @@ export const BoardActionsCtxProvider = ({
       {showEditBoardModal && (
         <EditBoardModal
           boardToEdit={{
-            columns: boardColumns ?? [],
+            columns: [],
             id: boardId ?? '',
             name: board?.name ?? '',
           }}

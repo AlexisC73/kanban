@@ -3,8 +3,6 @@ import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
 import { TextField } from '../text-field/TextField'
 import { CrossIcon, SpinnerIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
-import { useAppDispatch } from '@/lib/hook'
-import { updateBoard } from '@/lib/boards/usecases/update-board.usecase'
 
 export const EditBoardModal = ({
   boardToEdit,
@@ -18,7 +16,6 @@ export const EditBoardModal = ({
   closeModal: () => void
 }) => {
   const [submiting, setSubmiting] = useState(false)
-  const dispatch = useAppDispatch()
   const [editBoard, setEditBoard] = useState({
     id: boardToEdit.id,
     boardName: boardToEdit.name,
@@ -54,16 +51,6 @@ export const EditBoardModal = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmiting(true)
-    dispatch(
-      updateBoard({
-        id: boardToEdit.id,
-        name: editBoard.boardName,
-        columns: editBoard.boardColumns,
-      }),
-    ).then(() => {
-      setSubmiting(false)
-      closeModal?.()
-    })
   }
 
   const handleCloseModal = () => {

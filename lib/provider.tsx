@@ -1,15 +1,13 @@
 'use client'
 
 import { Provider } from 'react-redux'
-import { createStore } from './store'
-import { FakeBoardGateway } from './boards/infra/fake-board.gateway'
-import { getAllBoards } from './boards/usecases/get-all-boards.usecase'
+import { createTestStore } from './store'
+import { getBoards } from './boards/usecases/get-boards.usecase'
+import { fakeState } from './boards/fake-state/fake'
 
-const store = createStore({
-  boardGateway: new FakeBoardGateway(),
-})
+const store = createTestStore({}, fakeState)
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  store.dispatch(getAllBoards)
+  store.dispatch(getBoards)
   return <Provider store={store}>{children}</Provider>
 }

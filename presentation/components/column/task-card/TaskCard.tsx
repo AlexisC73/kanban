@@ -7,7 +7,7 @@ export interface TaskCardProps {
 export const TaskCard = ({
   name,
   completedSubTasksAmount,
-  totalSubTasksAmount
+  totalSubTasksAmount,
 }: TaskCardProps) => {
   return (
     <li className='bg-white dark:bg-Dark-Grey px-4 py-6 flex flex-col gap-y-2 rounded-lg shadow-card-task'>

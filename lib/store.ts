@@ -1,6 +1,7 @@
 import { AnyAction, ThunkDispatch, configureStore } from '@reduxjs/toolkit'
 import { BoardGateway } from './boards/model/board.gateway'
-import { reducer } from './boards/reducer'
+import { FakeBoardGateway } from './boards/infra/fake-board.gateway'
+import { rootReducer } from './root-reducer'
 
 export interface Dependencies {
   boardGateway: BoardGateway
@@ -8,10 +9,10 @@ export interface Dependencies {
 
 export const createStore = (
   dependencies: Dependencies,
-  preloadedState?: Partial<ReturnType<typeof reducer>>,
+  preloadedState?: Partial<ReturnType<typeof rootReducer>>,
 ) =>
   configureStore({
-    reducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware({
         thunk: {
@@ -19,8 +20,16 @@ export const createStore = (
         },
       })
     },
+    preloadedState,
   })
 
+export const createTestStore = (
+  { boardGateway = new FakeBoardGateway() }: Partial<Dependencies> = {},
+  preloadedState?: Partial<ReturnType<typeof rootReducer>>,
+) => {
+  return createStore({ boardGateway }, preloadedState)
+}
+
 export type AppStore = ReturnType<typeof createStore>
-export type RootState = ReturnType<AppStore['getState']>
+export type RootState = ReturnType<typeof rootReducer>
 export type AppDispatch = ThunkDispatch<RootState, Dependencies, AnyAction>

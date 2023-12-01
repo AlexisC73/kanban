@@ -1,46 +1,19 @@
 export interface BoardGateway {
-  getAllBoards: () => Promise<GetAllBoards>
-  createBoard: (board: {
-    name: string
-    columns: string[]
-  }) => Promise<CreateBoardResponse>
-  getBoardById: (id: string) => Promise<GetBoardByIdResponse>
-  updateBoard: (board: {
-    id: string
-    name: string
-    columns: Array<{ id: string; name: string }>
-  }) => Promise<void>
+  getBoards: () => Promise<GetBoardsResponse>
 }
 
-export type GetAllBoards = Array<{
+export type GetBoardsResponse = Array<{
   id: string
   name: string
   columns: Array<{
     id: string
     name: string
-    tasks: string[]
-    board: string
+    tasks: Array<{
+      id: string
+      name: string
+      description: string
+      status: string
+      subtasks: Array<{ id: string; name: string; completed: boolean }>
+    }>
   }>
 }>
-
-export interface CreateBoardResponse {
-  id: string
-  name: string
-  columns: Array<{
-    id: string
-    name: string
-    tasks: string[]
-    board: string
-  }>
-}
-
-export interface GetBoardByIdResponse {
-  id: string
-  name: string
-  columns: Array<{
-    id: string
-    name: string
-    tasks: string[]
-    board: string
-  }>
-}
