@@ -6,7 +6,7 @@ import { useState } from 'react'
 import { useAppDispatch } from '@/lib/hook'
 import { createBoard } from '@/lib/boards/usecases/add-board.usecase'
 
-export const AddBoardModal = ({ closeModal }: { closeModal: () => void }) => {
+export const AddBoardModal = ({ closeModal }: { closeModal?: () => void }) => {
   const dispatch = useAppDispatch()
 
   const [submiting, setSubmiting] = useState(false)
