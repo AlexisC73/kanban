@@ -2,6 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { columnEntityAdapter } from '../model/column.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
+import { createBoard } from '../usecases/add-board.usecase'
 
 export const columnsSlice = createSlice({
   name: 'columns',
@@ -18,6 +19,17 @@ export const columnsSlice = createSlice({
             tasks: c.tasks.map((t) => t.id),
           })),
         ),
+      )
+    })
+
+    builder.addCase(createBoard.fulfilled, (state, { meta }) => {
+      columnEntityAdapter.addMany(
+        state,
+        meta.arg.columns.map((c) => ({
+          id: c.id,
+          name: c.name,
+          tasks: [],
+        })),
       )
     })
   },

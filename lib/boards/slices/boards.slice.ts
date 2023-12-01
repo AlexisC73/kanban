@@ -2,6 +2,7 @@ import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { boardEntityAdapter } from '../model/board.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
+import { createBoard } from '../usecases/add-board.usecase'
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -17,6 +18,14 @@ export const boardsSlice = createSlice({
           columns: b.columns.map((c) => c.id),
         })),
       )
+    })
+
+    builder.addCase(createBoard.fulfilled, (state, { meta }) => {
+      boardEntityAdapter.addOne(state, {
+        id: meta.arg.id,
+        name: meta.arg.name,
+        columns: meta.arg.columns.map((c) => c.id),
+      })
     })
   },
 })
