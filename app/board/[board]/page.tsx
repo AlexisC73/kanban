@@ -6,6 +6,7 @@ import ColumList from '@/presentation/components/ColumnList/ColumnList'
 import { redirect, useParams } from 'next/navigation'
 import { ReactNode } from 'react'
 import { BoardViewModelType, selectBoardViewModel } from './board.viewmodel'
+import { exhaustiveGuard } from '@/lib/common/utils/exhaustiveGuard'
 
 export default function BoardPage() {
   const { board: boardId }: { board: string } = useParams()
@@ -23,7 +24,7 @@ export default function BoardPage() {
       case BoardViewModelType.BOARD_WITH_COLUMNS:
         return <ColumList board={boardViewModel.board.data} />
       default:
-        return null
+        return exhaustiveGuard(boardViewModel.board)
     }
   })()
 
