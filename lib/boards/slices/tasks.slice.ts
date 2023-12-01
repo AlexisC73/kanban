@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { taskEntityAdapter } from '../model/task.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
@@ -27,9 +27,8 @@ export const tasksSlice = createSlice({
   },
 })
 
-export const selectTasks = (state: RootState, taskIds: string[]) => {
-  return taskEntityAdapter
-    .getSelectors()
-    .selectAll(state.tasks)
-    .filter((t) => taskIds.includes(t.id))
-}
+export const selectTasks = createSelector(
+  (state: RootState, taskIds: string[]) =>
+    [taskEntityAdapter.getSelectors().selectAll(state.tasks), taskIds] as const,
+  ([tasks, taskIds]) => tasks.filter((t) => taskIds.includes(t.id)),
+)

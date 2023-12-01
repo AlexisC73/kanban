@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { boardEntityAdapter } from '../model/board.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
@@ -21,8 +21,14 @@ export const boardsSlice = createSlice({
   },
 })
 
-export const selectBoards = (state: RootState) =>
-  boardEntityAdapter.getSelectors().selectAll(state.boards)
+export const selectBoards = createSelector(
+  (state: RootState) =>
+    boardEntityAdapter.getSelectors().selectAll(state.boards),
+  (boards) => boards,
+)
 
-export const selectBoard = (state: RootState, boardId: string) =>
-  boardEntityAdapter.getSelectors().selectById(state.boards, boardId)
+export const selectBoard = createSelector(
+  (state: RootState, boardId: string) =>
+    boardEntityAdapter.getSelectors().selectById(state.boards, boardId),
+  (board) => board,
+)

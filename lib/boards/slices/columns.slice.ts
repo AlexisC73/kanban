@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSelector, createSlice } from '@reduxjs/toolkit'
 import { columnEntityAdapter } from '../model/column.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
@@ -23,8 +23,11 @@ export const columnsSlice = createSlice({
   },
 })
 
-export const selectColumns = (state: RootState, columnIds: string[]) =>
-  columnEntityAdapter
-    .getSelectors()
-    .selectAll(state.columns)
-    .filter((c) => columnIds.includes(c.id))
+export const selectColumns = createSelector(
+  (state: RootState, columnIds: string[]) =>
+    [
+      columnEntityAdapter.getSelectors().selectAll(state.columns),
+      columnIds,
+    ] as const,
+  ([columns, columnIds]) => columns.filter((c) => columnIds.includes(c.id)),
+)
