@@ -3,6 +3,8 @@ import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
 import { TextField } from '../text-field/TextField'
 import { CrossIcon, SpinnerIcon } from '@/presentation/@shared/assets'
 import { useState } from 'react'
+import { useAppDispatch } from '@/lib/hook'
+import { editBoard } from '@/lib/boards/usecases/edit-board.usecase'
 
 export const EditBoardModal = ({
   boardToEdit,
@@ -15,42 +17,50 @@ export const EditBoardModal = ({
   }
   closeModal: () => void
 }) => {
+  const dispatch = useAppDispatch()
   const [submiting, setSubmiting] = useState(false)
-  const [editBoard, setEditBoard] = useState({
+  const [board, setBoard] = useState({
     id: boardToEdit.id,
-    boardName: boardToEdit.name,
-    boardColumns: boardToEdit.columns,
+    name: boardToEdit.name,
+    columns: boardToEdit.columns,
   })
 
   const deleteColumn = (id: string) => {
-    setEditBoard((prev) => ({
+    setBoard((prev) => ({
       ...prev,
-      boardColumns: prev.boardColumns.filter((column) => column.id !== id),
+      columns: prev.columns.filter((column) => column.id !== id),
     }))
   }
 
   const editColumnName = (id: string) => (name: string) => {
-    setEditBoard((prev) => ({
+    setBoard((prev) => ({
       ...prev,
-      boardColumns: prev.boardColumns.map((column) =>
+      columns: prev.columns.map((column) =>
         column.id === id ? { ...column, name } : column,
       ),
     }))
   }
 
   const addNewColumn = () => {
-    setEditBoard((prev) => ({
+    setBoard((prev) => ({
       ...prev,
-      boardColumns: [
-        ...prev.boardColumns,
-        { id: `column_${Date.now()}`, name: '' },
-      ],
+      columns: [...prev.columns, { id: `column_${Date.now()}`, name: '' }],
     }))
   }
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmiting(true)
+    dispatch(
+      editBoard({
+        id: board.id,
+        name: board.name,
+        columns: board.columns,
+      }),
+    ).then(() => {
+      setSubmiting(false)
+      closeModal?.()
+    })
   }
 
   const handleCloseModal = () => {
@@ -73,15 +83,15 @@ export const EditBoardModal = ({
         <TextFieldWithInput
           label='Board Name'
           name='board-name'
-          value={editBoard.boardName}
+          value={board.name}
           onValueChange={(value: string) => {
-            setEditBoard((prev) => ({ ...prev, boardName: value }))
+            setBoard((prev) => ({ ...prev, name: value }))
           }}
           placeholder='e.g. Web Design'
         />
 
         <ListWithCrossButton
-          columns={editBoard.boardColumns}
+          columns={board.columns}
           onColumnNameChange={editColumnName}
           deleteColumn={deleteColumn}
           onAddNewColumn={addNewColumn}

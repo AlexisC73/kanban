@@ -3,9 +3,8 @@
 import { Provider } from 'react-redux'
 import { createTestStore } from './store'
 import { getBoards } from './boards/usecases/get-boards.usecase'
-import { fakeState } from './boards/fake-state/fake'
 
-const store = createTestStore({}, fakeState)
+const store = createTestStore({}, {})
 
 export function Providers({ children }: { children: React.ReactNode }) {
   store.dispatch(getBoards)

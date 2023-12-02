@@ -1,4 +1,4 @@
-import { stateBuilder } from '../board.builder'
+import { stateBuilder } from '../../state.builder'
 import { BoardFixture, createBoardFixture } from './fixture/boardFixture'
 
 describe('Feature: Adding a new board', () => {
@@ -55,12 +55,12 @@ describe('Feature: Adding a new board', () => {
           {
             id: 'column-id',
             name: 'column-name',
-            tasks: [],
+            boardId: 'board-id',
           },
           {
             id: 'column-id-2',
             name: 'column-name-2',
-            tasks: [],
+            boardId: 'board-id',
           },
         ],
       },
@@ -82,7 +82,7 @@ describe('Feature: Adding a new board', () => {
           {
             id: 'column-1-id',
             name: 'column-1-name',
-            tasks: [],
+            boardId: 'board-1-id',
           },
         ])
         .build(),
@@ -96,7 +96,7 @@ describe('Feature: Adding a new board', () => {
           {
             id: 'column-1-id',
             name: 'column-1-name',
-            tasks: [],
+            boardId: 'board-1-id',
           },
         ],
       },
@@ -125,7 +125,7 @@ describe('Feature: Adding a new board', () => {
           {
             id: 'column-1-id',
             name: 'column-1-name',
-            tasks: [],
+            boardId: 'board-1-id',
           },
         ],
       },
@@ -136,12 +136,12 @@ describe('Feature: Adding a new board', () => {
           {
             id: 'column-id',
             name: 'column-name',
-            tasks: [],
+            boardId: 'board-id',
           },
           {
             id: 'column-id-2',
             name: 'column-name-2',
-            tasks: [],
+            boardId: 'board-id',
           },
         ],
       },

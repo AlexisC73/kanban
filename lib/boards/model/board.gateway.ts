@@ -5,6 +5,14 @@ export interface BoardGateway {
     name: string
     columns: Array<{ id: string; name: string }>
   }) => Promise<void>
+  editBoard: (board: {
+    id: string
+    name: string
+    columns: Array<{
+      id: string
+      name: string
+    }>
+  }) => Promise<EditBoardResponse>
 }
 
 export type GetBoardsResponse = Array<{
@@ -13,12 +21,16 @@ export type GetBoardsResponse = Array<{
   columns: Array<{
     id: string
     name: string
-    tasks: Array<{
-      id: string
-      name: string
-      description: string
-      status: string
-      subtasks: Array<{ id: string; name: string; completed: boolean }>
-    }>
+    boardId: string
   }>
 }>
+
+export interface EditBoardResponse {
+  id: string
+  name: string
+  columns: Array<{
+    id: string
+    name: string
+    boardId: string
+  }>
+}

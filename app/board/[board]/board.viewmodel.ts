@@ -1,7 +1,7 @@
 import { selectBoard } from '@/lib/boards/slices/boards.slice'
-import { selectColumns } from '@/lib/boards/slices/columns.slice'
-import { selectSubtasks } from '@/lib/boards/slices/subtasks.slice'
-import { selectTasks } from '@/lib/boards/slices/tasks.slice'
+import { selectColumnsWithIds } from '@/lib/boards/slices/columns.slice'
+import { selectSubtasksWithIds } from '@/lib/tasks/slices/subtasks.slice'
+import { selectBoardTasks } from '@/lib/tasks/slices/tasks.slice'
 import { RootState } from '@/lib/store'
 import { createSelector } from '@reduxjs/toolkit'
 
@@ -61,9 +61,11 @@ export const selectBoardViewModel = createSelector(
       }
     }
 
-    const columns = selectColumns(state, board.columns)
-    const tasks = columns.flatMap((c) => selectTasks(state, c.tasks))
-    const subtasks = tasks.flatMap((t) => selectSubtasks(state, t.subtasks))
+    const columns = selectColumnsWithIds(state, board.columns)
+    const tasks = selectBoardTasks(state, board.id)
+    const subtasks = tasks.flatMap((t) =>
+      selectSubtasksWithIds(state, t.subtasks),
+    )
 
     const returnedBoard = {
       id: board.id,
@@ -72,7 +74,7 @@ export const selectBoardViewModel = createSelector(
         id: c.id,
         title: c.name,
         tasks: tasks
-          .filter((t) => c.tasks.includes(t.id))
+          .filter((t) => c.id === t.statusId)
           .map((t) => ({
             id: t.id,
             name: t.name,

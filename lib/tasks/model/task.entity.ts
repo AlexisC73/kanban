@@ -4,8 +4,9 @@ export interface Task {
   id: string
   name: string
   description: string
-  status: string
+  statusId: string
   subtasks: string[]
+  boardId: string
 }
 
 export const taskEntityAdapter = createEntityAdapter<Task>()

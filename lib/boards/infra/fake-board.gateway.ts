@@ -1,4 +1,8 @@
-import { BoardGateway, GetBoardsResponse } from '../model/board.gateway'
+import {
+  BoardGateway,
+  EditBoardResponse,
+  GetBoardsResponse,
+} from '../model/board.gateway'
 
 export class FakeBoardGateway implements BoardGateway {
   boards: Array<{
@@ -7,13 +11,7 @@ export class FakeBoardGateway implements BoardGateway {
     columns: Array<{
       id: string
       name: string
-      tasks: Array<{
-        id: string
-        name: string
-        description: string
-        status: string
-        subtasks: Array<{ id: string; name: string; completed: boolean }>
-      }>
+      boardId: string
     }>
   }> = []
 
@@ -32,5 +30,30 @@ export class FakeBoardGateway implements BoardGateway {
     }
     this.boards.push(newBoard)
     await Promise.resolve()
+  }
+
+  async editBoard(board: {
+    id: string
+    name: string
+    columns: Array<{
+      id: string
+      name: string
+    }>
+  }): Promise<EditBoardResponse> {
+    const boardIndex = this.boards.findIndex((b) => b.id === board.id)
+    if (boardIndex === -1) {
+      throw new Error('Board not found')
+    }
+    this.boards[boardIndex] = {
+      ...this.boards[boardIndex],
+      id: board.id,
+      name: board.name,
+      columns: board.columns.map((c) => ({
+        id: c.id,
+        name: c.name,
+        boardId: board.id,
+      })),
+    }
+    return await Promise.resolve(this.boards[boardIndex])
   }
 }

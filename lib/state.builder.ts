@@ -3,12 +3,12 @@ import {
   createAction,
   createReducer,
 } from '@reduxjs/toolkit'
-import { Board, boardEntityAdapter } from './model/board.entity'
-import { rootReducer } from '../root-reducer'
-import { RootState } from '../store'
-import { Column, columnEntityAdapter } from './model/column.entity'
-import { Task, taskEntityAdapter } from './model/task.entity'
-import { Subtask, subtaskEntityAdapter } from './model/subtask.entity'
+import { Board, boardEntityAdapter } from './boards/model/board.entity'
+import { rootReducer } from './root-reducer'
+import { RootState } from './store'
+import { Column, columnEntityAdapter } from './boards/model/column.entity'
+import { Subtask, subtaskEntityAdapter } from './tasks/model/subtask.entity'
+import { Task, taskEntityAdapter } from './tasks/model/task.entity'
 
 const initialState = rootReducer(undefined, createAction(''))
 

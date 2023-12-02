@@ -1,8 +1,9 @@
 import { RootState, createTestStore } from '@/lib/store'
 import { FakeBoardGateway } from '../../infra/fake-board.gateway'
 import { getBoards } from '../../usecases/get-boards.usecase'
-import { stateBuilder } from '../../board.builder'
+import { stateBuilder } from '../../../state.builder'
 import { createBoard } from '../../usecases/add-board.usecase'
+import { editBoard } from '../../usecases/edit-board.usecase'
 
 export const createBoardFixture = (
   {
@@ -20,13 +21,7 @@ export const createBoardFixture = (
         columns: Array<{
           id: string
           name: string
-          tasks: Array<{
-            id: string
-            name: string
-            description: string
-            status: string
-            subtasks: Array<{ id: string; name: string; completed: boolean }>
-          }>
+          boardId: string
         }>
       }>,
     ) {
@@ -42,6 +37,15 @@ export const createBoardFixture = (
     }) {
       await store.dispatch(createBoard(board))
     },
+    async whenEditBoard(board: {
+      id: string
+      name: string
+      columns: Array<{ id: string; name: string }>
+    }) {
+      try {
+        await store.dispatch(editBoard(board))
+      } catch (e) {}
+    },
     thenBoardShouldBe(
       expectedBoards: Array<{
         id: string
@@ -49,13 +53,7 @@ export const createBoardFixture = (
         columns: Array<{
           id: string
           name: string
-          tasks: Array<{
-            id: string
-            name: string
-            description: string
-            status: string
-            subtasks: Array<{ id: string; name: string; completed: boolean }>
-          }>
+          boardId: string
         }>
       }>,
     ) {
@@ -73,34 +71,8 @@ export const createBoardFixture = (
             b.columns.map((c) => ({
               id: c.id,
               name: c.name,
-              tasks: c.tasks.map((t) => t.id),
+              boardId: b.id,
             })),
-          ),
-        )
-        .withTasks(
-          expectedBoards.flatMap((b) =>
-            b.columns.flatMap((c) =>
-              c.tasks.map((t) => ({
-                id: t.id,
-                name: t.name,
-                description: t.description,
-                status: t.status,
-                subtasks: t.subtasks.map((s) => s.id),
-              })),
-            ),
-          ),
-        )
-        .withSubtasks(
-          expectedBoards.flatMap((b) =>
-            b.columns.flatMap((c) =>
-              c.tasks.flatMap((t) =>
-                t.subtasks.map((s) => ({
-                  id: s.id,
-                  name: s.name,
-                  completed: s.completed,
-                })),
-              ),
-            ),
           ),
         )
         .build()

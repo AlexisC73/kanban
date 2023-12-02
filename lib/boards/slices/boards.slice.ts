@@ -3,6 +3,7 @@ import { boardEntityAdapter } from '../model/board.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
 import { createBoard } from '../usecases/add-board.usecase'
+import { editBoard } from '../usecases/edit-board.usecase'
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -25,6 +26,16 @@ export const boardsSlice = createSlice({
         id: meta.arg.id,
         name: meta.arg.name,
         columns: meta.arg.columns.map((c) => c.id),
+      })
+    })
+
+    builder.addCase(editBoard.fulfilled, (state, action) => {
+      boardEntityAdapter.updateOne(state, {
+        id: action.payload.id,
+        changes: {
+          name: action.payload.name,
+          columns: action.payload.columns.map((c) => c.id),
+        },
       })
     })
   },

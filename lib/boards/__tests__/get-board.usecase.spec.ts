@@ -12,23 +12,7 @@ describe('Feature: Reetrieving boards', () => {
       {
         id: 'board-1',
         name: 'Board 1',
-        columns: [
-          {
-            id: 'column-1',
-            name: 'Column 1',
-            tasks: [
-              {
-                id: 'task-1',
-                name: 'Task 1',
-                description: 'task 1 desc',
-                status: 'column-1',
-                subtasks: [
-                  { id: 'subtask-1', name: 'subtask 1', completed: false },
-                ],
-              },
-            ],
-          },
-        ],
+        columns: [{ id: 'column-id-1', name: 'Column 1', boardId: 'board-1' }],
       },
     ])
 
@@ -40,19 +24,9 @@ describe('Feature: Reetrieving boards', () => {
         name: 'Board 1',
         columns: [
           {
-            id: 'column-1',
+            id: 'column-id-1',
             name: 'Column 1',
-            tasks: [
-              {
-                id: 'task-1',
-                name: 'Task 1',
-                description: 'task 1 desc',
-                status: 'column-1',
-                subtasks: [
-                  { id: 'subtask-1', name: 'subtask 1', completed: false },
-                ],
-              },
-            ],
+            boardId: 'board-1',
           },
         ],
       },
@@ -68,17 +42,7 @@ describe('Feature: Reetrieving boards', () => {
           {
             id: 'column-1',
             name: 'Column 1',
-            tasks: [
-              {
-                id: 'task-1',
-                name: 'Task 1',
-                description: 'task 1 desc',
-                status: 'column-1',
-                subtasks: [
-                  { id: 'subtask-1', name: 'subtask 1', completed: false },
-                ],
-              },
-            ],
+            boardId: 'board-1',
           },
         ],
       },
@@ -89,17 +53,7 @@ describe('Feature: Reetrieving boards', () => {
           {
             id: 'column-2',
             name: 'Column 2',
-            tasks: [
-              {
-                id: 'task-2',
-                name: 'Task 2',
-                description: 'task 2 desc',
-                status: 'column-2',
-                subtasks: [
-                  { id: 'subtask-2', name: 'subtask 2', completed: false },
-                ],
-              },
-            ],
+            boardId: 'board-2',
           },
         ],
       },
@@ -115,17 +69,7 @@ describe('Feature: Reetrieving boards', () => {
           {
             id: 'column-1',
             name: 'Column 1',
-            tasks: [
-              {
-                id: 'task-1',
-                name: 'Task 1',
-                description: 'task 1 desc',
-                status: 'column-1',
-                subtasks: [
-                  { id: 'subtask-1', name: 'subtask 1', completed: false },
-                ],
-              },
-            ],
+            boardId: 'board-1',
           },
         ],
       },
@@ -136,17 +80,7 @@ describe('Feature: Reetrieving boards', () => {
           {
             id: 'column-2',
             name: 'Column 2',
-            tasks: [
-              {
-                id: 'task-2',
-                name: 'Task 2',
-                description: 'task 2 desc',
-                status: 'column-2',
-                subtasks: [
-                  { id: 'subtask-2', name: 'subtask 2', completed: false },
-                ],
-              },
-            ],
+            boardId: 'board-2',
           },
         ],
       },

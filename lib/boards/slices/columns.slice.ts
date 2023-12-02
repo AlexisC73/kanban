@@ -3,6 +3,7 @@ import { columnEntityAdapter } from '../model/column.entity'
 import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
 import { createBoard } from '../usecases/add-board.usecase'
+import { editBoard } from '../usecases/edit-board.usecase'
 
 export const columnsSlice = createSlice({
   name: 'columns',
@@ -16,7 +17,7 @@ export const columnsSlice = createSlice({
           b.columns.map((c) => ({
             id: c.id,
             name: c.name,
-            tasks: c.tasks.map((t) => t.id),
+            boardId: b.id,
           })),
         ),
       )
@@ -28,7 +29,29 @@ export const columnsSlice = createSlice({
         meta.arg.columns.map((c) => ({
           id: c.id,
           name: c.name,
-          tasks: [],
+          boardId: meta.arg.id,
+        })),
+      )
+    })
+
+    builder.addCase(editBoard.fulfilled, (state, action) => {
+      const shouldRemoveCol = columnEntityAdapter
+        .getSelectors()
+        .selectAll(state)
+        .filter((c) => c.boardId === action.payload.id)
+        .filter((c) => !action.payload.columns.map((c) => c.id).includes(c.id))
+
+      columnEntityAdapter.removeMany(
+        state,
+        shouldRemoveCol.map((c) => c.id),
+      )
+
+      columnEntityAdapter.upsertMany(
+        state,
+        action.payload.columns.map((c) => ({
+          id: c.id,
+          name: c.name,
+          boardId: action.payload.id,
         })),
       )
     })
@@ -36,10 +59,25 @@ export const columnsSlice = createSlice({
 })
 
 export const selectColumns = createSelector(
+  (state: RootState) =>
+    columnEntityAdapter.getSelectors().selectAll(state.columns),
+  (columns) => columns,
+)
+
+export const selectColumnsWithIds = createSelector(
   (state: RootState, columnIds: string[]) =>
     [
       columnEntityAdapter.getSelectors().selectAll(state.columns),
       columnIds,
     ] as const,
   ([columns, columnIds]) => columns.filter((c) => columnIds.includes(c.id)),
+)
+
+export const selectBoardColumns = createSelector(
+  (state: RootState, boardId: string) =>
+    [
+      columnEntityAdapter.getSelectors().selectAll(state.columns),
+      boardId,
+    ] as const,
+  ([columns, boardId]) => columns.filter((c) => c.boardId === boardId),
 )
