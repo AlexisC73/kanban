@@ -119,7 +119,7 @@ describe('Board view model', () => {
             name: 'Task 1',
             boardId: 'board-id-1',
             description: "Task 1's description",
-            statusId: 'column-id-1',
+            columnId: 'column-id-1',
             subtasks: [],
           },
         ])

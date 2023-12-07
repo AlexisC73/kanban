@@ -1,21 +1,44 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { taskEntityAdapter } from '../model/task.entity'
+import { createSlice } from '@reduxjs/toolkit'
+import { tasksEntityAdapter } from '../model/tasks.entity'
 import { RootState } from '@/lib/store'
+import { getTasks } from '../usecases/get-tasks.usecase'
 
 export const tasksSlice = createSlice({
   name: 'tasks',
-  initialState: taskEntityAdapter.getInitialState(),
+  initialState: tasksEntityAdapter.getInitialState(),
   reducers: {},
-  extraReducers(builder) {},
+  extraReducers(builder) {
+    builder.addCase(getTasks.fulfilled, (state, action) => {
+      tasksEntityAdapter.addMany(
+        state,
+        action.payload.map((t) => ({
+          id: t.id,
+          name: t.name,
+          boardId: t.boardId,
+          columnId: t.columnId,
+          description: t.description,
+          subtasks: t.subtasks.map((s) => s.id),
+        })),
+      )
+    })
+  },
 })
 
-export const selectTasks = createSelector(
-  (state: RootState) => taskEntityAdapter.getSelectors().selectAll(state.tasks),
-  (tasks) => tasks,
-)
+export const selectTasks = (state: RootState) =>
+  tasksEntityAdapter.getSelectors().selectAll(state.tasks)
 
-export const selectBoardTasks = createSelector(
-  (state: RootState, boardId: string) =>
-    [taskEntityAdapter.getSelectors().selectAll(state.tasks), boardId] as const,
-  ([tasks, boardId]) => tasks.filter((task) => task.boardId === boardId),
-)
+export const selectBoardTasks = (state: RootState, boardId: string) => {
+  const tasksEntity = tasksEntityAdapter
+    .getSelectors()
+    .selectAll(state.tasks)
+    .filter((t) => t.boardId === boardId)
+
+  return tasksEntity.map((t) => ({
+    id: t.id,
+    name: t.name,
+    description: t.description,
+    columnId: t.columnId,
+    boardId: t.boardId,
+    subtasks: t.subtasks,
+  }))
+}

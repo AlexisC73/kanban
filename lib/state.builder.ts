@@ -7,8 +7,8 @@ import { Board, boardEntityAdapter } from './boards/model/board.entity'
 import { rootReducer } from './root-reducer'
 import { RootState } from './store'
 import { Column, columnEntityAdapter } from './boards/model/column.entity'
-import { Subtask, subtaskEntityAdapter } from './tasks/model/subtask.entity'
-import { Task, taskEntityAdapter } from './tasks/model/task.entity'
+import { Task, tasksEntityAdapter } from './tasks/model/tasks.entity'
+import { Subtask, subtasksEntityAdapter } from './tasks/model/sutasks.entity'
 
 const initialState = rootReducer(undefined, createAction(''))
 
@@ -27,11 +27,11 @@ const reducer = createReducer(initialState, (builder) => {
   })
 
   builder.addCase(withTasks, (state, action) => {
-    taskEntityAdapter.addMany(state.tasks, action.payload)
+    tasksEntityAdapter.addMany(state.tasks, action.payload)
   })
 
   builder.addCase(withSubtasks, (state, action) => {
-    subtaskEntityAdapter.addMany(state.subtasks, action.payload)
+    subtasksEntityAdapter.addMany(state.subtasks, action.payload)
   })
 })
 

@@ -1,25 +1,32 @@
-import { createSelector, createSlice } from '@reduxjs/toolkit'
-import { subtaskEntityAdapter } from '../model/subtask.entity'
+import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@/lib/store'
+import { getTasks } from '../usecases/get-tasks.usecase'
+import { subtasksEntityAdapter } from '../model/sutasks.entity'
 
 export const subtasksSlice = createSlice({
   name: 'subtasks',
-  initialState: subtaskEntityAdapter.getInitialState(),
+  initialState: subtasksEntityAdapter.getInitialState(),
   reducers: {},
-  extraReducers(builder) {},
+  extraReducers(builder) {
+    builder.addCase(getTasks.fulfilled, (state, action) => {
+      subtasksEntityAdapter.addMany(
+        state,
+        action.payload.flatMap((t) => t.subtasks),
+      )
+    })
+  },
 })
 
-export const selectSubtasks = createSelector(
-  (state: RootState) =>
-    subtaskEntityAdapter.getSelectors().selectAll(state.subtasks),
-  (subtasks) => subtasks,
-)
+export const selectSubtasks = (state: RootState) =>
+  subtasksEntityAdapter.getSelectors().selectAll(state.subtasks)
 
-export const selectSubtasksWithIds = createSelector(
-  (state: RootState, ids: string[]) =>
-    [
-      subtaskEntityAdapter.getSelectors().selectAll(state.subtasks),
-      ids,
-    ] as const,
-  ([subtasks, ids]) => subtasks.filter((subtask) => ids.includes(subtask.id)),
-)
+export const selectSubtasksWithIds = (
+  state: RootState,
+  subtaskIds: string[],
+) => {
+  const subtasksEntity = subtasksEntityAdapter
+    .getSelectors()
+    .selectAll(state.subtasks)
+
+  return subtasksEntity.filter((s) => subtaskIds.includes(s.id))
+}

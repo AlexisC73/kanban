@@ -2,9 +2,12 @@ import { AnyAction, ThunkDispatch, configureStore } from '@reduxjs/toolkit'
 import { BoardGateway } from './boards/model/board.gateway'
 import { FakeBoardGateway } from './boards/infra/fake-board.gateway'
 import { rootReducer } from './root-reducer'
+import { TaskGateway } from './tasks/model/tasks.gateway'
+import { FakeTaskGateway } from './tasks/infra/fake-task.gateway'
 
 export interface Dependencies {
   boardGateway: BoardGateway
+  taskGateway: TaskGateway
 }
 
 export const createStore = (
@@ -24,10 +27,13 @@ export const createStore = (
   })
 
 export const createTestStore = (
-  { boardGateway = new FakeBoardGateway() }: Partial<Dependencies> = {},
+  {
+    boardGateway = new FakeBoardGateway(),
+    taskGateway = new FakeTaskGateway(),
+  }: Partial<Dependencies> = {},
   preloadedState?: Partial<ReturnType<typeof rootReducer>>,
 ) => {
-  return createStore({ boardGateway }, preloadedState)
+  return createStore({ boardGateway, taskGateway }, preloadedState)
 }
 
 export type AppStore = ReturnType<typeof createStore>

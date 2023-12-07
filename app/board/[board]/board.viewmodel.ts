@@ -74,7 +74,7 @@ export const selectBoardViewModel = createSelector(
         id: c.id,
         title: c.name,
         tasks: tasks
-          .filter((t) => c.id === t.statusId)
+          .filter((t) => c.id === t.columnId)
           .map((t) => ({
             id: t.id,
             name: t.name,
