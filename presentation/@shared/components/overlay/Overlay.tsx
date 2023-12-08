@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 export const Overlay = ({
   children,
   fixed = false,
-  onClickAction
+  onClickAction,
 }: { fixed?: boolean; onClickAction?: () => void } & PropsWithChildren) => {
   return (
     <div

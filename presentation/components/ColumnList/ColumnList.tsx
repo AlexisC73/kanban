@@ -8,10 +8,10 @@ export interface ColumnListProps {
   }
 }
 
-export default function ColumList ({ board }: ColumnListProps) {
+export default function ColumList({ board }: ColumnListProps) {
   return (
     <div className='flex gap-x-6 p-4 py-6 md:px-6'>
-      {board.columns.map(col => (
+      {board.columns.map((col) => (
         <Column key={col.id} title={col.title} tasks={col.tasks} />
       ))}
     </div>

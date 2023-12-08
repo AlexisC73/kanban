@@ -14,9 +14,10 @@ export const Column = ({ title, tasks }: ColumnProps) => {
         {title} ({tasks.length})
       </h2>
       <ul className='flex flex-col gap-y-5'>
-        {tasks.map(task => (
+        {tasks.map((task) => (
           <TaskCard
             key={task.id}
+            id={task.id}
             completedSubTasksAmount={task.completedSubTasksAmount}
             totalSubTasksAmount={task.totalSubTasksAmount}
             name={task.name}

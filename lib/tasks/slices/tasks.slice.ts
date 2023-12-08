@@ -39,6 +39,9 @@ export const tasksSlice = createSlice({
 export const selectTasks = (state: RootState) =>
   tasksEntityAdapter.getSelectors().selectAll(state.tasks)
 
+export const selectTask = (state: RootState, taskId: string) =>
+  tasksEntityAdapter.getSelectors().selectById(state.tasks, taskId)
+
 export const selectBoardTasks = (state: RootState, boardId: string) => {
   const tasksEntity = tasksEntityAdapter
     .getSelectors()
