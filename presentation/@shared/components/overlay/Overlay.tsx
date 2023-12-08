@@ -10,7 +10,7 @@ export const Overlay = ({
       onClick={onClickAction}
       className={`${
         fixed ? 'fixed' : 'absolute'
-      } inset-0 h-screen bg-Black bg-opacity-40 flex items-center justify-center`}
+      } inset-0 h-screen bg-Black bg-opacity-40 flex items-center z-50 justify-center`}
     >
       {children}
     </div>

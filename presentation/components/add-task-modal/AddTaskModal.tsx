@@ -78,8 +78,13 @@ export const AddTaskModal = ({
   }
 
   return (
-    <Overlay>
-      <div className='bg-white dark:bg-Dark-Grey p-6 flex flex-col gap-y-6 w-full mx-4 rounded-md md:w-[480px]'>
+    <Overlay onClickAction={closeModal}>
+      <div
+        onClick={(e) => {
+          e.stopPropagation()
+        }}
+        className='bg-white dark:bg-Dark-Grey p-6 flex flex-col gap-y-6 w-full mx-4 rounded-md md:w-[480px]'
+      >
         <h2 className='text-Heading-L dark:text-white'>Add New Task</h2>
         <form className='flex flex-col gap-y-6' onSubmit={handleSubmit}>
           <TextFieldWithInput
