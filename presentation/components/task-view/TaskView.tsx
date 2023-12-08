@@ -1,7 +1,6 @@
 import { VerticalMenuIcon } from '@/presentation/@shared/assets'
 import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
 import { SubtaskCheckbox } from '../subtask-checkbox/SubtaskCheckbox'
-import { StatusSelect } from '../status-select/StatusSelect'
 import { PropsWithChildren } from 'react'
 
 export const TaskView = () => {
