@@ -41,6 +41,8 @@ describe('TaskViewViewModel', () => {
         boardId: 'board-1',
         columnId: 'column-1',
         description: 'Description 1',
+        completedSubtasksCount: 0,
+        totalSubtasksCount: 0,
         subtasks: [],
       },
     })
@@ -87,6 +89,8 @@ describe('TaskViewViewModel', () => {
         boardId: 'board-1',
         columnId: 'column-1',
         description: 'Description 1',
+        completedSubtasksCount: 0,
+        totalSubtasksCount: 2,
         subtasks: [
           {
             id: 'sub-1',

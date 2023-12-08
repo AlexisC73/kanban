@@ -7,6 +7,8 @@ export interface TaskViewProps {
     id: string
     description: string
     name: string
+    completedSubtasksCount: number
+    totalSubtasksCount: number
     subtasks: Array<{
       id: string
       name: string
@@ -32,7 +34,9 @@ export const TaskView = ({ task }: TaskViewProps) => {
       </div>
       <p className='text-Body-L text-Medium-Grey'>{task.description}</p>
       <div className='flex flex-col gap-y-4'>
-        <SectionTitle>Subtasks (2 of 3)</SectionTitle>
+        <SectionTitle>
+          Subtasks ({task.completedSubtasksCount} of {task.totalSubtasksCount})
+        </SectionTitle>
         <ul className='flex flex-col gap-y-2'>
           {task.subtasks.map((subtask) => (
             <SubtaskCheckbox

@@ -20,6 +20,8 @@ export const selectTaskModalViewModel = (
         description: string
         columnId: string
         boardId: string
+        completedSubtasksCount: number
+        totalSubtasksCount: number
         subtasks: Array<{
           id: string
           name: string
@@ -45,6 +47,9 @@ export const selectTaskModalViewModel = (
       description: task.description,
       columnId: task.columnId,
       boardId: task.boardId,
+      completedSubtasksCount: subtasks.filter((subtask) => subtask.completed)
+        .length,
+      totalSubtasksCount: subtasks.length,
       subtasks,
     },
   }
