@@ -4,6 +4,7 @@ import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
 import { createBoard } from '../usecases/add-board.usecase'
 import { editBoard } from '../usecases/edit-board.usecase'
+import { columnEntityAdapter } from '../model/column.entity'
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -52,3 +53,24 @@ export const selectBoard = createSelector(
     boardEntityAdapter.getSelectors().selectById(state.boards, boardId),
   (board) => board,
 )
+
+export const selectColumnsIdForBoard = (state: RootState, boardId: string) => {
+  return (
+    boardEntityAdapter.getSelectors().selectById(state.boards, boardId)
+      ?.columns ?? []
+  )
+}
+
+export const selectFirstColumnForBoard = (
+  state: RootState,
+  boardId: string,
+) => {
+  const firstColumnId = boardEntityAdapter
+    .getSelectors()
+    .selectById(state.boards, boardId)?.columns[0]
+  if (!firstColumnId) return undefined
+
+  return columnEntityAdapter
+    .getSelectors()
+    .selectById(state.columns, firstColumnId)
+}

@@ -1,10 +1,10 @@
-export function TextField ({
+export function TextField({
   name,
   placeholder,
   hasError = false,
   value,
   onValueChange,
-  id
+  id,
 }: {
   name: string
   placeholder?: string
@@ -26,7 +26,9 @@ export function TextField ({
         name={name}
         className={`outline-none bg-transparent placeholder:opacity-25 flex-1 text-Black dark:text-white dark:placeholder:opacity-25`}
         value={value}
-        onChange={e => onValueChange(e.target.value)}
+        onChange={(e) => {
+          onValueChange(e.target.value)
+        }}
       />
       {hasError && <p className='text-Body-L text-Red'>Can’t be empty</p>}
     </div>

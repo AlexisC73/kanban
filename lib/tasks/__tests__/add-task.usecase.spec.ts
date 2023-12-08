@@ -8,7 +8,7 @@ describe('Feature: Add task', () => {
     taskFixture = createTaskFixture()
   })
 
-  test('Example: When new task add and no tasks exists', async () => {
+  test.only('Example: When new task add and no tasks exists', async () => {
     taskFixture.givenExistingState(stateBuilder().build())
 
     await taskFixture.whenAddingANewTask({

@@ -5,6 +5,7 @@ import { AppLogo, ArrowDownIcon } from '@/presentation/@shared/assets'
 import { AddTaskButton } from '@/presentation/components/add-task/AddTask'
 import { useContext } from 'react'
 import OptionMenu from './OptionMenu/OptionMenu'
+import { BoardActionsCtx } from '@/context/boardActions/BoardActions'
 
 export const Header = ({
   currentBoardName,
@@ -13,6 +14,7 @@ export const Header = ({
   currentBoardName: string
   columnLength: number
 }) => {
+  const { setShowAddTaskModal } = useContext(BoardActionsCtx)
   return (
     <div className='fixed top-0 left-0 right-0 bg-white dark:bg-Dark-Grey h-16 flex items-center md:border-b-[1px] border-Lines-Light dark:border-b-Lines-Dark'>
       <div className='flex w-full justify-between'>
@@ -21,7 +23,12 @@ export const Header = ({
           <BoardTitle boardTitle={currentBoardName} />
         </div>
         <div className='flex items-center gap-x-4 pr-4'>
-          <AddTaskButton disabled={columnLength <= 0} />
+          <AddTaskButton
+            onClick={() => {
+              setShowAddTaskModal(true)
+            }}
+            disabled={columnLength <= 0}
+          />
           <OptionMenu />
         </div>
       </div>

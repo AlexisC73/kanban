@@ -18,7 +18,7 @@ export const addTask = createAppAsyncThunk(
     },
     { extra: { taskGateway } },
   ) => {
-    // await taskGateway.addTask(task)
-    return task
+    const newTask = await taskGateway.createNewTask(task)
+    return newTask
   },
 )

@@ -1,20 +1,57 @@
 import { ArrowDownIcon } from '@/presentation/@shared/assets'
-import { useState } from 'react'
+import { ReactNode, useState } from 'react'
+import {
+  StatusModelType,
+  selectStatusViewModelForBoard,
+} from './status-select.viewmodel'
+import { useAppSelector } from '@/lib/hook'
+import { exhaustiveGuard } from '@/lib/common/utils/exhaustiveGuard'
+import { selectColumnName } from '@/lib/boards/slices/columns.slice'
 
 export const StatusSelect = ({
-  defaultValue,
-  onChange
+  boardId,
+  onChange,
+  columnId,
 }: {
-  defaultValue: string
+  boardId: string
   onChange: (newValue: string) => void
+  columnId: string
 }) => {
   const [open, setOpen] = useState(false)
-  const toggleOpenSelect = () => setOpen(prev => !prev)
+  const toggleOpenSelect = () => {
+    setOpen((prev) => !prev)
+  }
 
-  const handleChangeState = (newValue: string) => {
+  const columnName = useAppSelector((state) =>
+    selectColumnName(state, columnId),
+  )
+
+  const handleChangeStatus = (newValue: string) => {
     onChange(newValue)
     setOpen(false)
   }
+
+  const statusViewModel = useAppSelector((state) =>
+    selectStatusViewModelForBoard(state, { boardId }),
+  )
+
+  const StatusNode: ReactNode = (() => {
+    switch (statusViewModel.type) {
+      case StatusModelType.NO_COLUMN:
+        return null
+      case StatusModelType.WITH_COLUMNS:
+        return statusViewModel.data.map((status) => (
+          <StatusSelector
+            key={status.id}
+            id={status.id}
+            name={status.name}
+            setSelected={handleChangeStatus}
+          />
+        ))
+      default:
+        return exhaustiveGuard(statusViewModel)
+    }
+  })()
 
   return (
     <div className='relative text-Body-L'>
@@ -25,40 +62,38 @@ export const StatusSelect = ({
           `${open ? ' border-Main-Purple border-opacity-100' : ''}`
         }
       >
-        <p>{defaultValue}</p>
+        <p>{columnName}</p>
         <ArrowDownIcon className='text-Main-Purple' />
       </div>
       {open && (
         <ul
-          onMouseLeave={() => setOpen(false)}
+          onMouseLeave={() => {
+            setOpen(false)
+          }}
           className='z-50 absolute top-12 left-0 right-0 bg-white dark:bg-Dark-Grey p-4 rounded-lg flex flex-col gap-y-2 text-Medium-Grey shadow-dropdown-shadow'
         >
-          <li
-            onClick={() => {
-              handleChangeState('Todo')
-            }}
-            className='cursor-pointer'
-          >
-            Todo
-          </li>
-          <li
-            onClick={() => {
-              handleChangeState('Doing')
-            }}
-            className='cursor-pointer'
-          >
-            Doing
-          </li>
-          <li
-            onClick={() => {
-              handleChangeState('Done')
-            }}
-            className='cursor-pointer'
-          >
-            Done
-          </li>
+          {StatusNode}
         </ul>
       )}
     </div>
+  )
+}
+
+const StatusSelector = ({
+  id,
+  name,
+  setSelected,
+}: {
+  id: string
+  name: string
+  setSelected: (id: string) => void
+}) => {
+  const handleClick = () => {
+    setSelected(id)
+  }
+  return (
+    <li onClick={handleClick} className='cursor-pointer'>
+      {name}
+    </li>
   )
 }

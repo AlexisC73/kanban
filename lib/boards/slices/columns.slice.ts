@@ -81,3 +81,12 @@ export const selectBoardColumns = createSelector(
     ] as const,
   ([columns, boardId]) => columns.filter((c) => c.boardId === boardId),
 )
+
+export const selectColumnName = createSelector(
+  (state: RootState, columnId: string) => {
+    return columnEntityAdapter
+      .getSelectors()
+      .selectById(state.columns, columnId)
+  },
+  (column) => column?.name,
+)

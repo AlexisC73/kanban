@@ -1,5 +1,18 @@
 export interface TaskGateway {
   getTasks: () => Promise<GetTasksResponse>
+  createNewTask: (task: {
+    id: string
+    name: string
+    description: string
+    columnId: string
+    boardId: string
+    subtasks: Array<{
+      id: string
+      name: string
+      completed: boolean
+      taskId: string
+    }>
+  }) => Promise<AddTaskResponse>
 }
 
 type GetTasksResponse = Array<{
@@ -15,3 +28,17 @@ type GetTasksResponse = Array<{
     completed: boolean
   }>
 }>
+
+interface AddTaskResponse {
+  id: string
+  name: string
+  description: string
+  boardId: string
+  columnId: string
+  subtasks: Array<{
+    id: string
+    name: string
+    taskId: string
+    completed: boolean
+  }>
+}

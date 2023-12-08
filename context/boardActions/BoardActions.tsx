@@ -3,6 +3,7 @@ import { selectBoard } from '@/lib/boards/slices/boards.slice'
 import { selectBoardColumns } from '@/lib/boards/slices/columns.slice'
 import { useAppSelector } from '@/lib/hook'
 import { AddBoardModal } from '@/presentation/components/add-board-modal/AddBoardModal'
+import { AddTaskModal } from '@/presentation/components/add-task-modal/AddTaskModal'
 import { EditBoardModal } from '@/presentation/components/edit-board-modal/EditBoardModal'
 import { useParams } from 'next/navigation'
 import { ReactNode, createContext, useState } from 'react'
@@ -12,11 +13,15 @@ export const BoardActionsCtx = createContext<{
   setShowAddBoardModal: (isOpen: boolean) => void
   showEditBoardModal: boolean
   setShowEditBoardModal: (isOpen: boolean) => void
+  showAddTaskModal: boolean
+  setShowAddTaskModal: (isOpen: boolean) => void
 }>({
   showAddBoardModal: false,
   setShowAddBoardModal: (isOpen) => {},
   showEditBoardModal: false,
   setShowEditBoardModal: () => {},
+  showAddTaskModal: false,
+  setShowAddTaskModal: () => {},
 })
 
 export const BoardActionsCtxProvider = ({
@@ -26,6 +31,7 @@ export const BoardActionsCtxProvider = ({
 }) => {
   const [showAddBoardModal, setShowAddBoardModal] = useState(false)
   const [showEditBoardModal, setShowEditBoardModal] = useState(false)
+  const [showAddTaskModal, setShowAddTaskModal] = useState(false)
   const { board: boardId } = useParams<{ board: string }>()
   const board = useAppSelector((state) => selectBoard(state, boardId))
   const columns = useAppSelector((state) => selectBoardColumns(state, boardId))
@@ -41,6 +47,8 @@ export const BoardActionsCtxProvider = ({
         setShowAddBoardModal,
         showEditBoardModal,
         setShowEditBoardModal,
+        showAddTaskModal,
+        setShowAddTaskModal,
       }}
     >
       {showAddBoardModal && (
@@ -59,6 +67,14 @@ export const BoardActionsCtxProvider = ({
           }}
           closeModal={() => {
             setShowEditBoardModal(false)
+          }}
+        />
+      )}
+      {showAddTaskModal && (
+        <AddTaskModal
+          boardId={boardId}
+          closeModal={() => {
+            setShowAddTaskModal(false)
           }}
         />
       )}
