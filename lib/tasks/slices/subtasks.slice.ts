@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { RootState } from '@/lib/store'
 import { getTasks } from '../usecases/get-tasks.usecase'
 import { subtasksEntityAdapter } from '../model/sutasks.entity'
+import { addTask } from '../usecases/add-task.usecase'
 
 export const subtasksSlice = createSlice({
   name: 'subtasks',
@@ -13,6 +14,10 @@ export const subtasksSlice = createSlice({
         state,
         action.payload.flatMap((t) => t.subtasks),
       )
+    })
+
+    builder.addCase(addTask.fulfilled, (state, action) => {
+      subtasksEntityAdapter.addMany(state, action.payload.subtasks)
     })
   },
 })

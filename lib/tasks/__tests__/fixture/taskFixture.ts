@@ -2,6 +2,7 @@ import { RootState, createTestStore } from '@/lib/store'
 import { FakeTaskGateway } from '../../infra/fake-task.gateway'
 import { getTasks } from '../../usecases/get-tasks.usecase'
 import { stateBuilder } from '@/lib/state.builder'
+import { addTask } from '../../usecases/add-task.usecase'
 
 export const createTaskFixture = (
   {
@@ -9,7 +10,7 @@ export const createTaskFixture = (
   }: Partial<{ taskGateway: FakeTaskGateway }> = {},
   initialState?: RootState,
 ) => {
-  const store = createTestStore({ taskGateway }, initialState)
+  let store = createTestStore({ taskGateway }, initialState)
 
   return {
     givenExistingTasks(
@@ -29,8 +30,26 @@ export const createTaskFixture = (
     ) {
       taskGateway.tasks = tasks
     },
+    givenExistingState(state: RootState) {
+      store = createTestStore({ taskGateway }, state)
+    },
     async whenRetrievingTasks() {
       await store.dispatch(getTasks())
+    },
+    async whenAddingANewTask(task: {
+      id: string
+      name: string
+      description: string
+      columnId: string
+      boardId: string
+      subtasks: Array<{
+        id: string
+        name: string
+        completed: boolean
+        taskId: string
+      }>
+    }) {
+      return await store.dispatch(addTask(task))
     },
     thenTasksShouldBe(
       expectedTasks: Array<{
