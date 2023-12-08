@@ -16,8 +16,8 @@ export const TaskView = () => {
           <VerticalMenuIcon className='text-Medium-Grey cursor-pointer' />
         </div>
         <p className='text-Body-L text-Medium-Grey'>
-          We know what we're planning to build for version one. Now we need to
-          finalise the first pricing model we'll use. Keep iterating the
+          We know what we&apos;re planning to build for version one. Now we need
+          to finalise the first pricing model we&apos;ll use. Keep iterating the
           subtasks until we have a coherent proposition.
         </p>
         <div className='flex flex-col gap-y-4'>
@@ -51,12 +51,11 @@ export const TaskView = () => {
         </div>
         <div className='flex flex-col gap-y-2'>
           <SectionTitle>Current Status</SectionTitle>
-          <StatusSelect
-            defaultValue='Doing'
+          {/* <StatusSelect
             onChange={() => {
               console.log('should change')
             }}
-          />
+          /> */}
         </div>
       </div>
     </Overlay>
