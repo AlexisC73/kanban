@@ -3,6 +3,7 @@ import { RootState } from '@/lib/store'
 import { getTasks } from '../usecases/get-tasks.usecase'
 import { subtasksEntityAdapter } from '../model/sutasks.entity'
 import { addTask } from '../usecases/add-task.usecase'
+import { updateSubtaskStatus } from '../usecases/update-subtask-completion'
 
 export const subtasksSlice = createSlice({
   name: 'subtasks',
@@ -18,6 +19,15 @@ export const subtasksSlice = createSlice({
 
     builder.addCase(addTask.fulfilled, (state, action) => {
       subtasksEntityAdapter.addMany(state, action.payload.subtasks)
+    })
+
+    builder.addCase(updateSubtaskStatus.fulfilled, (state, action) => {
+      subtasksEntityAdapter.updateOne(state, {
+        id: action.payload.id,
+        changes: {
+          completed: action.payload.completed,
+        },
+      })
     })
   },
 })

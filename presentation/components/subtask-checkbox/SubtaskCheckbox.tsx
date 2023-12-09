@@ -1,10 +1,10 @@
 import { CheckBox } from '../checkbox/checkbox'
 
-export function SubtaskCheckbox ({
+export function SubtaskCheckbox({
   label,
   id,
   completed,
-  onChange
+  onChange,
 }: {
   label: string
   id: string

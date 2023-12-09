@@ -45,4 +45,14 @@ export class FakeTaskGateway implements TaskGateway {
 
     return await Promise.resolve(updatedTask)
   }
+
+  async updateSubtaskStatus(subtask: { id: string; completed: boolean }) {
+    this.tasks = this.tasks.map((t) => ({
+      ...t,
+      subtasks: t.subtasks.map((s) =>
+        s.id === subtask.id ? { ...s, completed: subtask.completed } : s,
+      ),
+    }))
+    return await Promise.resolve(subtask)
+  }
 }

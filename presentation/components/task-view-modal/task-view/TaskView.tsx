@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react'
 import { StatusSelect } from '../../status-select/StatusSelect'
 import { useAppDispatch } from '@/lib/hook'
 import { updateTaskStatus } from '@/lib/tasks/usecases/update-task-column'
+import { updateSubtaskStatus } from '@/lib/tasks/usecases/update-subtask-completion'
 
 export interface TaskViewProps {
   task: {
@@ -27,6 +28,13 @@ export const TaskView = ({ task }: TaskViewProps) => {
   const dispatch = useAppDispatch()
   const hanleStatusChange = (newStatus: string) => {
     dispatch(updateTaskStatus({ id: task.id, columnId: newStatus }))
+  }
+
+  const handleUpdateSubtaskCompletion = (
+    subtaskId: string,
+    completed: boolean,
+  ) => {
+    dispatch(updateSubtaskStatus({ id: subtaskId, completed }))
   }
 
   return (
@@ -55,7 +63,7 @@ export const TaskView = ({ task }: TaskViewProps) => {
               label={subtask.name}
               completed={subtask.completed}
               onChange={() => {
-                console.log('not implemented')
+                handleUpdateSubtaskCompletion(subtask.id, !subtask.completed)
               }}
             />
           ))}
