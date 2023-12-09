@@ -1,12 +1,17 @@
 import { VerticalMenuIcon } from '@/presentation/@shared/assets'
 import { SubtaskCheckbox } from '../../subtask-checkbox/SubtaskCheckbox'
 import { PropsWithChildren } from 'react'
+import { StatusSelect } from '../../status-select/StatusSelect'
+import { useAppDispatch } from '@/lib/hook'
+import { updateTaskStatus } from '@/lib/tasks/usecases/update-task-column'
 
 export interface TaskViewProps {
   task: {
     id: string
     description: string
     name: string
+    boardId: string
+    columnId: string
     completedSubtasksCount: number
     totalSubtasksCount: number
     subtasks: Array<{
@@ -19,6 +24,11 @@ export interface TaskViewProps {
 }
 
 export const TaskView = ({ task }: TaskViewProps) => {
+  const dispatch = useAppDispatch()
+  const hanleStatusChange = (newStatus: string) => {
+    dispatch(updateTaskStatus({ id: task.id, columnId: newStatus }))
+  }
+
   return (
     <div
       onClick={(e) => {
@@ -53,11 +63,11 @@ export const TaskView = ({ task }: TaskViewProps) => {
       </div>
       <div className='flex flex-col gap-y-2'>
         <SectionTitle>Current Status</SectionTitle>
-        {/* <StatusSelect
-            onChange={() => {
-              console.log('should change')
-            }}
-          /> */}
+        <StatusSelect
+          boardId={task.boardId}
+          columnId={task.columnId}
+          onChange={hanleStatusChange}
+        />
       </div>
     </div>
   )

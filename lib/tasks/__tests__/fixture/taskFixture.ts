@@ -1,8 +1,11 @@
 import { RootState, createTestStore } from '@/lib/store'
 import { FakeTaskGateway } from '../../infra/fake-task.gateway'
-import { getTasks } from '../../usecases/get-tasks.usecase'
 import { stateBuilder } from '@/lib/state.builder'
 import { addTask } from '../../usecases/add-task.usecase'
+import { updateTaskStatus } from '../../usecases/update-task-column'
+import { selectTasks } from '../../slices/tasks.slice'
+import { selectSubtasksWithIds } from '../../slices/subtasks.slice'
+import { getTasks } from '../../usecases/get-tasks.usecase'
 
 export const createTaskFixture = (
   {
@@ -32,9 +35,18 @@ export const createTaskFixture = (
     },
     givenExistingState(state: RootState) {
       store = createTestStore({ taskGateway }, state)
+      const tasks = selectTasks(store.getState())
+      taskGateway.tasks = tasks.map((t) => ({
+        id: t.id,
+        name: t.name,
+        description: t.description,
+        boardId: t.boardId,
+        columnId: t.columnId,
+        subtasks: selectSubtasksWithIds(store.getState(), t.subtasks),
+      }))
     },
     async whenRetrievingTasks() {
-      await store.dispatch(getTasks())
+      return await store.dispatch(getTasks())
     },
     async whenAddingANewTask(task: {
       id: string
@@ -50,6 +62,15 @@ export const createTaskFixture = (
       }>
     }) {
       return await store.dispatch(addTask(task))
+    },
+    async whenUpdatingTaskStatus({
+      id,
+      columnId,
+    }: {
+      id: string
+      columnId: string
+    }) {
+      return await store.dispatch(updateTaskStatus({ id, columnId }))
     },
     thenTasksShouldBe(
       expectedTasks: Array<{

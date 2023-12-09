@@ -35,4 +35,14 @@ export class FakeTaskGateway implements TaskGateway {
     this.tasks = [...this.tasks, task]
     return await Promise.resolve(task)
   }
+
+  async updateTaskStatus(task: { id: string; columnId: string }) {
+    this.tasks = this.tasks.map((t) =>
+      t.id === task.id ? { ...t, columnId: task.columnId } : t,
+    )
+    const updatedTask = this.tasks.find((t) => t.id === task.id)
+    if (!updatedTask) throw new Error('Task not found')
+
+    return await Promise.resolve(updatedTask)
+  }
 }

@@ -13,6 +13,10 @@ export interface TaskGateway {
       taskId: string
     }>
   }) => Promise<AddTaskResponse>
+  updateTaskStatus: (task: {
+    id: string
+    columnId: string
+  }) => Promise<UpdateStatusReponse>
 }
 
 type GetTasksResponse = Array<{
@@ -30,6 +34,20 @@ type GetTasksResponse = Array<{
 }>
 
 interface AddTaskResponse {
+  id: string
+  name: string
+  description: string
+  boardId: string
+  columnId: string
+  subtasks: Array<{
+    id: string
+    name: string
+    taskId: string
+    completed: boolean
+  }>
+}
+
+interface UpdateStatusReponse {
   id: string
   name: string
   description: string

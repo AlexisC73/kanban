@@ -3,6 +3,7 @@ import { tasksEntityAdapter } from '../model/tasks.entity'
 import { RootState } from '@/lib/store'
 import { getTasks } from '../usecases/get-tasks.usecase'
 import { addTask } from '../usecases/add-task.usecase'
+import { updateTaskStatus } from '../usecases/update-task-column'
 
 export const tasksSlice = createSlice({
   name: 'tasks',
@@ -31,6 +32,15 @@ export const tasksSlice = createSlice({
         columnId: action.payload.columnId,
         boardId: action.payload.boardId,
         subtasks: action.payload.subtasks.map((s) => s.id),
+      })
+    })
+
+    builder.addCase(updateTaskStatus.fulfilled, (state, action) => {
+      tasksEntityAdapter.updateOne(state, {
+        id: action.payload.id,
+        changes: {
+          columnId: action.payload.columnId,
+        },
       })
     })
   },
