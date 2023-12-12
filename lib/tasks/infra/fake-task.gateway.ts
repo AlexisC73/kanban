@@ -12,6 +12,7 @@ export class FakeTaskGateway implements TaskGateway {
       name: string
       taskId: string
       completed: boolean
+      boardId: string
     }>
   }> = []
 
@@ -30,6 +31,7 @@ export class FakeTaskGateway implements TaskGateway {
       name: string
       completed: boolean
       taskId: string
+      boardId: string
     }>
   }) {
     this.tasks = [...this.tasks, task]

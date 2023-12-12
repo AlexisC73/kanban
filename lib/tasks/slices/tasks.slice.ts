@@ -4,6 +4,7 @@ import { RootState } from '@/lib/store'
 import { getTasks } from '../usecases/get-tasks.usecase'
 import { addTask } from '../usecases/add-task.usecase'
 import { updateTaskStatus } from '../usecases/update-task-column'
+import { deleteBoard } from '@/lib/boards/usecases/deleteBoard.usecase'
 
 export const tasksSlice = createSlice({
   name: 'tasks',
@@ -42,6 +43,15 @@ export const tasksSlice = createSlice({
           columnId: action.payload.columnId,
         },
       })
+    })
+
+    builder.addCase(deleteBoard.fulfilled, (state, action) => {
+      const tasksId = tasksEntityAdapter
+        .getSelectors()
+        .selectAll(state)
+        .filter((t) => t.boardId === action.meta.arg)
+        .map((t) => t.id)
+      tasksEntityAdapter.removeMany(state, tasksId)
     })
   },
 })

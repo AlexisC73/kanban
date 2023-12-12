@@ -27,6 +27,7 @@ export const selectTaskModalViewModel = (
           name: string
           completed: boolean
           taskId: string
+          boardId: string
         }>
       }
     } => {

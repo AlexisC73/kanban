@@ -56,4 +56,8 @@ export class FakeBoardGateway implements BoardGateway {
     }
     return await Promise.resolve(this.boards[boardIndex])
   }
+
+  async deleteBoard(board: { id: string }): Promise<void> {
+    this.boards = this.boards.filter((b) => b.id !== board.id)
+  }
 }

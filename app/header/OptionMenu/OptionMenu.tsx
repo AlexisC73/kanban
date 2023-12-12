@@ -1,5 +1,8 @@
 import { BoardActionsCtx } from '@/context/boardActions/BoardActions'
+import { deleteBoard } from '@/lib/boards/usecases/deleteBoard.usecase'
+import { useAppDispatch } from '@/lib/hook'
 import { VerticalMenuIcon } from '@/presentation/@shared/assets'
+import { useParams } from 'next/navigation'
 import { useContext, useState } from 'react'
 
 export default function OptionMenu() {
@@ -28,10 +31,22 @@ export default function OptionMenu() {
 
 const OptionMenuList = ({ closeMenuList }: { closeMenuList: () => void }) => {
   const { setShowEditBoardModal } = useContext(BoardActionsCtx)
+  const { board }: { board: string } = useParams()
+  const dispatch = useAppDispatch()
 
   const handleEditBoard = () => {
     closeMenuList()
     setShowEditBoardModal(true)
+  }
+
+  const handleDeleteBoard = () => {
+    try {
+      dispatch(deleteBoard(board)).finally(() => {
+        closeMenuList()
+      })
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   const handleMouseLeave = () => {
@@ -46,7 +61,9 @@ const OptionMenuList = ({ closeMenuList }: { closeMenuList: () => void }) => {
       <li onClick={handleEditBoard} className='text-Medium-Grey cursor-pointer'>
         Edit Board
       </li>
-      <li className='text-Red cursor-pointer'>Delete Board</li>
+      <li className='text-Red cursor-pointer' onClick={handleDeleteBoard}>
+        Delete Board
+      </li>
     </ul>
   )
 }

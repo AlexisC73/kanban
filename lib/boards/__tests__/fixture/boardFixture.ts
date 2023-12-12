@@ -4,6 +4,7 @@ import { getBoards } from '../../usecases/get-boards.usecase'
 import { stateBuilder } from '../../../state.builder'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { editBoard } from '../../usecases/edit-board.usecase'
+import { deleteBoard } from '../../usecases/deleteBoard.usecase'
 
 export const createBoardFixture = (
   {
@@ -44,6 +45,11 @@ export const createBoardFixture = (
     }) {
       try {
         await store.dispatch(editBoard(board))
+      } catch (e) {}
+    },
+    async whenDeletingBoard(board: { id: string }) {
+      try {
+        await store.dispatch(deleteBoard(board.id))
       } catch (e) {}
     },
     thenBoardShouldBe(

@@ -5,6 +5,7 @@ export interface Subtask {
   name: string
   taskId: string
   completed: boolean
+  boardId: string
 }
 
 export const subtasksEntityAdapter = createEntityAdapter<Subtask>()

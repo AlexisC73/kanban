@@ -13,6 +13,7 @@ export interface BoardGateway {
       name: string
     }>
   }) => Promise<EditBoardResponse>
+  deleteBoard: (board: { id: string }) => Promise<void>
 }
 
 export type GetBoardsResponse = Array<{

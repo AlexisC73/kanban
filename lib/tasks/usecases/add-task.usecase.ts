@@ -14,6 +14,7 @@ export const addTask = createAppAsyncThunk(
         name: string
         completed: boolean
         taskId: string
+        boardId: string
       }>
     },
     { extra: { taskGateway } },

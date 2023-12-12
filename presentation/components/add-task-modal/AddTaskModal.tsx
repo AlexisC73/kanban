@@ -60,6 +60,7 @@ export const AddTaskModal = ({
           name: s.name,
           completed: false,
           taskId: newTaskId,
+          boardId,
         })),
       }),
     )

@@ -91,6 +91,7 @@ describe('Feature: Add task', () => {
           name: 'subtask 1',
           completed: false,
           taskId: '2',
+          boardId: 'board-1',
         },
       ],
     })
@@ -108,6 +109,7 @@ describe('Feature: Add task', () => {
             name: 'subtask 1',
             completed: false,
             taskId: '2',
+            boardId: 'board-1',
           },
         ],
       },
@@ -133,6 +135,7 @@ describe('Feature: Add task', () => {
             name: 'subtask 1',
             completed: false,
             taskId: '1',
+            boardId: 'board-1',
           },
         ])
         .build(),
@@ -150,6 +153,7 @@ describe('Feature: Add task', () => {
           name: 'subtask 1',
           completed: false,
           taskId: '2',
+          boardId: 'board-1',
         },
       ],
     })
@@ -167,6 +171,7 @@ describe('Feature: Add task', () => {
             name: 'subtask 1',
             completed: false,
             taskId: '1',
+            boardId: 'board-1',
           },
         ],
       },
@@ -182,6 +187,7 @@ describe('Feature: Add task', () => {
             name: 'subtask 1',
             completed: false,
             taskId: '2',
+            boardId: 'board-1',
           },
         ],
       },

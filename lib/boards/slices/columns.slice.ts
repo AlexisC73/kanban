@@ -4,6 +4,7 @@ import { getBoards } from '../usecases/get-boards.usecase'
 import { RootState } from '@/lib/store'
 import { createBoard } from '../usecases/add-board.usecase'
 import { editBoard } from '../usecases/edit-board.usecase'
+import { deleteBoard } from '../usecases/deleteBoard.usecase'
 
 export const columnsSlice = createSlice({
   name: 'columns',
@@ -32,6 +33,16 @@ export const columnsSlice = createSlice({
           boardId: meta.arg.id,
         })),
       )
+    })
+
+    builder.addCase(deleteBoard.fulfilled, (state, { meta }) => {
+      const columnsId = columnEntityAdapter
+        .getSelectors()
+        .selectAll(state)
+        .filter((c) => c.boardId === meta.arg)
+        .map((c) => c.id)
+
+      columnEntityAdapter.removeMany(state, columnsId)
     })
 
     builder.addCase(editBoard.fulfilled, (state, action) => {

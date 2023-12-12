@@ -5,6 +5,7 @@ import { RootState } from '@/lib/store'
 import { createBoard } from '../usecases/add-board.usecase'
 import { editBoard } from '../usecases/edit-board.usecase'
 import { columnEntityAdapter } from '../model/column.entity'
+import { deleteBoard } from '../usecases/deleteBoard.usecase'
 
 export const boardsSlice = createSlice({
   name: 'boards',
@@ -38,6 +39,10 @@ export const boardsSlice = createSlice({
           columns: action.payload.columns.map((c) => c.id),
         },
       })
+    })
+
+    builder.addCase(deleteBoard.fulfilled, (state, action) => {
+      boardEntityAdapter.removeOne(state, action.meta.arg)
     })
   },
 })

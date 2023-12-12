@@ -11,6 +11,7 @@ export interface TaskGateway {
       name: string
       completed: boolean
       taskId: string
+      boardId: string
     }>
   }) => Promise<AddTaskResponse>
   updateTaskStatus: (task: {
@@ -35,6 +36,7 @@ type GetTasksResponse = Array<{
     name: string
     taskId: string
     completed: boolean
+    boardId: string
   }>
 }>
 
@@ -49,6 +51,7 @@ interface AddTaskResponse {
     name: string
     taskId: string
     completed: boolean
+    boardId: string
   }>
 }
 
@@ -63,6 +66,7 @@ interface UpdateStatusReponse {
     name: string
     taskId: string
     completed: boolean
+    boardId: string
   }>
 }
 

@@ -29,6 +29,7 @@ export const createTaskFixture = (
           name: string
           taskId: string
           completed: boolean
+          boardId: string
         }>
       }>,
     ) {
@@ -60,6 +61,7 @@ export const createTaskFixture = (
         name: string
         completed: boolean
         taskId: string
+        boardId: string
       }>
     }) {
       return await store.dispatch(addTask(task))
@@ -94,6 +96,7 @@ export const createTaskFixture = (
           name: string
           taskId: string
           completed: boolean
+          boardId: string
         }>
       }>,
     ) {
