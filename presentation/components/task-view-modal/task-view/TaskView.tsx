@@ -1,12 +1,13 @@
-import { VerticalMenuIcon } from '@/presentation/@shared/assets'
 import { SubtaskCheckbox } from '../../subtask-checkbox/SubtaskCheckbox'
 import { PropsWithChildren } from 'react'
 import { StatusSelect } from '../../status-select/StatusSelect'
 import { useAppDispatch } from '@/lib/hook'
 import { updateTaskStatus } from '@/lib/tasks/usecases/update-task-column'
 import { updateSubtaskStatus } from '@/lib/tasks/usecases/update-subtask-completion'
+import OptionMenu from './Options/Options'
 
 export interface TaskViewProps {
+  closeModal: () => void
   task: {
     id: string
     description: string
@@ -24,8 +25,9 @@ export interface TaskViewProps {
   }
 }
 
-export const TaskView = ({ task }: TaskViewProps) => {
+export const TaskView = ({ task, closeModal }: TaskViewProps) => {
   const dispatch = useAppDispatch()
+
   const hanleStatusChange = (newStatus: string) => {
     dispatch(updateTaskStatus({ id: task.id, columnId: newStatus }))
   }
@@ -48,7 +50,7 @@ export const TaskView = ({ task }: TaskViewProps) => {
         <h1 className='text-Heading-L flex-1 text-Black dark:text-white'>
           {task.name}
         </h1>
-        <VerticalMenuIcon className='text-Medium-Grey cursor-pointer' />
+        <OptionMenu onActionClick={closeModal} taskId={task.id} />
       </div>
       <p className='text-Body-L text-Medium-Grey'>{task.description}</p>
       <div className='flex flex-col gap-y-4'>

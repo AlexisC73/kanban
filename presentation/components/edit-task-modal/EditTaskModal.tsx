@@ -8,7 +8,13 @@ import { selectSubtasksWithIds } from '@/lib/tasks/slices/subtasks.slice'
 import { SubtasksEditList } from '../subtask-edit-list/SubtaskEditList'
 import { FormEvent, useState } from 'react'
 
-export const EditTaskModal = ({ taskId }: { taskId: string }) => {
+export const EditTaskModal = ({
+  taskId,
+  closeModal,
+}: {
+  taskId: string
+  closeModal: () => void
+}) => {
   const task = useAppSelector((state) => selectTask(state, taskId))
   const subtasks = useAppSelector((state) =>
     selectSubtasksWithIds(state, task?.subtasks ?? []),
@@ -48,7 +54,7 @@ export const EditTaskModal = ({ taskId }: { taskId: string }) => {
   }
 
   return (
-    <Overlay>
+    <Overlay onClickAction={closeModal}>
       <div
         onClick={(e) => {
           e.stopPropagation()

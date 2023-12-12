@@ -23,7 +23,12 @@ export const TaskViewModal = ({
       case TaskModalViewModelType.NO_TASK:
         return null
       case TaskModalViewModelType.WITH_TASK:
-        return <TaskView task={taskModalViewModel.data} />
+        return (
+          <TaskView
+            closeModal={overlayClickAction}
+            task={taskModalViewModel.data}
+          />
+        )
       default:
         return exhaustiveGuard(taskModalViewModel)
     }
