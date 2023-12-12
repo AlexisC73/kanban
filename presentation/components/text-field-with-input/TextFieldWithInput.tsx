@@ -7,7 +7,7 @@ export const TextFieldWithInput = ({
   placeholder,
   hasError = false,
   value,
-  onValueChange
+  onValueChange,
 }: {
   label: string
   name: string
@@ -19,7 +19,12 @@ export const TextFieldWithInput = ({
   return (
     <div className='flex flex-col gap-y-2'>
       <Label name={name}>{label}</Label>
-      <TextField onValueChange={onValueChange} name={name} value={value} placeholder={placeholder} />
+      <TextField
+        onValueChange={onValueChange}
+        name={name}
+        value={value}
+        placeholder={placeholder}
+      />
     </div>
   )
 }

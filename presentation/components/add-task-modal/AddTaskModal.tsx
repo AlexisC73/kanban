@@ -27,9 +27,10 @@ export const AddTaskModal = ({
     description: '',
     columnId: '',
   })
-  const [subtasks, setSubtasks] = useState<Array<{ id: string; name: string }>>(
-    [],
-  )
+  const [subtasks, setSubtasks] = useState<
+    Array<{ id: string; name: string; completed: boolean }>
+  >([])
+
   const dispatch = useAppDispatch()
 
   const handleInformationChange = (

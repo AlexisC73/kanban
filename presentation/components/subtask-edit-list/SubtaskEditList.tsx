@@ -5,14 +5,24 @@ export const SubtasksEditList = ({
   subtasks,
   setSubtasks,
 }: {
-  subtasks: Array<{ id: string; name: string }>
-  setSubtasks: Dispatch<SetStateAction<Array<{ id: string; name: string }>>>
+  subtasks: Array<{
+    id: string
+    name: string
+    completed: boolean
+  }>
+  setSubtasks: Dispatch<
+    SetStateAction<Array<{ id: string; name: string; completed: boolean }>>
+  >
 }) => {
   const handleAddSubtask = () => {
     setSubtasks((prev) => [
       ...prev,
-      { id: new Date().getTime().toString(), name: '' },
+      { id: new Date().getTime().toString(), name: '', completed: false },
     ])
+  }
+
+  const handleDeleteSubtask = (id: string) => {
+    setSubtasks((prev) => prev.filter((s) => s.id !== id))
   }
 
   const handleSubtaskNameChange = (id: string, name: string) => {
@@ -29,6 +39,7 @@ export const SubtasksEditList = ({
             onNameChange={handleSubtaskNameChange}
             id={s.id}
             name={s.name}
+            deleteSubtask={handleDeleteSubtask}
           />
         ))}
       </ul>
