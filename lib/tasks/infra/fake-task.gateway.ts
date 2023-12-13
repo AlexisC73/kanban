@@ -57,4 +57,21 @@ export class FakeTaskGateway implements TaskGateway {
     }))
     return await Promise.resolve(subtask)
   }
+
+  async updateTask(task: {
+    id: string
+    name: string
+    description: string
+    boardId: string
+    columnId: string
+    subtasks: Array<{
+      id: string
+      name: string
+      completed: boolean
+      taskId: string
+      boardId: string
+    }>
+  }) {
+    this.tasks = this.tasks.map((t) => (t.id === task.id ? task : t))
+  }
 }

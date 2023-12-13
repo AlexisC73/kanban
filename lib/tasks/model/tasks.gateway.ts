@@ -23,6 +23,20 @@ export interface TaskGateway {
     id: string
     completed: boolean
   }) => Promise<UpdateSubtaskStatusResponse>
+  updateTask: (task: {
+    id: string
+    name: string
+    description: string
+    boardId: string
+    columnId: string
+    subtasks: Array<{
+      id: string
+      name: string
+      completed: boolean
+      taskId: string
+      boardId: string
+    }>
+  }) => Promise<void>
 }
 
 type GetTasksResponse = Array<{

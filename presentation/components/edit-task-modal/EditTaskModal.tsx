@@ -1,4 +1,4 @@
-import { useAppSelector } from '@/lib/hook'
+import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { selectTask } from '@/lib/tasks/slices/tasks.slice'
 import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
 import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
@@ -7,6 +7,7 @@ import { StatusSelect } from '../status-select/StatusSelect'
 import { selectSubtasksWithIds } from '@/lib/tasks/slices/subtasks.slice'
 import { SubtasksEditList } from '../subtask-edit-list/SubtaskEditList'
 import { FormEvent, useState } from 'react'
+import { updateTask } from '@/lib/tasks/usecases/update-task.usecase'
 
 export const EditTaskModal = ({
   taskId,
@@ -16,6 +17,7 @@ export const EditTaskModal = ({
   closeModal: () => void
 }) => {
   const task = useAppSelector((state) => selectTask(state, taskId))
+  const dispatch = useAppDispatch()
   const subtasks = useAppSelector((state) =>
     selectSubtasksWithIds(state, task?.subtasks ?? []),
   )
@@ -48,9 +50,26 @@ export const EditTaskModal = ({
 
   if (!task) return null
 
+  const handleUpdateStatus = (status: string) => {
+    setEditedTask((prev) => ({ ...prev, columnId: status }))
+  }
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.stopPropagation()
-    console.log('submit')
+    dispatch(
+      updateTask({
+        ...editedTask,
+        subtasks: editedSubtasks.map((s) => ({
+          boardId: editedTask.boardId,
+          taskId: editedTask.id,
+          id: s.id,
+          name: s.name,
+          completed: s.completed,
+        })),
+      }),
+    ).then(() => {
+      closeModal()
+    })
   }
 
   return (
@@ -95,9 +114,7 @@ a little.'
             <StatusSelect
               boardId={editedTask.boardId}
               columnId={editedTask.columnId}
-              onChange={() => {
-                console.log('change status')
-              }}
+              onChange={handleUpdateStatus}
             />
           </div>
           <button className='w-full bg-Main-Purple text-white text-Body-L font-bold py-2 rounded-full'>

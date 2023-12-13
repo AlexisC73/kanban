@@ -7,6 +7,7 @@ import { selectTasks } from '../../slices/tasks.slice'
 import { selectSubtasksWithIds } from '../../slices/subtasks.slice'
 import { getTasks } from '../../usecases/get-tasks.usecase'
 import { updateSubtaskStatus } from '../../usecases/update-subtask-completion'
+import { updateTask } from '../../usecases/update-task.usecase'
 
 export const createTaskFixture = (
   {
@@ -83,6 +84,22 @@ export const createTaskFixture = (
       completed: boolean
     }) {
       return await store.dispatch(updateSubtaskStatus({ id, completed }))
+    },
+    async whenUpdatingTask(task: {
+      id: string
+      name: string
+      description: string
+      boardId: string
+      columnId: string
+      subtasks: Array<{
+        id: string
+        name: string
+        completed: boolean
+        taskId: string
+        boardId: string
+      }>
+    }) {
+      return await store.dispatch(updateTask(task))
     },
     thenTasksShouldBe(
       expectedTasks: Array<{

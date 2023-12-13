@@ -5,6 +5,7 @@ import { getTasks } from '../usecases/get-tasks.usecase'
 import { addTask } from '../usecases/add-task.usecase'
 import { updateTaskStatus } from '../usecases/update-task-column'
 import { deleteBoard } from '@/lib/boards/usecases/deleteBoard.usecase'
+import { updateTask } from '../usecases/update-task.usecase'
 
 export const tasksSlice = createSlice({
   name: 'tasks',
@@ -52,6 +53,17 @@ export const tasksSlice = createSlice({
         .filter((t) => t.boardId === action.meta.arg)
         .map((t) => t.id)
       tasksEntityAdapter.removeMany(state, tasksId)
+    })
+    builder.addCase(updateTask.fulfilled, (state, action) => {
+      tasksEntityAdapter.updateOne(state, {
+        id: action.payload.id,
+        changes: {
+          name: action.payload.name,
+          description: action.payload.description,
+          columnId: action.payload.columnId,
+          subtasks: action.payload.subtasks.map((s) => s.id),
+        },
+      })
     })
   },
 })
