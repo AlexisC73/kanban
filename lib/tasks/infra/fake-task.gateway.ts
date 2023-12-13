@@ -74,4 +74,8 @@ export class FakeTaskGateway implements TaskGateway {
   }) {
     this.tasks = this.tasks.map((t) => (t.id === task.id ? task : t))
   }
+
+  async deleteTask(taskId: string) {
+    this.tasks = this.tasks.filter((t) => t.id !== taskId)
+  }
 }

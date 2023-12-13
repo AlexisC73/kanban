@@ -37,6 +37,7 @@ export interface TaskGateway {
       boardId: string
     }>
   }) => Promise<void>
+  deleteTask: (taskId: string) => Promise<void>
 }
 
 type GetTasksResponse = Array<{

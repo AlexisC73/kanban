@@ -8,6 +8,7 @@ import { selectSubtasksWithIds } from '../../slices/subtasks.slice'
 import { getTasks } from '../../usecases/get-tasks.usecase'
 import { updateSubtaskStatus } from '../../usecases/update-subtask-completion'
 import { updateTask } from '../../usecases/update-task.usecase'
+import { deleteTask } from '../../usecases/delete-task.usecase'
 
 export const createTaskFixture = (
   {
@@ -100,6 +101,9 @@ export const createTaskFixture = (
       }>
     }) {
       return await store.dispatch(updateTask(task))
+    },
+    async whenDeletingTask({ taskId }: { taskId: string }) {
+      return await store.dispatch(deleteTask({ taskId }))
     },
     thenTasksShouldBe(
       expectedTasks: Array<{

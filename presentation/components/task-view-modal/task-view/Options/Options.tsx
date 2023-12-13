@@ -1,4 +1,6 @@
 import { TaskViewCtx } from '@/context/task-view/TaskViewCtx'
+import { useAppDispatch } from '@/lib/hook'
+import { deleteTask } from '@/lib/tasks/usecases/delete-task.usecase'
 import { VerticalMenuIcon } from '@/presentation/@shared/assets'
 import { useContext, useState } from 'react'
 
@@ -46,11 +48,19 @@ const OptionMenuList = ({
   onActionClick?: () => void
 }) => {
   const { showEditTaskWithId } = useContext(TaskViewCtx)
+  const dispatch = useAppDispatch()
 
   const handleEditBoard = () => {
     closeMenuList()
     onActionClick?.()
     showEditTaskWithId(taskId)
+  }
+
+  const handleDeleteTask = () => {
+    dispatch(deleteTask({ taskId })).then(() => {
+      closeMenuList()
+      onActionClick?.()
+    })
   }
 
   const handleMouseLeave = () => {
@@ -65,7 +75,9 @@ const OptionMenuList = ({
       <li onClick={handleEditBoard} className='text-Medium-Grey cursor-pointer'>
         Edit Task
       </li>
-      <li className='text-Red cursor-pointer'>Delete Task</li>
+      <li onClick={handleDeleteTask} className='text-Red cursor-pointer'>
+        Delete Task
+      </li>
     </ul>
   )
 }

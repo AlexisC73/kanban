@@ -6,6 +6,7 @@ import { addTask } from '../usecases/add-task.usecase'
 import { updateSubtaskStatus } from '../usecases/update-subtask-completion'
 import { deleteBoard } from '@/lib/boards/usecases/deleteBoard.usecase'
 import { updateTask } from '../usecases/update-task.usecase'
+import { deleteTask } from '../usecases/delete-task.usecase'
 
 export const subtasksSlice = createSlice({
   name: 'subtasks',
@@ -61,6 +62,14 @@ export const subtasksSlice = createSlice({
           name: s.name,
         })),
       )
+    })
+
+    builder.addCase(deleteTask.fulfilled, (state, action) => {
+      const subtasksId = selectSubtasksIdsForTaskId(
+        state,
+        action.meta.arg.taskId,
+      )
+      subtasksEntityAdapter.removeMany(state, subtasksId)
     })
   },
 })
