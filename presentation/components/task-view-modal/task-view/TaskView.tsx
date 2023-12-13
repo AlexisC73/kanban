@@ -44,7 +44,7 @@ export const TaskView = ({ task, closeModal }: TaskViewProps) => {
       onClick={(e) => {
         e.stopPropagation()
       }}
-      className='flex flex-col mx-4 md:mx-0 md:w-[480px] bg-white dark:bg-Dark-Grey px-6 pt-6 pb-8 rounded-md gap-y-6'
+      className='flex flex-col w-full mx-4 md:mx-0 md:w-[480px] bg-white dark:bg-Dark-Grey px-6 pt-6 pb-8 rounded-md gap-y-6'
     >
       <div className='flex items-center gap-x-4 md:gap-x-6'>
         <h1 className='text-Heading-L flex-1 text-Black dark:text-white'>
