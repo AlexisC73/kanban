@@ -4,10 +4,13 @@ import { FakeBoardGateway } from './boards/infra/fake-board.gateway'
 import { rootReducer } from './root-reducer'
 import { TaskGateway } from './tasks/model/tasks.gateway'
 import { FakeTaskGateway } from './tasks/infra/fake-task.gateway'
+import { AuthGateway } from './auth/models/auth.gateway'
+import { FakeAuthGateway } from './auth/infra/fake-auth.gateway'
 
 export interface Dependencies {
   boardGateway: BoardGateway
   taskGateway: TaskGateway
+  authGateway: AuthGateway
 }
 
 export const createStore = (
@@ -30,10 +33,11 @@ export const createTestStore = (
   {
     boardGateway = new FakeBoardGateway(),
     taskGateway = new FakeTaskGateway(),
+    authGateway = new FakeAuthGateway(),
   }: Partial<Dependencies> = {},
   preloadedState?: Partial<ReturnType<typeof rootReducer>>,
 ) => {
-  return createStore({ boardGateway, taskGateway }, preloadedState)
+  return createStore({ boardGateway, taskGateway, authGateway }, preloadedState)
 }
 
 export type AppStore = ReturnType<typeof createStore>
