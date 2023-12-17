@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { signupWithGithub } from '../usecases/signup-with-github.usecase'
+import { signinWithGithub } from '../usecases/signin-with-github.usecase'
 
 interface AuthState {
   user?: { id: string }
@@ -13,9 +14,14 @@ export const authSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(signupWithGithub.fulfilled, (state, action) => {
-      state.user = action.payload.user
-      state.token = action.payload.token
-    })
+    builder
+      .addCase(signupWithGithub.fulfilled, (state, action) => {
+        state.user = action.payload.user
+        state.token = action.payload.token
+      })
+      .addCase(signinWithGithub.fulfilled, (state, action) => {
+        state.user = action.payload.user
+        state.token = action.payload.token
+      })
   },
 })

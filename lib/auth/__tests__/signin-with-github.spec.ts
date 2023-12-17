@@ -1,13 +1,13 @@
 import { AppStore, createTestStore } from '@/lib/store'
-import { signupWithGithub } from '../usecases/signup-with-github.usecase'
 import { FakeAuthGateway } from '../infra/fake-auth.gateway'
+import { signinWithGithub } from '../usecases/signin-with-github.usecase'
 
-describe('Signup With Github', () => {
+describe('Signin With Github', () => {
   test('should be able to signup with github', async () => {
     givenNoUserAuthenticated()
-    givenSignupWithGithubWillSucceedForUser({ id: '123' })
+    givenSigninWithGithubWillSucceedForUser({ id: '123' })
 
-    await whenUserSignupWithGithub()
+    await whenUserSigninWithGithub()
 
     thenAuthenticatedUserShouldBe({
       id: '123',
@@ -28,12 +28,12 @@ function givenNoUserAuthenticated() {
   )
 }
 
-function givenSignupWithGithubWillSucceedForUser(user: { id: string }) {
-  authGateway.signupWithGithubWillSucceedForUser = user
+function givenSigninWithGithubWillSucceedForUser(user: { id: string }) {
+  authGateway.signinWithGithubWillSucceedForUser = user
 }
 
-async function whenUserSignupWithGithub() {
-  return await store.dispatch(signupWithGithub())
+async function whenUserSigninWithGithub() {
+  return await store.dispatch(signinWithGithub())
 }
 
 function thenAuthenticatedUserShouldBe(expectedUser: {
