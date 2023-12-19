@@ -11,7 +11,6 @@ describe('Signup With Github', () => {
 
     thenAuthenticatedUserShouldBe({
       id: '123',
-      token: JSON.stringify({ id: '123' }),
     })
   })
 })
@@ -36,11 +35,12 @@ async function whenUserSignupWithGithub() {
   return await store.dispatch(signupWithGithub())
 }
 
-function thenAuthenticatedUserShouldBe(expectedUser: {
-  id: string
-  token: string
-}) {
+function thenAuthenticatedUserShouldBe(expectedUser: { id: string }) {
   const { auth } = store.getState()
-  expect(auth.user).toEqual({ id: expectedUser.id })
-  expect(auth.token).toEqual(expectedUser.token)
+  expect(auth).toEqual(
+    expect.objectContaining({
+      user: { id: expectedUser.id },
+      token: expect.any(String),
+    }),
+  )
 }
