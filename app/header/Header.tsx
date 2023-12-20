@@ -6,6 +6,7 @@ import { AddTaskButton } from '@/presentation/components/add-task/AddTask'
 import { useContext } from 'react'
 import OptionMenu from './OptionMenu/OptionMenu'
 import { BoardActionsCtx } from '@/context/boardActions/BoardActions'
+import { SignUser } from './SignUser'
 
 export const Header = ({
   currentBoardName,
@@ -29,6 +30,7 @@ export const Header = ({
             }}
             disabled={columnLength <= 0}
           />
+          <SignUser />
           <OptionMenu />
         </div>
       </div>

@@ -18,20 +18,26 @@ export const boardsSlice = createSlice({
         action.payload.map((b) => ({
           id: b.id,
           name: b.name,
+          owner: b.owner,
           columns: b.columns.map((c) => c.id),
         })),
       )
     })
 
-    builder.addCase(createBoard.fulfilled, (state, { meta }) => {
+    builder.addCase(createBoard.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return
+      }
       boardEntityAdapter.addOne(state, {
-        id: meta.arg.id,
-        name: meta.arg.name,
-        columns: meta.arg.columns.map((c) => c.id),
+        id: action.payload.id,
+        name: action.payload.name,
+        owner: action.payload.owner,
+        columns: action.payload.columns.map((c) => c.id),
       })
     })
 
     builder.addCase(editBoard.fulfilled, (state, action) => {
+      if (!action.payload) return
       boardEntityAdapter.updateOne(state, {
         id: action.payload.id,
         changes: {
@@ -42,7 +48,8 @@ export const boardsSlice = createSlice({
     })
 
     builder.addCase(deleteBoard.fulfilled, (state, action) => {
-      boardEntityAdapter.removeOne(state, action.meta.arg)
+      if (!action.payload) return
+      boardEntityAdapter.removeOne(state, action.payload)
     })
   },
 })

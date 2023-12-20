@@ -1,28 +1,33 @@
-import { stateBuilder } from '@/lib/state.builder'
+import { testStateBuilderProvider } from '@/lib/state.builder'
 import { BoardFixture, createBoardFixture } from './fixture/boardFixture'
+import {
+  AuthFixture,
+  createAuthFixture,
+} from '@/lib/auth/__tests__/auth.fixture'
 
 describe('Feature: Editing board', () => {
   let boardFixture: BoardFixture
+  let authFixture: AuthFixture
 
   beforeEach(() => {
-    boardFixture = createBoardFixture()
+    const stateBuilderProvider = testStateBuilderProvider()
+    boardFixture = createBoardFixture(stateBuilderProvider)
+    authFixture = createAuthFixture(stateBuilderProvider)
   })
 
   it('Example: Editing an existing board', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([{ id: 'board-id', name: 'board-name', columns: [] }])
-        .build(),
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-id',
+          name: 'board-name',
+          owner: 'alice-id',
+          columns: [],
+        },
+      ],
+      true,
     )
-
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-id',
-        name: 'board-name',
-        columns: [],
-      },
-    ])
 
     await boardFixture.whenEditBoard({
       id: 'board-id',
@@ -34,37 +39,31 @@ describe('Feature: Editing board', () => {
       {
         id: 'board-id',
         name: 'new-board-name',
+        owner: 'alice-id',
         columns: [],
       },
     ])
   })
 
   it('Example: Editing existing column name of a board', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([
-          { id: 'board-id', name: 'board-name', columns: ['column-id-1'] },
-        ])
-        .withColumns([
-          { id: 'column-id-1', name: 'column 1', boardId: 'board-id' },
-        ])
-        .build(),
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-id',
+          name: 'board-name',
+          owner: 'alice-id',
+          columns: [
+            {
+              id: 'column-id-1',
+              name: 'column 1',
+              boardId: 'board-id',
+            },
+          ],
+        },
+      ],
+      true,
     )
-
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-id',
-        name: 'board-name',
-        columns: [
-          {
-            id: 'column-id-1',
-            name: 'column 1',
-            boardId: 'board-id',
-          },
-        ],
-      },
-    ])
 
     await boardFixture.whenEditBoard({
       id: 'board-id',
@@ -81,6 +80,7 @@ describe('Feature: Editing board', () => {
       {
         id: 'board-id',
         name: 'new-board-name',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id-1',
@@ -93,33 +93,22 @@ describe('Feature: Editing board', () => {
   })
 
   it('Example: Editing existing column name of a board when multiple column exists', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([
-          {
-            id: 'board-id',
-            name: 'board-name',
-            columns: ['column-id-1', 'column-id-2'],
-          },
-        ])
-        .withColumns([
-          { id: 'column-id-1', name: 'column 1', boardId: 'board-id' },
-          { id: 'column-id-2', name: 'column 2', boardId: 'board-id' },
-        ])
-        .build(),
-    )
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
 
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-id',
-        name: 'board-name',
-        columns: [
-          { id: 'column-id-1', name: 'column 1', boardId: 'board-id' },
-          { id: 'column-id-2', name: 'column 2', boardId: 'board-id' },
-        ],
-      },
-    ])
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-id',
+          name: 'board-name',
+          owner: 'alice-id',
+          columns: [
+            { id: 'column-id-1', name: 'column 1', boardId: 'board-id' },
+            { id: 'column-id-2', name: 'column 2', boardId: 'board-id' },
+          ],
+        },
+      ],
+      true,
+    )
 
     await boardFixture.whenEditBoard({
       id: 'board-id',
@@ -134,6 +123,7 @@ describe('Feature: Editing board', () => {
       {
         id: 'board-id',
         name: 'new-board-name',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id-1',
@@ -147,27 +137,19 @@ describe('Feature: Editing board', () => {
   })
 
   it('Example: Editing existing board to add a column', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([
-          {
-            id: 'board-id',
-            name: 'board 1',
-            columns: ['column-id-1', 'column-id-2'],
-          },
-        ])
-        .withColumns([])
-        .build(),
-    )
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
 
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-id',
-        name: 'board 1',
-        columns: [],
-      },
-    ])
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-id',
+          name: 'board 1',
+          owner: 'alice-id',
+          columns: [],
+        },
+      ],
+      true,
+    )
 
     await boardFixture.whenEditBoard({
       id: 'board-id',
@@ -179,6 +161,7 @@ describe('Feature: Editing board', () => {
       {
         id: 'board-id',
         name: 'board 1',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id-1',
@@ -191,49 +174,30 @@ describe('Feature: Editing board', () => {
   })
 
   it('Example: Editing existing board to remove a column', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([
-          {
-            id: 'board-id',
-            name: 'board 1',
-            columns: ['column-id-1', 'column-id-2'],
-          },
-        ])
-        .withColumns([
-          {
-            id: 'column-id-1',
-            name: 'column 1',
-            boardId: 'board-id',
-          },
-          {
-            id: 'column-id-2',
-            name: 'column 2',
-            boardId: 'board-id',
-          },
-        ])
-        .build(),
-    )
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
 
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-id',
-        name: 'board 1',
-        columns: [
-          {
-            id: 'column-id-1',
-            name: 'column 1',
-            boardId: 'board-id',
-          },
-          {
-            id: 'column-id-2',
-            name: 'column 2',
-            boardId: 'board-id',
-          },
-        ],
-      },
-    ])
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-id',
+          name: 'board 1',
+          owner: 'alice-id',
+          columns: [
+            {
+              id: 'column-id-1',
+              name: 'column 1',
+              boardId: 'board-id',
+            },
+            {
+              id: 'column-id-2',
+              name: 'column 2',
+              boardId: 'board-id',
+            },
+          ],
+        },
+      ],
+      true,
+    )
 
     await boardFixture.whenEditBoard({
       id: 'board-id',
@@ -245,6 +209,7 @@ describe('Feature: Editing board', () => {
       {
         id: 'board-id',
         name: 'board 1',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id-1',

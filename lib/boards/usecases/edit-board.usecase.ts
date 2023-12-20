@@ -11,9 +11,14 @@ export const editBoard = createAppAsyncThunk(
         name: string
       }>
     },
-    { extra: { boardGateway } },
+    { extra: { boardGateway }, getState },
   ) => {
-    const editedBoard = await boardGateway.editBoard(board)
+    const state = getState()
+    const token = state.auth.token
+    if (!token) {
+      return null
+    }
+    const editedBoard = await boardGateway.editBoard({ board, token })
     return await Promise.resolve(editedBoard)
   },
 )

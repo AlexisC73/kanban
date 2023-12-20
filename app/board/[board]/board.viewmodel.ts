@@ -29,6 +29,7 @@ export const selectBoardViewModel = createSelector(
           data: {
             id: string
             name: string
+            owner: string
             columns: Array<{
               id: string
               title: string
@@ -70,6 +71,7 @@ export const selectBoardViewModel = createSelector(
     const returnedBoard = {
       id: board.id,
       name: board.name,
+      owner: board.owner,
       columns: columns.map((c) => ({
         id: c.id,
         title: c.name,

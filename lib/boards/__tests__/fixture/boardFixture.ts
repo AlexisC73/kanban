@@ -1,34 +1,52 @@
-import { RootState, createTestStore } from '@/lib/store'
+import { AppStore, createTestStore } from '@/lib/store'
 import { FakeBoardGateway } from '../../infra/fake-board.gateway'
 import { getBoards } from '../../usecases/get-boards.usecase'
-import { stateBuilder } from '../../../state.builder'
+import { StateBuilderProvider, stateBuilder } from '../../../state.builder'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { editBoard } from '../../usecases/edit-board.usecase'
 import { deleteBoard } from '../../usecases/deleteBoard.usecase'
 
 export const createBoardFixture = (
-  {
-    boardGateway = new FakeBoardGateway(),
-  }: Partial<{ boardGateway: FakeBoardGateway }> = {},
-  initialState?: RootState,
+  testStateBuilderProvider: StateBuilderProvider,
 ) => {
-  const store = createTestStore({ boardGateway }, initialState)
+  const boardGateway = new FakeBoardGateway()
+  let store: AppStore
 
   return {
     givenExistingBoards(
       boards: Array<{
         id: string
         name: string
+        owner: string
         columns: Array<{
           id: string
           name: string
           boardId: string
         }>
       }>,
+      existInState: boolean,
     ) {
       boardGateway.boards = boards
+      if (existInState) {
+        testStateBuilderProvider.setState((builder) =>
+          builder
+            .withBoards(
+              boards.map((b) => ({
+                id: b.id,
+                name: b.name,
+                owner: b.owner,
+                columns: b.columns.map((c) => c.id),
+              })),
+            )
+            .withColumns(boards.flatMap((b) => b.columns)),
+        )
+      }
     },
     async whenRetrievingBoards() {
+      store = createTestStore(
+        { boardGateway },
+        testStateBuilderProvider.getState(),
+      )
       await store.dispatch(getBoards())
     },
     async whenAddingNewBoard(board: {
@@ -36,6 +54,10 @@ export const createBoardFixture = (
       name: string
       columns: Array<{ id: string; name: string }>
     }) {
+      store = createTestStore(
+        { boardGateway },
+        testStateBuilderProvider.getState(),
+      )
       await store.dispatch(createBoard(board))
     },
     async whenEditBoard(board: {
@@ -44,11 +66,19 @@ export const createBoardFixture = (
       columns: Array<{ id: string; name: string }>
     }) {
       try {
+        store = createTestStore(
+          { boardGateway },
+          testStateBuilderProvider.getState(),
+        )
         await store.dispatch(editBoard(board))
       } catch (e) {}
     },
     async whenDeletingBoard(board: { id: string }) {
       try {
+        store = createTestStore(
+          { boardGateway },
+          testStateBuilderProvider.getState(),
+        )
         await store.dispatch(deleteBoard(board.id))
       } catch (e) {}
     },
@@ -56,6 +86,7 @@ export const createBoardFixture = (
       expectedBoards: Array<{
         id: string
         name: string
+        owner: string
         columns: Array<{
           id: string
           name: string
@@ -64,11 +95,12 @@ export const createBoardFixture = (
       }>,
     ) {
       const state = store.getState()
-      const expectedState = stateBuilder()
+      const expectedState = stateBuilder(testStateBuilderProvider.getState())
         .withBoards(
           expectedBoards.map((b) => ({
             id: b.id,
             name: b.name,
+            owner: b.owner,
             columns: b.columns.map((c) => c.id),
           })),
         )
@@ -82,6 +114,7 @@ export const createBoardFixture = (
           ),
         )
         .build()
+
       expect(state).toEqual(expectedState)
     },
   }

@@ -14,9 +14,14 @@ describe('Status select view model', () => {
           {
             id: 'board-id',
             name: 'Board 1',
+            owner: 'alice-id',
             columns: [],
           },
         ])
+        .withAuthUser({
+          user: { id: 'alice-id' },
+          token: JSON.stringify({ id: 'alice-id' }),
+        })
         .build(),
     )
 
@@ -38,6 +43,7 @@ describe('Status select view model', () => {
           {
             id: 'board-id',
             name: 'Board 1',
+            owner: 'alice-id',
             columns: ['col-1', 'col-2'],
           },
         ])

@@ -1,16 +1,22 @@
-import { stateBuilder } from '../../state.builder'
+import {
+  AuthFixture,
+  createAuthFixture,
+} from '@/lib/auth/__tests__/auth.fixture'
+import { testStateBuilderProvider } from '../../state.builder'
 import { BoardFixture, createBoardFixture } from './fixture/boardFixture'
 
 describe('Feature: Adding a new board', () => {
   let boardFixture: BoardFixture
+  let authFixture: AuthFixture
 
   beforeEach(() => {
-    boardFixture = createBoardFixture()
+    const stateBuilderProvider = testStateBuilderProvider()
+    authFixture = createAuthFixture(stateBuilderProvider)
+    boardFixture = createBoardFixture(stateBuilderProvider)
   })
   it('Example: Adding a new board when no boards exist with no columns', async () => {
-    boardFixture = createBoardFixture({}, stateBuilder().withBoards([]).build())
-
-    boardFixture.givenExistingBoards([])
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
+    boardFixture.givenExistingBoards([], true)
 
     await boardFixture.whenAddingNewBoard({
       id: 'board-id',
@@ -22,15 +28,15 @@ describe('Feature: Adding a new board', () => {
       {
         id: 'board-id',
         name: 'board-name',
+        owner: 'alice-id',
         columns: [],
       },
     ])
   })
 
   it('Example: Adding a new board when no boards exist with 2 columns', async () => {
-    boardFixture = createBoardFixture({}, stateBuilder().withBoards([]).build())
-
-    boardFixture.givenExistingBoards([])
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
+    boardFixture.givenExistingBoards([], true)
 
     await boardFixture.whenAddingNewBoard({
       id: 'board-id',
@@ -51,6 +57,7 @@ describe('Feature: Adding a new board', () => {
       {
         id: 'board-id',
         name: 'board-name',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id',
@@ -68,39 +75,25 @@ describe('Feature: Adding a new board', () => {
   })
 
   it('Example: Adding a new board when 1 board already exist', async () => {
-    boardFixture = createBoardFixture(
-      {},
-      stateBuilder()
-        .withBoards([
-          {
-            id: 'board-1-id',
-            name: 'board-1-name',
-            columns: ['column-1-id'],
-          },
-        ])
-        .withColumns([
-          {
-            id: 'column-1-id',
-            name: 'column-1-name',
-            boardId: 'board-1-id',
-          },
-        ])
-        .build(),
-    )
+    authFixture.givenAuthenticatedUser({ id: 'alice-id' })
 
-    boardFixture.givenExistingBoards([
-      {
-        id: 'board-1-id',
-        name: 'board-1-name',
-        columns: [
-          {
-            id: 'column-1-id',
-            name: 'column-1-name',
-            boardId: 'board-1-id',
-          },
-        ],
-      },
-    ])
+    boardFixture.givenExistingBoards(
+      [
+        {
+          id: 'board-1-id',
+          name: 'board-1-name',
+          owner: 'alice-id',
+          columns: [
+            {
+              id: 'column-1-id',
+              name: 'column-1-name',
+              boardId: 'board-1-id',
+            },
+          ],
+        },
+      ],
+      true,
+    )
 
     await boardFixture.whenAddingNewBoard({
       id: 'board-id',
@@ -121,6 +114,7 @@ describe('Feature: Adding a new board', () => {
       {
         id: 'board-1-id',
         name: 'board-1-name',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-1-id',
@@ -132,6 +126,7 @@ describe('Feature: Adding a new board', () => {
       {
         id: 'board-id',
         name: 'board-name',
+        owner: 'alice-id',
         columns: [
           {
             id: 'column-id',

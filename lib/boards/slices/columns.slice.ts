@@ -24,13 +24,16 @@ export const columnsSlice = createSlice({
       )
     })
 
-    builder.addCase(createBoard.fulfilled, (state, { meta }) => {
+    builder.addCase(createBoard.fulfilled, (state, action) => {
+      if (!action.payload) {
+        return
+      }
       columnEntityAdapter.addMany(
         state,
-        meta.arg.columns.map((c) => ({
+        action.payload.columns.map((c) => ({
           id: c.id,
           name: c.name,
-          boardId: meta.arg.id,
+          boardId: c.boardId,
         })),
       )
     })
@@ -46,11 +49,13 @@ export const columnsSlice = createSlice({
     })
 
     builder.addCase(editBoard.fulfilled, (state, action) => {
+      if (!action.payload) return
+      const payload = action.payload
       const shouldRemoveCol = columnEntityAdapter
         .getSelectors()
         .selectAll(state)
-        .filter((c) => c.boardId === action.payload.id)
-        .filter((c) => !action.payload.columns.map((c) => c.id).includes(c.id))
+        .filter((c) => c.boardId === payload.id)
+        .filter((c) => !payload.columns.map((c) => c.id).includes(c.id))
 
       columnEntityAdapter.removeMany(
         state,
@@ -62,7 +67,7 @@ export const columnsSlice = createSlice({
         action.payload.columns.map((c) => ({
           id: c.id,
           name: c.name,
-          boardId: action.payload.id,
+          boardId: payload.id,
         })),
       )
     })

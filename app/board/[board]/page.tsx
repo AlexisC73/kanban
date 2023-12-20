@@ -18,7 +18,7 @@ export default function BoardPage() {
   const boardNode: ReactNode = (() => {
     switch (boardViewModel.board.type) {
       case BoardViewModelType.NO_BOARD:
-        return redirect('/')
+        return redirect('/board')
       case BoardViewModelType.EMPTY_BOARD:
         return <NoColumnScreen />
       case BoardViewModelType.BOARD_WITH_COLUMNS:

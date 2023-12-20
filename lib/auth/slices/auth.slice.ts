@@ -1,8 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { signupWithGithub } from '../usecases/signup-with-github.usecase'
 import { signinWithGithub } from '../usecases/signin-with-github.usecase'
+import { RootState } from '@/lib/store'
 
-interface AuthState {
+export interface AuthState {
   user?: { id: string }
   token?: string
 }
@@ -25,3 +26,7 @@ export const authSlice = createSlice({
       })
   },
 })
+
+export const selectAuthUser = (state: RootState) => {
+  return state.auth.user
+}

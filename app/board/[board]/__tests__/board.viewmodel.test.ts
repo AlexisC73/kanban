@@ -23,6 +23,7 @@ describe('Board view model', () => {
           {
             id: 'board-id-1',
             name: 'Board 1',
+            owner: 'alice-id',
             columns: [],
           },
         ])
@@ -47,6 +48,7 @@ describe('Board view model', () => {
           {
             id: 'board-id-1',
             name: 'Board 1',
+            owner: 'alice-id',
             columns: ['column-id-1', 'column-id-2'],
           },
         ])
@@ -73,6 +75,7 @@ describe('Board view model', () => {
         data: {
           id: 'board-id-1',
           name: 'Board 1',
+          owner: 'alice-id',
           columns: [
             {
               id: 'column-id-1',
@@ -98,6 +101,7 @@ describe('Board view model', () => {
           {
             id: 'board-id-1',
             name: 'Board 1',
+            owner: 'alice-id',
             columns: ['column-id-1', 'column-id-2'],
           },
         ])
@@ -134,6 +138,7 @@ describe('Board view model', () => {
         data: {
           id: 'board-id-1',
           name: 'Board 1',
+          owner: 'alice-id',
           columns: [
             {
               id: 'column-id-1',

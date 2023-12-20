@@ -8,9 +8,12 @@ export const createBoard = createAppAsyncThunk(
       name: string
       columns: Array<{ id: string; name: string }>
     },
-    { extra: { boardGateway } },
+    { extra: { boardGateway }, getState },
   ) => {
-    await boardGateway.createBoard(board)
-    await Promise.resolve()
+    const state = getState()
+    const token = state.auth.token
+    if (!token) return null
+    const newBoard = await boardGateway.createBoard({ board, token })
+    return await Promise.resolve(newBoard)
   },
 )

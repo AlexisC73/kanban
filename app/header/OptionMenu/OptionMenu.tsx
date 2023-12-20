@@ -44,9 +44,7 @@ const OptionMenuList = ({ closeMenuList }: { closeMenuList: () => void }) => {
       dispatch(deleteBoard(board)).finally(() => {
         closeMenuList()
       })
-    } catch (e) {
-      console.log(e)
-    }
+    } catch (e) {}
   }
 
   const handleMouseLeave = () => {

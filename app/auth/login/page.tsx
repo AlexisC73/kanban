@@ -2,14 +2,17 @@
 
 import { selectAuthUser } from '@/lib/auth/slices/auth.slice'
 import { useAppSelector } from '@/lib/hook'
+import { SignInModal } from '@/presentation/components/SignInModal'
 import { redirect } from 'next/navigation'
 
-export default function Home() {
+export default function Login() {
   const authUser = useAppSelector(selectAuthUser)
-
-  if (authUser === undefined) {
-    redirect('/auth/login')
+  if (authUser !== undefined) {
+    redirect('/')
   }
-
-  redirect('/board')
+  return (
+    <div>
+      <SignInModal />
+    </div>
+  )
 }
