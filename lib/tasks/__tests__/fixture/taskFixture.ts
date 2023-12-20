@@ -9,6 +9,7 @@ import { getTasks } from '../../usecases/get-tasks.usecase'
 import { updateSubtaskStatus } from '../../usecases/update-subtask-completion'
 import { updateTask } from '../../usecases/update-task.usecase'
 import { deleteTask } from '../../usecases/delete-task.usecase'
+import { TaskWithSubtasks } from '../../model/types'
 
 export const createTaskFixture = (
   {
@@ -19,22 +20,7 @@ export const createTaskFixture = (
   let store = createTestStore({ taskGateway }, initialState)
 
   return {
-    givenExistingTasks(
-      tasks: Array<{
-        id: string
-        name: string
-        description: string
-        boardId: string
-        columnId: string
-        subtasks: Array<{
-          id: string
-          name: string
-          taskId: string
-          completed: boolean
-          boardId: string
-        }>
-      }>,
-    ) {
+    givenExistingTasks(tasks: TaskWithSubtasks[]) {
       taskGateway.tasks = tasks
     },
     givenExistingState(state: RootState) {
@@ -52,20 +38,7 @@ export const createTaskFixture = (
     async whenRetrievingTasks() {
       return await store.dispatch(getTasks())
     },
-    async whenAddingANewTask(task: {
-      id: string
-      name: string
-      description: string
-      columnId: string
-      boardId: string
-      subtasks: Array<{
-        id: string
-        name: string
-        completed: boolean
-        taskId: string
-        boardId: string
-      }>
-    }) {
+    async whenAddingANewTask(task: TaskWithSubtasks) {
       return await store.dispatch(addTask(task))
     },
     async whenUpdatingTaskStatus({
@@ -86,41 +59,13 @@ export const createTaskFixture = (
     }) {
       return await store.dispatch(updateSubtaskStatus({ id, completed }))
     },
-    async whenUpdatingTask(task: {
-      id: string
-      name: string
-      description: string
-      boardId: string
-      columnId: string
-      subtasks: Array<{
-        id: string
-        name: string
-        completed: boolean
-        taskId: string
-        boardId: string
-      }>
-    }) {
+    async whenUpdatingTask(task: TaskWithSubtasks) {
       return await store.dispatch(updateTask(task))
     },
     async whenDeletingTask({ taskId }: { taskId: string }) {
       return await store.dispatch(deleteTask({ taskId }))
     },
-    thenTasksShouldBe(
-      expectedTasks: Array<{
-        id: string
-        name: string
-        description: string
-        boardId: string
-        columnId: string
-        subtasks: Array<{
-          id: string
-          name: string
-          taskId: string
-          completed: boolean
-          boardId: string
-        }>
-      }>,
-    ) {
+    thenTasksShouldBe(expectedTasks: TaskWithSubtasks[]) {
       const expectedState = stateBuilder()
         .withTasks(
           expectedTasks.map((t) => ({

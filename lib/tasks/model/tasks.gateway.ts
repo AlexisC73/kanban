@@ -1,19 +1,8 @@
+import { TaskWithSubtasks } from './types'
+
 export interface TaskGateway {
   getTasks: () => Promise<GetTasksResponse>
-  createNewTask: (task: {
-    id: string
-    name: string
-    description: string
-    columnId: string
-    boardId: string
-    subtasks: Array<{
-      id: string
-      name: string
-      completed: boolean
-      taskId: string
-      boardId: string
-    }>
-  }) => Promise<AddTaskResponse>
+  createNewTask: (task: TaskWithSubtasks) => Promise<AddTaskResponse>
   updateTaskStatus: (task: {
     id: string
     columnId: string
@@ -23,67 +12,15 @@ export interface TaskGateway {
     id: string
     completed: boolean
   }) => Promise<UpdateSubtaskStatusResponse>
-  updateTask: (task: {
-    id: string
-    name: string
-    description: string
-    boardId: string
-    columnId: string
-    subtasks: Array<{
-      id: string
-      name: string
-      completed: boolean
-      taskId: string
-      boardId: string
-    }>
-  }) => Promise<void>
+  updateTask: (task: TaskWithSubtasks) => Promise<void>
   deleteTask: (taskId: string) => Promise<void>
 }
 
-type GetTasksResponse = Array<{
-  id: string
-  name: string
-  description: string
-  boardId: string
-  columnId: string
-  subtasks: Array<{
-    id: string
-    name: string
-    taskId: string
-    completed: boolean
-    boardId: string
-  }>
-}>
+type GetTasksResponse = TaskWithSubtasks[]
 
-interface AddTaskResponse {
-  id: string
-  name: string
-  description: string
-  boardId: string
-  columnId: string
-  subtasks: Array<{
-    id: string
-    name: string
-    taskId: string
-    completed: boolean
-    boardId: string
-  }>
-}
+type AddTaskResponse = TaskWithSubtasks
 
-interface UpdateStatusReponse {
-  id: string
-  name: string
-  description: string
-  boardId: string
-  columnId: string
-  subtasks: Array<{
-    id: string
-    name: string
-    taskId: string
-    completed: boolean
-    boardId: string
-  }>
-}
+type UpdateStatusReponse = TaskWithSubtasks
 
 interface UpdateSubtaskStatusResponse {
   id: string

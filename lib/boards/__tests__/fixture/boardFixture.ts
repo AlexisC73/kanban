@@ -5,6 +5,7 @@ import { StateBuilderProvider, stateBuilder } from '../../../state.builder'
 import { createBoard } from '../../usecases/add-board.usecase'
 import { editBoard } from '../../usecases/edit-board.usecase'
 import { deleteBoard } from '../../usecases/deleteBoard.usecase'
+import { BoardWithColumns } from '../../model/types'
 
 export const createBoardFixture = (
   testStateBuilderProvider: StateBuilderProvider,
@@ -13,19 +14,7 @@ export const createBoardFixture = (
   let store: AppStore
 
   return {
-    givenExistingBoards(
-      boards: Array<{
-        id: string
-        name: string
-        owner: string
-        columns: Array<{
-          id: string
-          name: string
-          boardId: string
-        }>
-      }>,
-      existInState: boolean,
-    ) {
+    givenExistingBoards(boards: BoardWithColumns[], existInState: boolean) {
       boardGateway.boards = boards
       if (existInState) {
         testStateBuilderProvider.setState((builder) =>
@@ -82,18 +71,7 @@ export const createBoardFixture = (
         await store.dispatch(deleteBoard(board.id))
       } catch (e) {}
     },
-    thenBoardShouldBe(
-      expectedBoards: Array<{
-        id: string
-        name: string
-        owner: string
-        columns: Array<{
-          id: string
-          name: string
-          boardId: string
-        }>
-      }>,
-    ) {
+    thenBoardShouldBe(expectedBoards: BoardWithColumns[]) {
       const state = store.getState()
       const expectedState = stateBuilder(testStateBuilderProvider.getState())
         .withBoards(

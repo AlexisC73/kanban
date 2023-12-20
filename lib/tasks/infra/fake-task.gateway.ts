@@ -1,39 +1,14 @@
 import { TaskGateway } from '../model/tasks.gateway'
+import { TaskWithSubtasks } from '../model/types'
 
 export class FakeTaskGateway implements TaskGateway {
-  tasks: Array<{
-    id: string
-    name: string
-    description: string
-    boardId: string
-    columnId: string
-    subtasks: Array<{
-      id: string
-      name: string
-      taskId: string
-      completed: boolean
-      boardId: string
-    }>
-  }> = []
+  tasks: TaskWithSubtasks[] = []
 
   async getTasks() {
     return this.tasks
   }
 
-  async createNewTask(task: {
-    id: string
-    name: string
-    description: string
-    columnId: string
-    boardId: string
-    subtasks: Array<{
-      id: string
-      name: string
-      completed: boolean
-      taskId: string
-      boardId: string
-    }>
-  }) {
+  async createNewTask(task: TaskWithSubtasks) {
     this.tasks = [...this.tasks, task]
     return await Promise.resolve(task)
   }
@@ -58,20 +33,7 @@ export class FakeTaskGateway implements TaskGateway {
     return await Promise.resolve(subtask)
   }
 
-  async updateTask(task: {
-    id: string
-    name: string
-    description: string
-    boardId: string
-    columnId: string
-    subtasks: Array<{
-      id: string
-      name: string
-      completed: boolean
-      taskId: string
-      boardId: string
-    }>
-  }) {
+  async updateTask(task: TaskWithSubtasks) {
     this.tasks = this.tasks.map((t) => (t.id === task.id ? task : t))
   }
 
