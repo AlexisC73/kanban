@@ -6,14 +6,25 @@ export interface BoardGateway {
     board,
     token,
   }: {
-    board: BoardWithColumns
+    board: {
+      id: string
+      name: string
+      columns: Array<{ id: string; name: string }>
+    }
     token: string
   }) => Promise<CreateBoardResponse>
   editBoard: ({
     board,
     token,
   }: {
-    board: BoardWithColumns
+    board: {
+      id: string
+      name: string
+      columns: Array<{
+        id: string
+        name: string
+      }>
+    }
     token: string
   }) => Promise<EditBoardResponse>
   deleteBoard: ({ id, token }: { id: string; token: string }) => Promise<void>
