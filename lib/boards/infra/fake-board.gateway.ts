@@ -65,6 +65,7 @@ export class FakeBoardGateway implements BoardGateway {
     const boardIndex = this.boards.findIndex(
       (b) => b.id === board.id && b.owner === user.id,
     )
+    console.log(boardIndex)
     if (boardIndex === -1) {
       throw new Error('Board not found')
     }
@@ -89,6 +90,12 @@ export class FakeBoardGateway implements BoardGateway {
     token: string
   }): Promise<void> {
     const user = JSON.parse(token) as { id: string }
-    this.boards = this.boards.filter((b) => b.owner !== user.id && b.id !== id)
+    const boardIndex = this.boards.findIndex(
+      (b) => b.id === id && b.owner === user.id,
+    )
+    if (boardIndex === -1) {
+      throw new Error('Board not exist or you are not the owner')
+    }
+    this.boards = this.boards.filter((b) => b.id !== id)
   }
 }
