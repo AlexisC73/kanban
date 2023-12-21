@@ -18,9 +18,14 @@ export const TaskCard = ({
   const handleClick = () => {
     showTaskWithId(id)
   }
+  const handleDragStart = (e: React.DragEvent<HTMLLIElement>) => {
+    e.dataTransfer.setData('task-id', id)
+  }
   return (
     <li
       onClick={handleClick}
+      draggable
+      onDragStart={handleDragStart}
       className='bg-white dark:bg-Dark-Grey px-4 py-6 flex flex-col gap-y-2 rounded-lg shadow-card-task cursor-pointer'
     >
       <p className='text-Black dark:text-white text-Heading-M'>{name}</p>
