@@ -2,14 +2,16 @@ import { Overlay } from '@/presentation/@shared/components/overlay/Overlay'
 import { TextFieldWithInput } from '../text-field-with-input/TextFieldWithInput'
 import { TextField } from '../text-field/TextField'
 import { CrossIcon, SpinnerIcon } from '@/presentation/@shared/assets'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useAppDispatch } from '@/lib/hook'
 import { createBoard } from '@/lib/boards/usecases/add-board.usecase'
+import { redirect } from 'next/navigation'
 
 export const AddBoardModal = ({ closeModal }: { closeModal?: () => void }) => {
   const dispatch = useAppDispatch()
 
   const [submiting, setSubmiting] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [editBoard, setEditBoard] = useState<{
     id: string
     boardName: string
@@ -57,8 +59,15 @@ export const AddBoardModal = ({ closeModal }: { closeModal?: () => void }) => {
     ).then(() => {
       setSubmiting(false)
       closeModal?.()
+      setSuccess(true)
     })
   }
+
+  useEffect(() => {
+    if (success) {
+      redirect(`board/${editBoard.id}`)
+    }
+  }, [success, editBoard.id])
 
   const handleCloseModal = () => {
     if (submiting) {

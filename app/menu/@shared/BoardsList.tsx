@@ -1,16 +1,15 @@
+'use client'
 import { BoardLi } from './BoardLi'
-import { Board } from '@/lib/boards/model/board.entity'
 import { CreateNewBoardButton } from './CreateNewBoardButton'
+import { useParams } from 'next/navigation'
+import { useAppSelector } from '@/lib/hook'
+import { selectBoards } from '@/lib/boards/slices/boards.slice'
 
-export interface BoardsListProps {
-  boards: Board[]
-  currentBoardId: string
-}
+export const BoardsList = () => {
+  const params = useParams()
+  const boardId = params?.board as string | undefined
+  const boards = useAppSelector(selectBoards)
 
-export const BoardsList = ({
-  boards = [],
-  currentBoardId,
-}: BoardsListProps) => {
   return (
     <div>
       <h2 className='text-Heading-S uppercase text-Medium-Grey px-6 pb-4'>
@@ -23,7 +22,7 @@ export const BoardsList = ({
               label={board.name}
               key={board.id}
               boardId={board.id}
-              active={currentBoardId === board.id}
+              active={!boardId ? false : boardId === board.id}
             />
           ))}
         </ul>

@@ -1,4 +1,6 @@
+'use client'
 import { PlusIcon } from '@/presentation/@shared/assets'
+import { useParams } from 'next/navigation'
 
 export const AddTaskButton = ({
   disabled = false,
@@ -7,6 +9,11 @@ export const AddTaskButton = ({
   disabled?: boolean
   onClick: () => void
 }) => {
+  const params = useParams()
+  const boardId = params.board as string | undefined
+
+  if (!boardId) return null
+
   return (
     <button
       disabled={disabled}

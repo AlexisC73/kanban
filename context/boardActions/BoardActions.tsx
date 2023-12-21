@@ -36,10 +36,6 @@ export const BoardActionsCtxProvider = ({
   const board = useAppSelector((state) => selectBoard(state, boardId))
   const columns = useAppSelector((state) => selectBoardColumns(state, boardId))
 
-  if (!board) {
-    return children
-  }
-
   return (
     <BoardActionsCtx.Provider
       value={{
@@ -58,7 +54,7 @@ export const BoardActionsCtxProvider = ({
           }}
         />
       )}
-      {showEditBoardModal && (
+      {showEditBoardModal && !!board && (
         <EditBoardModal
           boardToEdit={{
             columns,

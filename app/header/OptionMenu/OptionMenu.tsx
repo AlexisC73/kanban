@@ -1,3 +1,5 @@
+'use client'
+
 import { BoardActionsCtx } from '@/context/boardActions/BoardActions'
 import { deleteBoard } from '@/lib/boards/usecases/deleteBoard.usecase'
 import { useAppDispatch } from '@/lib/hook'
@@ -6,11 +8,15 @@ import { useParams } from 'next/navigation'
 import { useContext, useState } from 'react'
 
 export default function OptionMenu() {
+  const params = useParams()
+  const boardId = params.board as string | undefined
   const [showMenuList, setShowMenuList] = useState(false)
 
   const toggleMenuList = () => {
     setShowMenuList((prev) => !prev)
   }
+
+  if (!boardId) return null
 
   return (
     <div className='flex items-center justify-center relative'>

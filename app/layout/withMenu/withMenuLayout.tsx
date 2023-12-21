@@ -12,11 +12,8 @@ export const WithMenuLayout = ({ children }: { children: ReactNode }) => {
   const board = useAppSelector((state) => selectBoard(state, boardId))
   return (
     <>
-      <Header
-        columnLength={board?.columns.length ?? 0}
-        currentBoardName={board?.name ?? 'Kanban App'}
-      />
-      <Menu currentBoardId={boardId} />
+      <Header columnLength={board?.columns.length ?? 0} />
+      <Menu />
       <div
         className={`flex mt-16 overflow-y-scroll h-full ${
           isOpen ? 'md:ml-[260px] lg:ml-[300px]' : ''

@@ -86,3 +86,11 @@ export const selectFirstColumnForBoard = (
     .getSelectors()
     .selectById(state.columns, firstColumnId)
 }
+
+export const selectBoardTitle = (boardId?: string) => (state: RootState) => {
+  if (!boardId) return undefined
+  return (
+    boardEntityAdapter.getSelectors().selectById(state.boards, boardId)?.name ??
+    'No board found'
+  )
+}
