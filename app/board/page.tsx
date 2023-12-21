@@ -15,7 +15,7 @@ export default function BoardPage() {
   }
   return (
     <div className='flex flex-col gap-y-4 w-full items-center justify-center'>
-      <p className='text-Heading-M text-white'>
+      <p className='text-Heading-M text-Dark-Grey dark:text-white'>
         You don&apos;t have any board yet.
       </p>
       <button
