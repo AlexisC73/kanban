@@ -65,7 +65,6 @@ export class FakeBoardGateway implements BoardGateway {
     const boardIndex = this.boards.findIndex(
       (b) => b.id === board.id && b.owner === user.id,
     )
-    console.log(boardIndex)
     if (boardIndex === -1) {
       throw new Error('Board not found')
     }
