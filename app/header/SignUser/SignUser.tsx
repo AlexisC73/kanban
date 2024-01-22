@@ -27,7 +27,7 @@ export const SignUser = () => {
           </>
         )
       default:
-        return <div>{user.id}</div>
+        return null
     }
   })()
   return <div>{AuthNode}</div>
