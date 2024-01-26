@@ -80,6 +80,13 @@ export const selectColumns = createSelector(
   (columns) => columns,
 )
 
+export const selectFirstColumnIdFromBoard = (boardId: string) =>
+  createSelector(
+    (state: RootState) =>
+      columnEntityAdapter.getSelectors().selectAll(state.columns),
+    (columns) => columns.filter((c) => c.boardId === boardId)[0].id,
+  )
+
 export const selectColumnsWithIds = createSelector(
   (state: RootState, columnIds: string[]) =>
     [

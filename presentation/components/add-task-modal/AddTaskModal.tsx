@@ -4,9 +4,10 @@ import { TextareaField } from '../textarea-field/TextareaField'
 import { SubtasksEditList } from '../subtask-edit-list/SubtaskEditList'
 import { StatusSelect } from '../status-select/StatusSelect'
 import { useState } from 'react'
-import { useAppDispatch } from '@/lib/hook'
+import { useAppDispatch, useAppSelector } from '@/lib/hook'
 import { addTask } from '@/lib/tasks/usecases/add-task.usecase'
 import { SpinnerIcon } from '@/presentation/@shared/assets'
+import { selectFirstColumnIdFromBoard } from '@/lib/boards/slices/columns.slice'
 
 interface TaskState {
   name: string
@@ -21,11 +22,13 @@ export const AddTaskModal = ({
   boardId: string
   closeModal?: () => void
 }) => {
+  const firstColumnId = useAppSelector(selectFirstColumnIdFromBoard(boardId))
+
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [task, setTask] = useState<TaskState>({
     name: '',
     description: '',
-    columnId: '',
+    columnId: firstColumnId,
   })
   const [subtasks, setSubtasks] = useState<
     Array<{ id: string; name: string; completed: boolean }>
