@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, FocusEvent, useState } from 'react'
 import { Label } from '../label/Label'
 
 export function TextareaField({
@@ -6,7 +6,7 @@ export function TextareaField({
   name,
   rows = 4,
   placeholder,
-  hasError = false,
+  required = false,
   value,
   handleValueChange,
 }: {
@@ -14,13 +14,25 @@ export function TextareaField({
   name: string
   rows?: number
   placeholder?: string
-  hasError?: boolean
   value: string
+  required?: boolean
   handleValueChange: (value: string) => void
 }) {
+  const [hasError, setHasError] = useState(false)
+
   const customClass = hasError
     ? 'border-Red'
     : 'border-Medium-Grey border-opacity-25'
+
+  const handleBlur = (e: FocusEvent<HTMLTextAreaElement, Element>) => {
+    if (e.target.value.length <= 0) {
+      if (required) {
+        setHasError(true)
+        return
+      }
+    }
+    setHasError(false)
+  }
 
   const onTextChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     handleValueChange(event.target.value)
@@ -35,8 +47,10 @@ export function TextareaField({
           placeholder={placeholder ?? 'Enter task name'}
           id={name}
           name={name}
+          onBlur={handleBlur}
           className={`outline-none bg-transparent placeholder:opacity-25 flex-1 text-Black dark:text-white dark:placeholder:opacity-25`}
           rows={rows}
+          required={required}
           value={value}
           onChange={onTextChange}
         />

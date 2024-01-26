@@ -89,6 +89,7 @@ export const AddBoardModal = ({ closeModal }: { closeModal?: () => void }) => {
         <TextFieldWithInput
           label='Board Name'
           name='board-name'
+          required
           value={editBoard.boardName}
           onValueChange={(value: string) => {
             setEditBoard((prev) => ({ ...prev, boardName: value }))
@@ -138,6 +139,7 @@ export const ListWithCrossButton = ({
         {columns.map((column) => (
           <InputWithCrossButton
             onColumnNameChange={onColumnNameChange}
+            required
             column={column}
             key={column.id}
             deleteColumn={deleteColumn}
@@ -159,10 +161,12 @@ export const InputWithCrossButton = ({
   column,
   onColumnNameChange,
   deleteColumn,
+  required = false,
 }: {
   column: { id: string; name: string }
   onColumnNameChange: (id: string) => (name: string) => void
   deleteColumn: (id: string) => void
+  required?: boolean
 }) => {
   return (
     <li className='flex items-center gap-x-4'>
@@ -171,6 +175,7 @@ export const InputWithCrossButton = ({
         id={column.id}
         name={`${column.id}`}
         value={column.name}
+        required={required}
         placeholder='e.g. Todo'
       />
       <CrossIcon

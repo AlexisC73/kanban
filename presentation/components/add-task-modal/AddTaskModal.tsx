@@ -93,6 +93,7 @@ export const AddTaskModal = ({
             onValueChange={(value) => {
               handleInformationChange('name', value)
             }}
+            required
             name='title'
             value={task.name}
             label='Title'
@@ -101,6 +102,7 @@ export const AddTaskModal = ({
           <TextareaField
             label='Description'
             name='description'
+            required
             placeholder='e.g. It’s always good to take a break. This 
 15 minute break will  recharge the batteries 
 a little.'

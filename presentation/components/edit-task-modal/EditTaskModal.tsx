@@ -86,6 +86,7 @@ export const EditTaskModal = ({
             onValueChange={(value) => {
               setEditedTask((prev) => ({ ...prev, name: value }))
             }}
+            required
             name='title'
             value={editedTask.name}
             label='Title'
@@ -94,6 +95,7 @@ export const EditTaskModal = ({
           <TextareaField
             label='Description'
             name='description'
+            required
             placeholder='e.g. It’s always good to take a break. This 
 15 minute break will  recharge the batteries 
 a little.'

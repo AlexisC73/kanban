@@ -88,6 +88,7 @@ export const EditBoardModal = ({
         <TextFieldWithInput
           label='Board Name'
           name='board-name'
+          required
           value={board.name}
           onValueChange={(value: string) => {
             setBoard((prev) => ({ ...prev, name: value }))
@@ -133,6 +134,7 @@ export const ListWithCrossButton = ({
         {columns.map((column) => (
           <InputWithCrossButton
             onColumnNameChange={onColumnNameChange}
+            required
             column={column}
             key={column.id}
             deleteColumn={deleteColumn}
@@ -154,15 +156,18 @@ export const InputWithCrossButton = ({
   column,
   onColumnNameChange,
   deleteColumn,
+  required = false,
 }: {
   column: { id: string; name: string }
   onColumnNameChange: (id: string) => (name: string) => void
   deleteColumn: (id: string) => void
+  required?: boolean
 }) => {
   return (
     <li className='flex items-center gap-x-4'>
       <TextField
         onValueChange={onColumnNameChange(column.id)}
+        required={required}
         id={column.id}
         name={`${column.id}`}
         value={column.name}

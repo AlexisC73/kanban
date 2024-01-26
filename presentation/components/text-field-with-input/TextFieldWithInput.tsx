@@ -5,14 +5,14 @@ export const TextFieldWithInput = ({
   label,
   name,
   placeholder,
-  hasError = false,
+  required = false,
   value,
   onValueChange,
 }: {
   label: string
   name: string
   placeholder?: string
-  hasError?: boolean
+  required?: boolean
   value?: string
   onValueChange: (value: string) => void
 }) => {
@@ -23,6 +23,7 @@ export const TextFieldWithInput = ({
         onValueChange={onValueChange}
         name={name}
         value={value}
+        required={required}
         placeholder={placeholder}
       />
     </div>
