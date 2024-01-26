@@ -51,7 +51,6 @@ export const EditBoardModal = ({
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSubmiting(true)
-    console.log(board)
     dispatch(
       editBoard({
         id: board.id,
@@ -63,9 +62,7 @@ export const EditBoardModal = ({
         setSubmiting(false)
         closeModal?.()
       })
-      .catch((e) => {
-        console.log(e.message)
-      })
+      .catch((e) => {})
   }
 
   const handleCloseModal = () => {
